@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.fibitpro.fibitapp",
+      "sha256_cert_fingerprints":
+        ["76:80:95:17:50:36:DC:F8:4E:9A:0D:73:E1:B0:6E:67:3C:AC:42:A7:9D:80:91:F2:C0:6B:0E:B8:1E:4C:7F:AD"]
+    }
+  }
+]
