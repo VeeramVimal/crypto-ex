@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="75" height="44" viewBox="0 0 75 44">
+  <g id="Black_jungle" data-name="Black jungle" transform="translate(-990 -368)">
+    <g id="Group_2981" data-name="Group 2981">
+      <rect id="Rectangle_2661" data-name="Rectangle 2661" width="75" height="44" rx="2" transform="translate(990 368)"/>
+      <g id="Group_2939" data-name="Group 2939" transform="translate(1 -296)">
+        <g id="Rectangle_2597" data-name="Rectangle 2597" transform="translate(989 664)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <path d="M2,0H73a2,2,0,0,1,2,2V4a0,0,0,0,1,0,0H0A0,0,0,0,1,0,4V2A2,2,0,0,1,2,0Z" stroke="none"/>
+          <path d="M2,.125H73A1.875,1.875,0,0,1,74.875,2V3.75a.125.125,0,0,1-.125.125H.25A.125.125,0,0,1,.125,3.75V2A1.875,1.875,0,0,1,2,.125Z" fill="none"/>
+        </g>
+        <g id="Rectangle_2643" data-name="Rectangle 2643" transform="translate(1037 671)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="24" height="2" rx="0.5" stroke="none"/>
+          <rect x="0.125" y="0.125" width="23.75" height="1.75" rx="0.375" fill="none"/>
+        </g>
+        <g id="Rectangle_2643-2" data-name="Rectangle 2643" transform="translate(1037 675)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="24" height="2" rx="0.5" stroke="none"/>
+          <rect x="0.125" y="0.125" width="23.75" height="1.75" rx="0.375" fill="none"/>
+        </g>
+        <g id="Rectangle_2643-3" data-name="Rectangle 2643" transform="translate(1037 679)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="24" height="2" rx="0.5" stroke="none"/>
+          <rect x="0.125" y="0.125" width="23.75" height="1.75" rx="0.375" fill="none"/>
+        </g>
+        <g id="Rectangle_2643-4" data-name="Rectangle 2643" transform="translate(1037 683)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="24" height="2" rx="0.5" stroke="none"/>
+          <rect x="0.125" y="0.125" width="23.75" height="1.75" rx="0.375" fill="none"/>
+        </g>
+        <g id="Rectangle_2643-5" data-name="Rectangle 2643" transform="translate(1037 687)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="24" height="2" rx="0.5" stroke="none"/>
+          <rect x="0.125" y="0.125" width="23.75" height="1.75" rx="0.375" fill="none"/>
+        </g>
+        <g id="Rectangle_2601" data-name="Rectangle 2601" transform="translate(992 696)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="43" height="8" rx="1" stroke="none"/>
+          <rect x="0.125" y="0.125" width="42.75" height="7.75" rx="0.875" fill="none"/>
+        </g>
+        <g id="Rectangle_2644" data-name="Rectangle 2644" transform="translate(1037 696)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="24" height="8" rx="1" stroke="none"/>
+          <rect x="0.125" y="0.125" width="23.75" height="7.75" rx="0.875" fill="none"/>
+        </g>
+        <g id="Rectangle_2602" data-name="Rectangle 2602" transform="translate(992 671)" fill="#111" stroke="#292929" stroke-width="0.25">
+          <rect width="43" height="23" rx="1" stroke="none"/>
+          <rect x="0.125" y="0.125" width="42.75" height="22.75" rx="0.875" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <rect id="Rectangle_2743" data-name="Rectangle 2743" width="11" height="3" rx="0.5" transform="translate(1038 395)" fill="#00dbae"/>
+    <rect id="Rectangle_2744" data-name="Rectangle 2744" width="11" height="3" rx="0.5" transform="translate(1051 395)" fill="#ff4033"/>
+  </g>
+</svg>
