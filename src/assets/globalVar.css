@@ -1,0 +1,22 @@
+:root {
+  --whiteClr: white;
+  --blackClr: black;
+  --redClr: red;
+}
+
+:root .light-new  {
+  --whiteBlack: white;
+  --whiteBlackOpp: black;
+  --btnClr: #00dbae;
+  --resendClr: #00dbae;
+  --chatPopupBg: #95ea97;
+  --chatsellPopupBg : #ee8181;
+}
+
+:root .dark-new {
+  --whiteBlack: black;
+  --whiteBlackOpp: white;
+  --btnClr: #00dbae;
+  --resendClr: #00dbae;
+  --chatPopupBg: #fef6d8;
+}

@@ -1,0 +1,693 @@
+:root .light-new {
+  --color-1: #000000;
+  --border-color-1: #bbbbbb;
+  --background-color-1: rgb(250, 250, 250);
+  --background-color-2: #ffffff;
+  --background-color-3: rgb(245, 245, 245);
+  --background-color-4: rgb(243, 243, 243);
+  --border-color-2: #dbdbdb;
+}
+
+:root .dark-new {
+  --color-1: #ffffff;
+  --border-color-1: #c7c7c791;
+  --background-color-1: #14161a;
+  --background-color-2: #303236;
+  --background-color-3: #14161a;
+  --background-color-4: rgb(15, 15, 15);
+  --border-color-2: #303236;
+}
+
+:root .blue-whale {
+  --color-1: #ffffff;
+  --border-color-1: #c7c7c791;
+  --background-color-1: #0c495c;
+  --background-color-2: #29677a;
+}
+
+:root .blue-dark {
+  --color-1: #ffffff;
+  --border-color-1: #c7c7c791;
+  --background-color-1: #36424d;
+  --background-color-2: #45505a;
+}
+
+:root .brown {
+  --color-1: #ffffff;
+  --border-color-1: #c7c7c791;
+  --background-color-1: #373737;
+  --background-color-2: #686868;
+}
+
+:root .dark-black {
+  --color-1: #ffffff;
+  --border-color-1: #c7c7c791;
+  --background-color-1: #1d1d1d;
+  --background-color-2: #111010;
+}
+
+.faq-second-section .accordion-item {
+  border-bottom: 1px solid var(--border-color-1);
+}
+
+.faq-second-section .accordion-button {
+  color: inherit !important;
+}
+
+.accordian-dot-icons {
+  color: inherit !important;
+}
+
+.height-container .form-control {
+  background-color: transparent;
+}
+
+.blue-dark .custom-dropdown .dropdown-item {
+  color: #fff;
+  font-size: 14px;
+}
+
+.custom-dropdown .dropdown-item:focus,
+.custom-dropdown .dropdown-item:hover {
+  color: #1e2125 !important;
+}
+
+.deposit-fourth-section th {
+  color: var(--color-1);
+  background-color: var(--background-color-1);
+}
+
+.deposit-fourth-section td {
+  color: var(--color-1);
+}
+
+.transaction-history-tabs-section .nav-link {
+  color: var(--color-1);
+}
+
+.deposit-second-section {
+  background-color: var(--background-color-1);
+}
+
+.deposit-crypto-modal .modal-content {
+  background-color: var(--background-color-1);
+}
+
+#myInput2 {
+  background-color: transparent;
+  border: 1px solid rgb(14, 203, 129);
+  color: var(--color-1);
+}
+
+.css-bhp9pd-MuiPaper-root-MuiCard-root {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+.payment-qrcode-optional-button {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+.table {
+  color: var(--color-1) !important;
+}
+
+.css-1mxz8qt-MuiPaper-root {
+  background-color: var(--background-color-1) !important;
+}
+
+.css-11w94w9-MuiTableCell-root {
+  color: var(--color-1) !important;
+}
+
+.css-10dfkli-MuiTableCell-root {
+  color: var(--color-1) !important;
+}
+
+.css-177gid-MuiTableCell-root {
+  color: var(--color-1) !important;
+}
+
+.css-1azl6jz-MuiTableCell-root {
+  color: var(--color-1) !important;
+}
+
+.css-jtlhu6-MuiTablePagination-root {
+  color: var(--color-1) !important;
+}
+
+.css-zylse7-MuiButtonBase-root-MuiIconButton-root.Mui-disabled {
+  color: var(--color-1) !important;
+}
+
+.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
+  color: var(--color-1) !important;
+}
+
+.css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon {
+  color: var(--color-1) !important;
+}
+
+.referral-page-top-banner-section .nav-tabs .nav-link {
+  color: var(--color-1) !important;
+}
+
+.bg-card {
+  background-color: var(--background-color-1) !important;
+}
+
+.bg-card-inner {
+  background-color: var(--background-color-2) !important;
+  border-radius: 20px;
+}
+
+.bg-Dark-New {
+  color: var(--color-1) !important;
+}
+
+.enter-amount-section {
+  background-color: var(--background-color-1) !important;
+}
+
+.f-control {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+.p2p-trade-table .p2p-trade-table-tr {
+  background-color: var(--background-color-1) !important;
+}
+
+.p2p-trade-table .p2p-trade-table-th {
+  color: var(--color-1) !important;
+}
+
+.faq-section {
+  margin-top: 40px;
+  background-color: var(--background-color-1) !important;
+  padding: 5vh 0 5vh;
+}
+
+.p2p-trade-hero-section-two-nav-bg {
+  background-color: var(--background-color-1) !important;
+}
+
+.p2p-user-center-blocked-user-table table th {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+#scrollspy-section-3-para {
+  background-color: var(--background-color-2) !important;
+  border: 1px solid var(--border-color-1);
+}
+
+#scrollspy-section-2-para {
+  background-color: var(--background-color-2) !important;
+  border: 1px solid var(--border-color-1);
+}
+
+#scrollspy-section-1-para {
+  background-color: var(--background-color-2) !important;
+  border: 1px solid var(--border-color-1);
+}
+
+.select-dropdown-btn {
+  color: var(--color-1) !important;
+}
+
+.password-text-33 {
+  font-weight: 500;
+  font-size: 15px;
+  font-family: sans-serif;
+}
+
+.password-text-44 {
+  font-weight: 800;
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+.password-text-55 {
+  font-weight: 800;
+  font-size: 22px;
+  font-family: sans-serif;
+}
+
+.password-text-66 {
+  font-weight: 600;
+  font-size: 17px;
+  font-family: sans-serif;
+}
+
+.password-text-77 {
+  font-weight: 500;
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+/* .btn-light {
+    background-color: var(--background-color-1);
+    color: var(--color-1) !important;
+} */
+.btn-light:hover {
+  background-color: var(--btnClr);
+}
+
+.card {
+  border: 1px solid var(--border-color-1);
+}
+
+.device-management-table td {
+  font-weight: 400;
+  font-size: 15px;
+  font-family: sans-serif;
+}
+
+.nav-tabs-buy-sell .nav-link {
+  color: var(--color-1) !important;
+}
+
+.nav-pills-buy-sell .nav-pills .nav-link {
+  color: var(--color-1) !important;
+}
+
+.p2p-second-nav-content-title {
+  color: var(--color-1) !important;
+}
+
+.p2p-second-nav-icons {
+  color: var(--color-1) !important;
+}
+
+.dropdown-item {
+  color: var(--color-1) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--background-color-2) !important;
+  color: var(--color-1) !important;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: var(--btnClr) !important;
+  border-color: var(--btnClr) !important;
+}
+
+.page-link {
+  color: var(--color-1) !important;
+  box-shadow: none !important;
+}
+
+.select-dropdown-btn-buysell {
+  background-color: var(--background-color-1) !important;
+  border: 1px solid var(--border-color-1);
+}
+
+.place-order-buy-sell-tabs .nav-pills {
+  background-color: var(--background-color-1) !important;
+  border: 1px solid var(--border-color-1);
+}
+
+.add-payment-method-cancel-button {
+  background-color: var(--background-color-1) !important;
+}
+
+.postAd-top-section .form-control {
+  background-color: var(--background-color-2) !important;
+  color: var(--color-1) !important;
+  border: 1px solid var(--border-color-1);
+}
+
+.pan-input-text {
+  color: var(--color-1) !important;
+}
+
+.dropbtn1 {
+  background-color: transparent !important;
+}
+
+.dropdown-content1 {
+  background-color: var(--background-color-1) !important;
+}
+
+.paired-trade-dropdown-table th {
+  color: var(--color-1) !important;
+}
+
+.place-order-section-top .form-check-input {
+  background-color: #b5fff1 !important;
+}
+
+.banking-border-bottom {
+  border-bottom: 1px solid var(--border-color-1);
+}
+
+.dark-new .inner-third-section {
+  background-color: #14161a !important;
+}
+
+.dark-new .top-banner-eight-section .card {
+  background-color: #14161a !important;
+}
+
+.dark-new .benefits-text-1 {
+  color: #fff;
+}
+
+.phone-number-verification-change-top-banner .form-control {
+  color: var(--color-1) !important;
+}
+
+.PhoneInputInput {
+  color: var(--color-1) !important;
+}
+
+.form-control {
+  color: var(--color-1) !important;
+}
+
+.dark-new .height-container .btn-light {
+  background-color: #14161a !important;
+}
+
+.dark-new .btn-light.active,
+.dark-new .btn-light:active {
+  color: #000;
+  background-color: var(--btnClr) !important;
+  border-color: #f9fafb;
+  box-shadow: none !important;
+}
+
+.css-xc836r-control {
+  border-color: var(--border-color-1) !important;
+}
+
+.dark-new .css-1dimb5e-singleValue {
+  color: var(--color-1) !important;
+}
+
+.dark-new .css-1nmdiq5-menu {
+  background-color: #c7c7c791 !important;
+}
+
+.dark-new .status_dropdown .dropdown-item:hover {
+  color: #fff !important;
+}
+
+.dark-new .status_dropdown .dropdown-item:hover {
+  color: #000 !important;
+}
+
+/* .modal-content {
+    
+    background-color: transparent !important;
+    
+} */
+
+/* .dark-new .thememodal   {
+    background-color:rgb(0, 0, 0) !important;
+  } */
+
+/* .modal-body {
+    background-color: var(--background-color-1) !important;;
+} */
+
+/* .light-new .thememodal .modal-content {
+    background-color: #000 !important;
+  } */
+
+
+
+.form-control {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+.dropdown-content {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+.dark-new .rmsc.dark {
+  --rmsc-main: #4285f4;
+  --rmsc-hover: #0e0c0a;
+  --rmsc-selected: #1d1915;
+  --rmsc-border: #333333;
+  --rmsc-gray: #555555;
+  --rmsc-bg: #000000;
+  color: #fff;
+}
+
+.dark-new.thememodal {
+  background-color: transparent !important;
+  color: #FFF !important;
+}
+
+.light-new.thememodal {
+  background-color: transparent !important;
+  color: #000 !important;
+}
+
+.dark-new.thememodal .modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #000;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 0.3rem;
+  outline: 0;
+}
+
+.dark-new .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border: 1px solid rgb(255, 255, 255) !important
+}
+
+.css-1ualgfl-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  border: 1px solid rgb(0, 0, 0) !important
+}
+
+.css-1ualgfl-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1px solid rgb(255, 255, 255) !important
+}
+
+.dark-new .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  color: #FFF !important;
+}
+.dark-new .css-vqmohf-MuiButtonBase-root-MuiRadio-root {
+  color: #FFF !important;
+}
+
+.register-section-top .PhoneInput {
+  border: 1px solid #ced4da !important;
+  padding-left: 10px !important;
+}
+
+.register-section-top .PhoneInput {
+  border-radius: 0.25rem;
+  color: var(--color-1) !important;
+  background-color: var(--background-color-1) !important;
+}
+
+.dark-new .shadow-lg {
+  box-shadow: 0 1rem 3rem #00dbaf1f!important;
+}
+.accordion-item {
+  border: 1px solid var(--border-color-1);
+}
+.dark-new .modal-content {
+  background-color: rgb(0, 0, 0);
+}
+.datepicker-css-styling{
+  color: var(--color-1) !important;
+}
+.form-select{
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+.rmsc .dropdown-container {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+  border: 1px solid var(--border-color-1);
+}
+.height-container .PhoneInput {
+  border: 1px solid #ced4da !important;
+  border-radius: 0.25rem;
+  padding-left: 15px !important;
+  background-color: var(--background-color-1) !important;
+}
+
+
+
+input {
+  color: var(--color-1) !important;
+}
+/* .pan-input-text .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+    color: var(--color-1) !important;
+  }
+  */
+
+fieldset {
+  border: 1px solid var(--border-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+/* .pan-input-text{
+    color: var(--color-1) !important;
+    } */
+
+label {
+  color: var(--color-1) !important;
+}
+
+.phone-number-verification-change-top-banner .form-control {
+  color: var(--color-1) !important;
+}
+
+.dark-new .tab-content {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+table {
+  background-color: var(--background-color-1);
+  color: var(--color-1) !important;
+}
+
+table tr {
+  background-color: var(--background-color-1);
+  color: var(--color-1) !important;
+}
+
+table th {
+  /* / background-color: var(--background-color-1); / */
+  color: var(--color-1) !important;
+}
+
+table td {
+  /* / background-color: var(--background-color-1); / */
+  color: var(--color-1) !important;
+}
+
+table thead {
+  /* / background-color: var(--background-color-1); / */
+  color: var(--color-1) !important;
+}
+
+.MuiTablePagination-root {
+  background-color: var(--background-color-1) !important ;
+  color: var(--color-1) !important;
+}
+
+.MuiSvgIcon-root {
+  color: var(--color-1) !important;
+}
+
+.form-control {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+.dropdown-content {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+.dark-new .rmsc.dark {
+  --rmsc-main: #4285f4;
+  --rmsc-hover: #0e0c0a;
+  --rmsc-selected: #1d1915;
+  --rmsc-border: #333333;
+  --rmsc-gray: #555555;
+  --rmsc-bg: #000000;
+  color: #fff;
+}
+
+.rmsc .dropdown-container {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+  border: 1px solid var(--border-color-1) !important;
+}
+
+.datepicker-css-styling {
+  color: var(--color-1) !important;
+}
+.dark-new .modal-content {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+
+
+.form-select{
+    background-color: var(--background-color-1) !important;
+    color: var(--color-1) !important;
+  }
+
+
+  .overflow-x-scroll-arrow-section-2 {
+    position: relative;
+    z-index: 999;
+  }
+  
+  .horizon-prev {
+    position: absolute;
+    left: 5px;
+    top: 35px;
+    z-index: 999;
+  }
+  
+  .horizon-next {
+    position: absolute;
+    right: 5px;
+    top: 35px;
+    z-index: 999;
+  }
+  .horizon-next, .horizon-prev {
+    background-color: rgba(128, 128, 128, 0.747);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.644) !important;
+    line-height: 20px;
+    font-size: 12px;
+  }
+  .deposit-select-coin-section {
+    background-color: var(--background-color-1);
+  }
+  .markets-search-group-section .input-group-text {
+    background-color: var(--background-color-1) !important;
+    color: var(--color-1) !important;
+}
+.page-item.disabled .page-link {
+  background-color: var(--background-color-1) !important;
+}
+.page-link {
+  background-color: var(--background-color-1) !important;
+
+}
+
+.rdt_TableHeadRow{
+  background-color: #CCC !important;
+  color: #000 !important;
+}
+.rdt_TableRow{
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+.rdt_Pagination{
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+.trading-competition-inner-box{
+  background-color: var(--background-color-3) !important;
+
+}
+.trading-card-box-design{
+  background-color: var(--background-color-3) !important;
+}

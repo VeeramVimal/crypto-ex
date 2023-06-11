@@ -1,0 +1,117 @@
+.light-new {
+    --mainTextColor: black;
+}
+
+.dark-new {
+    --mainTextColor: white;
+}
+
+.capitalizeText {
+    text-transform: capitalize;
+}
+
+.footer-section a {
+    color: white;
+}
+
+.curPointer {
+    cursor: pointer;
+}
+
+.curDefault {
+    cursor: default;
+}
+
+.color-yellow{
+    color: rgb(201, 148, 0);
+}
+
+.positiveVal, .color-green, .color-buy, .clr-filled, .colorActive, .ready-text-2 {
+    color: rgb(14, 203, 129) !important;
+}
+
+.negativeVal, .color-red, .color-sell, .clr-cancelled, .color-darkpink, .error {
+    color: rgb(246, 70, 93) !important;
+}
+
+.error {
+    font-size: 15px !important;
+}
+
+img.smallSize {
+    height: 25px;
+    width: 25px;
+}
+
+.bid_bar_imp {
+    background-color: #3491072e !important;
+}
+
+.ready-text-1 {
+    color: #fff
+}
+
+.useUpdImg {
+    width: 150px;
+}
+
+button {
+    color: var(--mainTextColor) !important;
+}
+.color-blue{
+    color: rgb(76 101 229);
+}
+
+.custom-letterAvatar {
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    /* Colors */
+    /* background-color: rgb(99, 220, 176); */
+    background-color: rgb(14, 203, 129);
+
+    /* Rounded border */
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+}
+.custom-letterAvatar-1 {
+    position: relative;
+    /* display: flex; */
+    /* -webkit-box-align: center; */
+    /* align-items: center; */
+    /* -webkit-box-pack: center; */
+    /* justify-content: center; */
+    /* flex-shrink: 0; */
+    width: 40px;
+    height: 40px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    line-height: 2;
+    border-radius: 50%;
+    overflow: hidden;
+    user-select: none;
+    background-color: rgb(14, 203, 129);
+}
+
+.cusImagee {
+    max-width: 260px;
+}
+
+.opacity1 {
+    opacity: 0.4;
+}
+h1.ads_price {
+    font-size: 33.9px!important;
+}
+.ads_bar{
+    margin-left: 123px!important;
+    margin-top: 52px!important;
+}
+
+.tb-img img {
+    height: 35px;
+    width: 35px;
+}

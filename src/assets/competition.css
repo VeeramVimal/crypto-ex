@@ -1,0 +1,638 @@
+/* ============ DESKTOP-VIEW ============  */
+
+@media all and (min-width: 992px) {
+  .trading-competition-slide-section .swiper-button-next:after,
+  .trading-competition-slide-section .swiper-button-prev:after {
+    font-family: swiper-icons;
+    font-size: 16px !important;
+    text-transform: none !important;
+    letter-spacing: 0;
+    font-variant: initial;
+    line-height: 1;
+  }
+
+  .trading-competition-slide-section .swiper-button-next,
+  .trading-competition-slide-section .swiper-button-prev {
+    position: absolute;
+    top: 40px !important;
+    height: 30;
+    border: 1px solid #00dbae;
+    border-radius: 50%;
+    padding: 5px 20px;
+    color: #00dbae !important;
+  }
+  .trading-card-swiper {
+    padding-top: 80px;
+  }
+  .trading-competition-text-5 {
+    font-size: 13px;
+    color: #0084ff;
+    text-decoration: underline;
+  }
+  .trading-competition-text-5:hover {
+    color: #0084ff;
+    text-decoration: underline;
+  }
+  .trading-competition-text-4 {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .active-button-styling {
+    background: #00dbae;
+    color: #ffffff !important;
+    border-radius: 0.4em;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    font-size: 14px;
+    width: fit-content !important;
+    position: relative;
+    top: -4em;
+  }
+
+  .left-days-card-section {
+    background: #00dbae;
+    border-radius: 1em;
+    padding: 0.6em;
+    width: 150px;
+  }
+  .left-days-card-section span {
+    font-size: 15px;
+  }
+  .trading-card-box-design {
+    padding: 20px 0px;
+    border-radius: 6px;
+  }
+  .trading-competition-text-3 {
+    font-size: 1.6rem;
+  }
+  .trading-competition-image-1 {
+    width: 100px !important;
+    height: 100px !important;
+    padding: 1.5em;
+  }
+  .trading-competition-image-2 {
+    width: 100px !important;
+    height: 100px !important;
+    padding: 1em;
+  }
+
+  .trading-competition-image-1-border {
+    width: 250px !important;
+    height: 190px !important;
+    background-color: var(--color-1);
+    justify-content: center !important;
+    text-align: center;
+    align-items: center !important;
+  }
+  .trading-competition-image-1-border-2 {
+    width: 190px !important;
+    height: 140px !important;
+    background-color: var(--color-1);
+    justify-content: center !important;
+    text-align: center;
+    align-items: center !important;
+  }
+
+  .trading-competition-text-2 {
+    font-size: 20px;
+    text-align: center;
+  }
+  .trading-competition-banner-section {
+    /* background-image: url("https://dex-trade.com/img/tournaments-bg.png"); */
+    background-repeat: no-repeat !important;
+    background-position: center;
+    background-size: 100% 100% !important;
+  }
+  .trading-competition-text-1 {
+    font-size: 2.4rem;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .trading-competion-section-1 table th:nth-child(1) {
+    width: 10% !important;
+  }
+  .trading-competion-section-1 table th:nth-child(2) {
+    width: 40% !important;
+  }
+  .trading-competion-section-1 table th:nth-child(3) {
+    width: 16% !important;
+  }
+  .trading-competion-section-1 table th:nth-child(4) {
+    width: 40% !important;
+  }
+
+  .trading-competion-section-1 table {
+    background: transparent !important;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+  .trading-competion-section-1 table tbody tr:last-child {
+    border-bottom: 0px solid #ddd;
+  }
+  .trading-competion-section-1 table tbody tr {
+    border-bottom: 1px solid #ddd;
+    padding: 0.35em;
+    background-color: transparent !important;
+    font-size: 0.75em;
+  }
+
+  .trading-competion-section-1 table th,
+  .trading-competion-section-1 table td {
+    padding: 0.625em;
+  }
+
+  .trading-competion-section-1 table th {
+    font-size: 0.75em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 600px) {
+    .trading-competion-section-1 table {
+      border: 0;
+    }
+
+    .trading-competion-section-1 table caption {
+      font-size: 1.3em;
+    }
+
+    .trading-competion-section-1 table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    .trading-competion-section-1 table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: 0.625em;
+    }
+
+    .trading-competion-section-1 table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: 0.8em;
+      text-align: right;
+    }
+
+    .trading-competion-section-1 table td::before {
+      /*
+      * aria-label has no advantage, it won't be read inside a table
+      content: attr(aria-label);
+      */
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    table td:last-child {
+      border-bottom: 0;
+    }
+  }
+  .trading-competion-section-4 {
+    border-radius: 6px;
+    /* From https://css.glass */
+    background: rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+    backdrop-filter: blur(2.8px);
+    -webkit-backdrop-filter: blur(2.8px);
+    border: 1px solid rgba(255, 255, 255, 0.48);
+    padding: 10px;
+    color: #ffffff !important;
+  }
+  .competion-text-7 {
+    font-size: 2.4rem;
+  }
+  .trading-competion-section-3 {
+    padding: 20px;
+    border-radius: 6px;
+    background-color: #00dbae;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    color: #252547;
+  }
+  .competion-text-6 {
+    font-size: 0.84rem;
+    opacity: 0.7;
+  }
+  .trading-competion-section-color-1 {
+    align-items: center;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5625rem 0.175rem;
+    width: 96%;
+    margin: auto;
+  }
+  .trading-competion-section-color-1 p {
+    font-size: 14px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #62686d;
+  }
+  .competion-text-5 {
+    font-size: 15px;
+    margin-bottom: 0px;
+    color: #246acc;
+    text-decoration: underline;
+  }
+  .competion-text-4 {
+    font-size: 15px;
+    margin-bottom: 0px;
+  }
+  .competion-text-3 {
+    font-size: 13px;
+    color: #62686d;
+    margin-bottom: 0px;
+  }
+  .competion-text-2 {
+    font-size: 16px;
+    margin-bottom: 0px;
+  }
+  .countdown-container {
+    padding: 14px 0px !important;
+    border-radius: 4px;
+  }
+  .big-text {
+    align-items: center;
+    background-color: #00dbae;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    margin: 0 1px;
+    padding: 0.5625rem 30px 0.25rem;
+    position: relative;
+    width: 6.875rem;
+  }
+  .countdown-container span {
+    font-size: 12px;
+  }
+
+  .trading-competion-section-1 {
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  .competion-text-1 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+}
+
+/* =========================================== MOBILE-VIEW =================================== */
+
+@media (max-width: 991px) {
+  .trading-competition-slide-section .swiper-button-next:after,
+  .trading-competition-slide-section .swiper-button-prev:after {
+    font-family: swiper-icons;
+    font-size: 16px !important;
+    text-transform: none !important;
+    letter-spacing: 0;
+    font-variant: initial;
+    line-height: 1;
+  }
+
+  .trading-competition-slide-section .swiper-button-next,
+  .trading-competition-slide-section .swiper-button-prev {
+    position: absolute;
+    top: 40px !important;
+    height: 30;
+    border: 1px solid #00dbae;
+    border-radius: 50%;
+    padding: 5px 20px;
+    color: #00dbae !important;
+  }
+  .trading-card-swiper {
+    padding-top: 80px;
+  }
+  .trading-competition-text-5 {
+    font-size: 13px;
+    color: #0084ff;
+    text-decoration: underline;
+  }
+  .trading-competition-text-5:hover {
+    color: #0084ff;
+    text-decoration: underline;
+  }
+  .trading-competition-text-4 {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .left-days-card-section {
+    background: #00dbae;
+    border-radius: 1em;
+    padding: 0.4em;
+  }
+  .left-days-card-section span {
+    font-size: 13px;
+  }
+
+  .trading-card-box-design {
+    padding: 20px 0px;
+    border-radius: 6px;
+  }
+  .trading-competition-text-3 {
+    font-size: 1.6rem;
+  }
+  .trading-competition-image-1-border {
+    width: 250px !important;
+    height: 190px !important;
+    background-color: var(--color-1);
+    justify-content: center !important;
+    text-align: center;
+    align-items: center !important;
+  }
+  .trading-competition-image-1-border-2 {
+    width: 90px !important;
+    height: 70px !important;
+    background-color: var(--color-1);
+    justify-content: center !important;
+    text-align: center;
+    align-items: center !important;
+  }
+  .trading-competition-image-1 {
+    width: 90px !important;
+    height: 90px !important;
+  }
+  .trading-competition-image-2 {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .active-button-styling {
+    background: #00dbae;
+    color: #ffffff !important;
+    border-radius: 0.4em;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em !important;
+    font-size: 14px;
+    width: fit-content !important;
+    position: relative;
+    top: -3em;
+  }
+  .trading-competition-text-2 {
+    font-size: 14px;
+    text-align: center;
+  }
+  .trading-competition-banner-section {
+    /* background-image: url("./images/trading-competition-bg.png"); */
+    background-repeat: no-repeat !important;
+    background-position: center;
+    background-size: 100% 100% !important;
+  }
+  .trading-competition-text-1 {
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .referYourFriendsTable {
+    overflow: scroll;
+  }
+  .referYourFriendsTable table {
+    width: 1000px;
+  }
+  .trading-competion-section-1 table th:nth-child(1) {
+    width: 10% !important;
+  }
+  .trading-competion-section-1 table th:nth-child(2) {
+    width: 40% !important;
+  }
+  .trading-competion-section-1 table th:nth-child(3) {
+    width: 16% !important;
+  }
+  .trading-competion-section-1 table th:nth-child(4) {
+    width: 40% !important;
+  }
+
+  .trading-competion-section-1 table {
+    background: transparent !important;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+  .trading-competion-section-1 table tbody tr:last-child {
+    border-bottom: 0px solid #ddd;
+  }
+  .trading-competion-section-1 table tbody tr {
+    border-bottom: 1px solid #ddd;
+    padding: 0.35em;
+    background-color: transparent !important;
+    font-size: 0.75em;
+  }
+
+  .trading-competion-section-1 table th,
+  .trading-competion-section-1 table td {
+    padding: 0.625em;
+  }
+
+  .trading-competion-section-1 table th {
+    font-size: 0.75em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media screen and (max-width: 600px) {
+    .trading-competion-section-1 table {
+      border: 0;
+    }
+
+    .trading-competion-section-1 table caption {
+      font-size: 1.3em;
+    }
+
+    .trading-competion-section-1 table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    .trading-competion-section-1 table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: 0.625em;
+    }
+
+    .trading-competion-section-1 table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: 0.8em;
+      text-align: right;
+    }
+
+    .trading-competion-section-1 table td::before {
+      /*
+      * aria-label has no advantage, it won't be read inside a table
+      content: attr(aria-label);
+      */
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* table td:last-child {
+      border-bottom: 0;
+    } */
+  }
+  .trading-competion-section-4 {
+    border-radius: 6px;
+    background-color: #ffffff;
+    padding: 20px;
+  }
+  .competion-text-7 {
+    font-size: 1rem;
+  }
+  .trading-competion-section-3 {
+    padding: 20px;
+    border-radius: 6px;
+    background-color: #00dbae;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    color: #252547;
+  }
+  .competion-text-6 {
+    font-size: 0.74rem;
+    opacity: 0.7;
+  }
+  .trading-competion-section-4 h3 {
+    font-size: 14px;
+  }
+  .trading-competion-section-color-1 {
+    align-items: center;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5625rem 0.175rem;
+    width: 96%;
+    margin: auto;
+  }
+  .trading-competion-section-color-1 p {
+    font-size: 14px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #62686d;
+  }
+  .competion-text-5 {
+    font-size: 13px;
+    margin-bottom: 0px;
+    color: #246acc;
+    text-decoration: underline;
+  }
+  .competion-text-4 {
+    font-size: 13px;
+    margin-bottom: 0px;
+  }
+  .competion-text-3 {
+    font-size: 12px;
+    color: #62686d;
+    margin-bottom: 0px;
+  }
+  .competion-text-2 {
+    font-size: 15px;
+    margin-bottom: 0px;
+  }
+  .countdown-container {
+    padding: 14px 0px !important;
+    border-radius: 4px;
+  }
+  .big-text {
+    align-items: center;
+    background-color: #00dbae;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    margin: 0 1px;
+    padding: 0.5625rem 0px 0.25rem;
+    position: relative;
+    width: 1.875rem;
+    font-size: 0.8rem;
+  }
+  .countdown-container span {
+    font-size: 10px;
+  }
+
+  .trading-competion-section-1 {
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  .competion-text-1 {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+}
+.trading-competion-section-1-box {
+  padding: 20px;
+  border-radius: 6px;
+  background-color: var(--background-color-3);
+}
+
+.sharewithfriends-css {
+  width: 50%;
+  height: 50%;
+}
+
+#tradingcompetitiontablecss thead th:first-child {
+  background-color: var(--border-color-1) !important;
+  border-top-left-radius: 0.5em !important;
+  border-bottom-left-radius: 0.5em !important;
+  border: none !important;
+  padding: 1em !important;
+}
+
+#tradingcompetitiontablecss thead th:last-child {
+  background-color: var(--border-color-1) !important;
+  border-top-right-radius: 0.5em !important;
+  border-bottom-right-radius: 0.5em !important;
+  border: none !important;
+  padding: 1em !important;
+}
+
+#tradingcompetitiontablecss tbody {
+  border: none !important;
+}
+
+tr:nth-child(even) {
+  background-color: var(--background-color-3);
+}
+
+tr:nth-child(odd) {
+  background-color: var(--background-color-2);
+}
+
+#tradingcompetitiontablecss tbody tr td {
+  padding: 1em !important;
+  border: none !important;
+}
+
+.sidebar {
+  max-width: 350px;
+}
+
+.sticky-panel {
+  position: fixed;
+  top: 200px;
+  bottom: 50%;
+}
