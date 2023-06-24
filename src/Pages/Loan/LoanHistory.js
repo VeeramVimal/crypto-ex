@@ -80,10 +80,7 @@ const LoanHistory = (props) => {
     const [repay_data_err, setRepay_data_err] = useState({
         repay_amount_err: ""
     });
-    const [filterQuery, setFilterQuery] = useState({
-        startDate: "",
-        endDate: ""
-    });
+
     //** get the loan history API integrate func*/
     const getLoanHistory = async () => {
         var userId = "";
@@ -119,8 +116,8 @@ const LoanHistory = (props) => {
         }
     };
     useEffect(() => {
-
-        getLoanHistory(filterQuery);
+        // getLoanHistory(filterQuery);
+        getLoanHistory();
     }, [myProfile]);
 
     //** search filter functionality */
@@ -190,46 +187,59 @@ const LoanHistory = (props) => {
         if (event.target.name == "repay_amount" || repay_data.repay_amount) {
             setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "" }));
         }
-        let remainAmt = parseFloat(Number((repayData.remainingPrinciple + hourInterest) - (event.target.value)).toFixed(8))
+        // let remainAmt = parseFloat(Number((repayData.remainingPrinciple + hourInterest) - (event.target.value)).toFixed(8))
+        let remAmount = (Number(repayData.remainingPrinciple) - (event.target.value));
+        // let remainAmt = parseFloat(Number((repayData.remainingPrinciple) - (event.target.value)).toFixed(8))
+        let remainAmt = parseFloat((remAmount < 0 ? 0 : remAmount).toFixed(8));
         setRepay_data((prevProp) => ({
             ...prevProp,
             ["repay_amount"]: event.target.value,
             ['remainingAmt']: remainAmt,
         }));
     };
+    const blockInvalidChar = (event) => {
+        return ['e', 'E', '+', '-'].includes(event.key) && event.preventDefault();
+    };
+
 
     //** validations func */
     const validationCheckErr = async () => {
         let isValid = true;
         let USDTwalletAmt = repayData?.userWallet.amount;
-        let remindAmt = repayData.remainingPrinciple + hourInterest;
-        let min = ((repayData.remainingPrinciple) * (10 / 100));
         let checkAmt = repayData.remainingPrinciple + hourInterest;
+        let remindAmt = parseFloat(Number(checkAmt).toFixed(8)) || checkAmt;
+        let min = ((repayData.remainingPrinciple) * (10 / 100));
         // parseFloat(Number(repayData.remainingPrinciple + hourInterest).toFixed(8))
-        if (repay_data.repay_amount == "") {
-            setButtonHide(true);
-            setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "Repaid your loanable amount" }));
-            isValid = false;
-        }
-        else if (USDTwalletAmt < repay_data.repay_amount) {
-            setButtonHide(true);
-            setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: `Your amount is ${USDTwalletAmt}` }));
-            isValid = false;
-        }
-        else if (remindAmt < repay_data.repay_amount) {
-            setButtonHide(true);
-            setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "Enter your loanable amount" }));
-            isValid = false;
-        }
-        else if (min > repay_data.repay_amount) {
-            setButtonHide(true);
-            setRepay_data_err((prevErr) => ({
-                ...prevErr,
-                repay_amount_err: `Enter your minimum ${parseFloat(Number(min).toFixed(8))} loanable amount`
-            }));
-            isValid = false;
+        if (repay_data.repay_amount) {
+            if (repay_data.repay_amount == "") {
+                setButtonHide(true);
+                setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "Repaid your loanable amount" }));
+                isValid = false;
+            }
+            else if (USDTwalletAmt < repay_data.repay_amount) {
+                setButtonHide(true);
+                setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: `Your amount is ${USDTwalletAmt}` }));
+                isValid = false;
+            }
+            else if (remindAmt < repay_data.repay_amount) {
+                setButtonHide(true);
+                setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "Enter your loanable amount" }));
+                isValid = false;
+            }
+            else if (min > repay_data.repay_amount) {
+                setButtonHide(true);
+                setRepay_data_err((prevErr) => ({
+                    ...prevErr,
+                    repay_amount_err: `Enter your minimum ${parseFloat(Number(min).toFixed(8))} loanable amount`
+                }));
+                isValid = false;
+            } else {
+                setButtonHide(false);
+                setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "" }));
+            };
         }
         else if (repay_data.remainingAmt) {
+            setButtonHide(false);
             // if (repay_data.remainingAmt !== 0) {
             //     setButtonHide(true);
             //     setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "Enter your loanable amount" }));
@@ -238,10 +248,14 @@ const LoanHistory = (props) => {
             //     setButtonHide(false);
             //     setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "" }));
             // }
-            if (repay_data.remainingAmt == 0) {
-                setButtonHide(false);
-                setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "" }));
-            } 
+            // if (repay_data.remainingAmt == 0) {
+            //     setButtonHide(false);
+            //     setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "" }));
+            // } 
+        }
+        else if (repay_data.selectPercentAmt) {
+            setButtonHide(false);
+            setRepay_data_err((prevErr) => ({ ...prevErr, repay_amount_err: "" }));
         }
         else if (remindAmt == repay_data.repay_amount) {
             setButtonHide(false);
@@ -276,19 +290,21 @@ const LoanHistory = (props) => {
                 console.log(error);
             }
         };
-        // var expireDate = moment(loanData.expirationDate).format("YYYY-MM-DD", true);
-        // var todayDate = moment(new Date("2023-05-05")).format("YYYY-MM-DD", true);
+
         var expireDate = new Date(loanData.expirationDate);
         var borrowDate = new Date(loanData.borrowDate);
         var RepaidDate = new Date(loanData.RepaidDate);
         var todayDate = new Date();
+        var estimateOneHr = "", interst = ""
         // ${parseFloat(((row.borrowCoinDetails.sevenDaysFixedRate.annuallyRate) % 100) * 100).toFixed(8)}
         const days = parseInt((expireDate - todayDate) / (1000 * 60 * 60 * 24));
         var hours = parseInt(Math.abs(RepaidDate - todayDate) / 3600000);
         const minutes = parseInt(Math.abs(expireDate.getTime() - todayDate.getTime()) / (1000 * 60) % 60);
         // const seconds = parseInt(Math.abs(expireDate.getTime() - todayDate.getTime()) / (1000) % 60);
-        var calc = (hours + 1) * parseFloat(loanData.hourlyInterestRate);
-        setHourInterest(calc);
+        interst = ((loanData.yearlyInterestRate) / 100) //** convert interest rate to percentage for ex: (3.2/100 = 0.032) */
+        estimateOneHr = ((loanData.remainingPrinciple) * interst) / (365 * 24); //** convert the estimate one hour interest in repaid amount*/
+        // var calc = (hours + 1) * parseFloat(loanData.hourlyInterestRate); //** convert the estimate one hour interest in repaid amount*/
+        setHourInterest(estimateOneHr);
         if (days == 0) {
             // setPercentBtnHide(!percentBtnHide);
             setPercentBtnHide(true);
@@ -306,8 +322,9 @@ const LoanHistory = (props) => {
                 return (
                     repayData.remainingPrinciple ?
                         setRepay_data({
-                            repay_amount: ((repayData.remainingPrinciple + hourInterest) * (25 / 100)),
-                            remainingAmt: ((repayData.remainingPrinciple + hourInterest) - (repayData.remainingPrinciple * (25 / 100))),
+                            repay_amount: parseFloat(Number(((repayData.remainingPrinciple) * (25 / 100))).toFixed(8)),
+                            // repay_amount: repayAmt(25),
+                            remainingAmt: ((repayData.remainingPrinciple) - (repayData.remainingPrinciple * (25 / 100))),
                             selectPercentAmt: 25,
                             due_status: ""
                         }) : 0
@@ -316,8 +333,8 @@ const LoanHistory = (props) => {
                 return (
                     repayData.remainingPrinciple ?
                         setRepay_data({
-                            repay_amount: ((repayData.remainingPrinciple + hourInterest) * (50 / 100)),
-                            remainingAmt: ((repayData.remainingPrinciple + hourInterest) - ((repayData.remainingPrinciple) * (50 / 100))),
+                            repay_amount: parseFloat(Number(((repayData.remainingPrinciple) * (50 / 100))).toFixed(8)),
+                            remainingAmt: ((repayData.remainingPrinciple) - ((repayData.remainingPrinciple) * (50 / 100))),
                             selectPercentAmt: 50,
                             due_status: ""
                         }) : 0
@@ -326,8 +343,8 @@ const LoanHistory = (props) => {
                 return (
                     repayData.remainingPrinciple ?
                         setRepay_data({
-                            repay_amount: ((repayData.remainingPrinciple + hourInterest) * (75 / 100)),
-                            remainingAmt: ((repayData.remainingPrinciple + hourInterest) - ((repayData.remainingPrinciple) * (75 / 100))),
+                            repay_amount: parseFloat(Number(((repayData.remainingPrinciple) * (75 / 100))).toFixed(8)),
+                            remainingAmt: ((repayData.remainingPrinciple) - ((repayData.remainingPrinciple) * (75 / 100))),
                             selectPercentAmt: 75,
                             due_status: ""
                         }) : 0
@@ -336,7 +353,7 @@ const LoanHistory = (props) => {
                 return (
                     repayData.remainingPrinciple ?
                         setRepay_data({
-                            repay_amount: repayData.remainingPrinciple + hourInterest,
+                            repay_amount: parseFloat(Number(repayData.remainingPrinciple).toFixed(8)),
                             remainingAmt: 0,
                             selectPercentAmt: 100,
                             due_status: "done"
@@ -345,11 +362,12 @@ const LoanHistory = (props) => {
             default:
                 break;
         }
+
     };
     const handleMaxClick = (event) => {
         if (repayData.remainingPrinciple) {
             setRepay_data({
-                repay_amount: repayData.remainingPrinciple + hourInterest,
+                repay_amount: parseFloat(Number(repayData.remainingPrinciple).toFixed(8)),
                 remainingAmt: 0,
                 selectPercentAmt: 100,
                 due_status: "done"
@@ -359,8 +377,11 @@ const LoanHistory = (props) => {
 
     //** handle confirm repay functionality */
     const handleConfirmRepay = async (event) => {
+        var hrIntrest = parseFloat(Number(hourInterest).toFixed(8))
         event.preventDefault();
-        let calcPercentage = (repay_data.repay_amount / repayData.remainingPrinciple) * 100;
+        if (buttonHide) return true;
+        setButtonHide(true);
+        let calcPercentage = (repay_data.repay_amount / (repayData.remainingPrinciple)) * 100;
         const isValidation = await validationCheckErr();
         if (isValidation) {
             try {
@@ -370,13 +391,13 @@ const LoanHistory = (props) => {
                     repaymentAmount: repay_data.repay_amount,
                     due_detail: [{
                         due_percentage: parseInt(calcPercentage),
-                        due_paid_amount: repay_data.repay_amount - hourInterest,
+                        due_paid_amount: Number(repay_data.repay_amount) + hrIntrest,
                         due_date: new Date()
                     }],
                     expirationDate: repayData.expirationDate,
                     collateralAmount: repayData.collateralAmount,
                     due_status: (parseInt(calcPercentage) == 100) ? 1 : 0
-                }
+                };
                 const params = {
                     method: "POST",
                     url: `${Config.V1_API_URL}crypto-loan/repayment`,
@@ -386,15 +407,25 @@ const LoanHistory = (props) => {
                 if (response.status == 'error') toast({ type: response.status, message: response.message })
                 else {
                     toast({ type: "success", message: "Your crypto loan repayment is successfully" });
-                    response.code == 200 && setRepayShow(!repayShow); setRepay_data({ repay_amount: "" });
-                    window.location.reload();
+                    response.code == 200 && setRepayShow(!repayShow); setRepay_data({ repay_amount: "" }); await getLoanHistory();
                 }
             } catch (error) {
                 console.log(error);
                 toast({ type: "error", message: "Something went wrong" });
             }
+            setButtonHide(true);
         }
     };
+    const debounce = (func, delay) => {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func(...args);
+            }, delay);
+        };
+    };
+    const handleDebouncedSubmit = debounce(handleConfirmRepay, 1000)
     //** search the loan history details */
     const handleSearchChange = (e) => {
         setSearchOrder(e.target.value);
@@ -626,7 +657,13 @@ const LoanHistory = (props) => {
                                                                                         Hourly Interest:
                                                                                     </p>
                                                                                     <p className="col table-data-5  color-green fw-bold">
-                                                                                        {`${parseFloat((loan.hourlyInterestRate).toFixed(8))}`}                                                                                    </p>
+                                                                                        {/* {`${parseFloat((loan.hourlyInterestRate).toFixed(8))}`} */}
+                                                                                        {
+                                                                                            (loan.remainingPrinciple == 0) ?
+                                                                                                `${parseFloat(0).toFixed(8)}` :
+                                                                                                `${parseFloat((((loan.remainingPrinciple) * ((loan.yearlyInterestRate) / 100)) / (365 * 24)).toFixed(8))}`
+                                                                                        }
+                                                                                    </p>
                                                                                 </div>
                                                                             </p>
                                                                         </div>
@@ -892,21 +929,23 @@ const LoanHistory = (props) => {
                                                 data-effect="solid"
                                                 // data-place="right"
                                                 data-multiline={true}
-                                                data-tip={`If you want to repay the loan amount transfer the loan wallet to your wallet then after repaid`}
+                                                data-tip={`Transfer from loan wallet to spot wallet for loan repayment`}
                                                 data-for="repay"
                                             />
                                         </span>
                                     </p>
-                                    <div className='d-flex justify-content-between bg-grey p-3'>
+                                    <div className='crypto-loan-input-field'>
                                         <input
                                             type="number"
                                             min="0"
+                                            // pattern="[0-9]*\.?[0-9]*"
                                             className="form-control form-control-bg-css p-0 border-0 outline: none"
                                             placeholder="Enter Amount"
                                             aria-label="Recipient's username"
                                             aria-describedby="basic-addon2"
                                             name='repay_amount'
                                             value={repay_data.repay_amount}
+                                            onKeyDown={blockInvalidChar}
                                             onChange={handleChangeRepay}
                                         />
                                         {/* className="max-btn" */}
@@ -1021,10 +1060,12 @@ const LoanHistory = (props) => {
                                             Principal Repaid
                                         </span>
                                         <span className=''>
-                                            {repayData.remainingPrinciple ?
+                                            {/* {repayData.remainingPrinciple ?
                                                 `${parseFloat(Number(repayData.remainingPrinciple).toFixed(8))} ${repayData.borrowedCoin}` :
-                                                `0.00000000 ${repayData.borrowedCoin}`}
-                                            {/* {repay_data.repay_amount ? `${repay_data.repay_amount} ${repayData.borrowedCoin}` : `0.00000000 ${repayData.borrowedCoin}`} */}
+                                                `0.00000000 ${repayData.borrowedCoin}`} */}
+                                            {repay_data.repay_amount ? 
+                                            `${parseFloat(Number(repay_data.repay_amount)).toFixed(8)} ${repayData.borrowedCoin}` : 
+                                            `0.00000000 ${repayData.borrowedCoin}`}
 
                                         </span>
                                     </div>
@@ -1034,13 +1075,13 @@ const LoanHistory = (props) => {
                                             Total Repayment
                                         </span>
                                         <span className=''>
-                                            {repayData.remainingPrinciple && hourInterest ?
+                                            {/* {repayData.remainingPrinciple && hourInterest ?
                                                 `${parseFloat(Number(repayData.remainingPrinciple + hourInterest).toFixed(8))}
                                                  ${repayData.borrowedCoin}` :
-                                                `0.00000000 ${repayData.borrowedCoin}`}
-                                            {/* {repay_data.repay_amount && hourInterest ?
-                                                `${(repay_data.repay_amount + hourInterest)} ${repayData.borrowedCoin}` :
                                                 `0.00000000 ${repayData.borrowedCoin}`} */}
+                                            {repay_data.repay_amount && hourInterest ?
+                                                `${parseFloat((Number(repay_data.repay_amount) + hourInterest)).toFixed(8)} ${repayData.borrowedCoin}` :
+                                                `0.00000000 ${repayData.borrowedCoin}`}
                                         </span>
                                     </div>
                                     <div className='d-flex justify-content-between flex-column flex-lg-row align-items-center mb-1 mt-2'>
@@ -1048,7 +1089,7 @@ const LoanHistory = (props) => {
                                             Principal Remaining
                                         </span>
                                         <span className=''>
-                                            {console.log("repay_data.remainingAmt==========", repay_data.remainingAmt)}
+
                                             {(repay_data.remainingAmt) ?
                                                 `${parseFloat(Number(repay_data.remainingAmt).toFixed(8))} ${repayData.borrowedCoin}` :
                                                 `0.00000000 ${repayData.borrowedCoin}`}
@@ -1083,7 +1124,7 @@ const LoanHistory = (props) => {
                                 <div className="col text-center">
                                     <button
                                         className='btn  banner-top-button-login'
-                                        onClick={handleConfirmRepay}
+                                        onClick={handleDebouncedSubmit}
                                         disabled={buttonHide}
                                     >
                                         Confirm repayment

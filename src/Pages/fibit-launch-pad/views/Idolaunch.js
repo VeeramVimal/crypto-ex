@@ -22,7 +22,8 @@ import Config from '../../../core/config/index';
 
 function IdoLaunch() {
     const navigate = useNavigate();
-    const currentDate = moment(new Date)
+    const currentDate = moment(new Date);
+    const maxProjectInfo = 80; //** get the project information that is shorter than desired length */
     const [userData, setUserData] = useState([]);
     const [pastData, setPastData] = useState([]);
     const [presentData, setPersentData] = useState([]);
@@ -44,10 +45,7 @@ function IdoLaunch() {
     const handleChangeSearch = (event) => {
 
     };
-    //** get the project information that is shorter than desired length */
-    // const getProjectInfo = () => {
-    //     if()
-    // };
+
     const handleClick = (userId, status) => {
         if (userId) axios({
             method: "GET",
@@ -56,7 +54,7 @@ function IdoLaunch() {
             const { data } = res;
             if (data) navigate("/active-ido", { state: { userDetails: data.data, status } })
         }).catch((err) => console.log(err))
-    }
+    };
     return (
         <div className="Ido-App-lanchpad">
             <Navbar />
@@ -134,7 +132,15 @@ function IdoLaunch() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="d-flex flex-row">
-                                                                    <p className="ido-text-6 mb-1">{past.projectInfo}</p>
+                                                                    <p className="ido-text-6 mb-1">
+                                                                        {/* {past.projectInfo} */}
+                                                                        {
+                                                                            !showMore &&
+                                                                                past.projectInfo?.length > maxProjectInfo ?
+                                                                                past.projectInfo.slice(0, maxProjectInfo) + '...' :
+                                                                                past.projectInfo
+                                                                        }
+                                                                    </p>
                                                                 </div>
                                                                 <div className="d-flex flex-row align-items-center mt-2">
                                                                     <div className="active-ido-section-2">
@@ -202,7 +208,15 @@ function IdoLaunch() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="d-flex flex-row">
-                                                                    <p className="ido-text-6 mb-1">{present.projectInfo}</p>
+                                                                    <p className="ido-text-6 mb-1">
+                                                                        {/* {present.projectInfo} */}
+                                                                        {
+                                                                            !showMore &&
+                                                                                present.projectInfo?.length > maxProjectInfo ?
+                                                                                present.projectInfo.slice(0, maxProjectInfo) + '...' :
+                                                                                present.projectInfo
+                                                                        }
+                                                                    </p>
                                                                 </div>
                                                                 <div className="d-flex flex-row align-items-center mt-2">
                                                                     <div className="active-ido-section-2">
@@ -266,7 +280,15 @@ function IdoLaunch() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="d-flex flex-row">
-                                                                    <p className="ido-text-6 mb-1">{future.projectInfo}</p>
+                                                                    <p className="ido-text-6 mb-1">
+                                                                        {/* {future.projectInfo} */}
+                                                                        {
+                                                                            !showMore &&
+                                                                                future.projectInfo?.length > maxProjectInfo ?
+                                                                                future.projectInfo.slice(0, maxProjectInfo) + '...' :
+                                                                                future.projectInfo
+                                                                        }
+                                                                    </p>
                                                                 </div>
                                                                 <div className="d-flex flex-row align-items-center mt-2">
                                                                     <div className="active-ido-section-2">
@@ -290,7 +312,7 @@ function IdoLaunch() {
                                                                         <p className="ido-text-6 mb-1">Levels</p>
                                                                     </div>
                                                                 </div>
-                                                                <div className="progress mt-4">
+                                                                {/* <div className="progress mt-4">
                                                                     <div className="progress-bar" role="progressbar" aria-label="Basic example" style={{ width: "25%" }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                                 <div className="d-flex flex-row gap-3 mt-2 mb-3">
@@ -300,7 +322,7 @@ function IdoLaunch() {
                                                                     <div className="ms-auto text-end">
                                                                         <p className="ido-text-7 mb-1">0 / 100,000 USDT</p>
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
                                                             </div>
                                                         </div>
                                                     </div>

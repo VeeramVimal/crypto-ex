@@ -21,134 +21,107 @@ import { useContextData } from '../../core/context';
 import { toast } from "../../core/lib/toastAlert";
 import { useLocation } from "react-router-dom";
 
-
 export default function Copytradingportfolio(props) {
     const { myProfile } = useContextData();
-    let query = useQuery();    
+    let query = useQuery();
     const [markets, setmarkets] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [fixedamt, setFixedamt] = useState();    
+    const [fixedamt, setFixedamt] = useState();
     const [userBalance, setUserBalance] = useState();
 
     async function GetMarkets() {
-        try{        
+        try {
             const params = {
-            url: `${Config.V1_API_URL}trade/getMarkets`,
-            method: 'GET'
+                url: `${Config.V1_API_URL}trade/getMarkets`,
+                method: 'GET'
             }
             const response = (await makeRequest(params));
             if (response.status) {
-                const usersListResponse = response.data;            
+                const usersListResponse = response.data;
                 const result = usersListResponse.map(item => {
-                return {
-                    label: item.pair,
-                    value: item._id
-                }
+                    return {
+                        label: item.pair,
+                        value: item._id
+                    }
                 })
-            setmarkets(result)
+                setmarkets(result)
             }
+        } catch (err) {
+            console.log("GetMarkets error", err);
         }
-        catch(e)
-        {
-            
-        }
-      }      
+    };
 
-      async function getUserBalance(){
-        try{
+    async function getUserBalance() {
+        try {
             const params = {
-            url: `${Config.V1_API_URL}copyTrade/getUserBalance`,
-            method: "POST",
-            data: {userId:myProfile._id,currency_id:'61330e0fedf7c88c84357055'},
+                url: `${Config.V1_API_URL}copyTrade/getUserBalance`,
+                method: "POST",
+                data: { userId: myProfile._id, currency_id: '61330e0fedf7c88c84357055' },
             };
             const response = await makeRequest(params);
-            if (response) {          
-            setUserBalance(response.data);
-        
+            if (response) {
+                setUserBalance(response.data);
+            } else {
+                console.log('bbbbbbbbb')
             }
-            else
-            {
-            console.log('bbbbbbbbb')
-            }
-
+        } catch (err) {
+            console.log("user balance error", err);
         }
-        catch(e)
-        {
+    };
 
-        }
-    
-      }
-
-      const handleSelect = (selectedList, selectedItem) => {
+    const handleSelect = (selectedList, selectedItem) => {
         setSelectedUsers(selectedList);
-      }  
+    };
 
-      function useQuery() {
+    function useQuery() {
         const { search } = useLocation();
-      
         return React.useMemo(() => new URLSearchParams(search), [search]);
-      }
+    };
 
-
-      async function sendRequest(){
-        try
-        {
-            
-            if(!fixedamt || selectedUsers.length <= 0)
-            {
+    async function sendRequest() {
+        try {
+            if (!fixedamt || selectedUsers.length <= 0) {
                 toast({ type: "error", message: 'Please fill all details' });
-            }
-            else if(fixedamt > userBalance.amount)
-            {
+            } else if (fixedamt > userBalance.amount) {
                 toast({ type: "error", message: 'Insufficient balance' });
-            }
-            else if(userBalance.amount < 0.00000001)
-            {
+            } else if (userBalance.amount < 0.00000001) {
                 toast({ type: "error", message: 'Insufficient balance' });
-            }
-            else
-            {
+            } else {
                 const trader_id = atob(query.get("id"));
                 let selected_user_uids;
                 let selected_user_uids_arr = selectedUsers.map(selected_user => selected_user.value);
                 if (selected_user_uids_arr.length) {
-                selected_user_uids = selected_user_uids_arr.join(",")
-                }                
+                    selected_user_uids = selected_user_uids_arr.join(",")
+                }
                 const params = {
                     url: `${Config.V1_API_URL}copyTrade/createCopyTraderRequest`,
                     method: "POST",
-                    data: { 
+                    data: {
                         //cost_per_order:cost_per_order,
-                        copy_amt:fixedamt,
+                        copy_amt: fixedamt,
                         //take_profit:take_profit,
                         //stop_loss:stop_loss,
-                        trader_id:trader_id,
-                        copy_user_id:myProfile._id,
-                        selected_pairs:selected_user_uids
+                        trader_id: trader_id,
+                        copy_user_id: myProfile._id,
+                        selected_pairs: selected_user_uids
                     },
                 };
                 const response = await makeRequest(params);
                 if (response.status) {
                     toast({ type: "success", message: 'Request send successfully' });
-                }
-                else
-                {
+                } else {
                     toast({ type: "error", message: 'Request send faild' });
                 }
-
             }
-
+        } catch (err) {
+            console.log('copy-trade error', err)
         }
-          catch(e)
-          {
-            console.log('errorrrrrrr',e)
-          }
-      }          
-      
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         GetMarkets()
         getUserBalance()
-    },[myProfile]);
+    }, [myProfile]);
     return (
         <div>
             <NavbarOne
@@ -200,8 +173,8 @@ export default function Copytradingportfolio(props) {
                                         <div className="col">
                                             <p className="mb-0 fc-g f-20">Select pair</p>
                                             <div class="dropdown">
-                                                    <Select id="users_pairs" value={selectedUsers} isMulti={true} onChange={handleSelect} options={markets} className="basic-multi-select" ></Select>
-                                                    {/* <Select
+                                                <Select id="users_pairs" value={selectedUsers} isMulti={true} onChange={handleSelect} options={markets} className="basic-multi-select" ></Select>
+                                                {/* <Select
                                                         defaultValue={[markets[2], markets[3]]}
                                                         value={selectedUsers}
                                                         isMulti
@@ -210,14 +183,14 @@ export default function Copytradingportfolio(props) {
                                                         className="basic-multi-select"
                                                         classNamePrefix="select"
                                                     /> */}
-                                                
+
                                             </div>
                                         </div>
                                         <div className="col">
                                             <p className="mb-0 fc-g f-20">Fixed amount</p>
                                             <div class="dropdown">
                                                 {/* <p className="text-grey dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"> */}
-                                                <input id="swal_copy_amt" type="number" step="0.5" class="swal2-input" onChange={(e)=>setFixedamt(e.target.value)}/>
+                                                <input id="swal_copy_amt" type="number" step="0.5" class="swal2-input" onChange={(e) => setFixedamt(e.target.value)} />
                                                 {/* </p> */}
                                                 {/* <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                     <li><a class="dropdown-item" href="#">7D</a></li>
@@ -275,14 +248,14 @@ export default function Copytradingportfolio(props) {
                                             <p className="text-grey">Portfolio Margin Balance (USDT)</p>
                                         </div> */}
                                     </div>
-                                    
+
                                     <div className="d-flex mt-2 text-start justify-content-between align-items-center">
                                         <div className="">
                                             {/* <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">AUM:</span>197,635.12 USD</p> */}
-                                            <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">USDT Balance:</span>{userBalance ? userBalance.amount:'0.00'}</p>
+                                            <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">USDT Balance:</span>{userBalance ? userBalance.amount : '0.00'}</p>
                                         </div>
                                         <div className="mx-1">
-                                            <button className='btn  banner-top-button-copy' onClick={()=>sendRequest()}>
+                                            <button className='btn  banner-top-button-copy' onClick={() => sendRequest()}>
                                                 Copy
                                             </button>
                                         </div>

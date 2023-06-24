@@ -25,60 +25,40 @@ import { getCookie, deleteCookie } from '../../core/helper/cookie';
 import { FaUserAlt } from 'react-icons/fa';
 import { HiClipboardDocumentList } from 'react-icons/hi2';
 import { BsBellFill } from 'react-icons/bs';
-
-
 import jwt_decode from 'jwt-decode';
-import Bluewhale from "../../assets/images/mode-images/Blue-whale.svg";
-import GraniteGray from "../../assets/images/mode-images/Granite-Gray.svg";
 import lightnew from "../../assets/images/mode-images/light-new.svg";
 import Darknew from "../../assets/images/mode-images/Dark-new.svg";
-import Blackjungle from "../../assets/images/mode-images/Black-jungle.svg";
-import MaastrichtBlue from "../../assets/images/mode-images/Maastricht-Blue.svg";
 import Config from "../../core/config/";
 import { makeRequest } from "../../core/services/v1/request";
 import socketIOClient from "socket.io-client";
 import { Badge } from "react-bootstrap";
 import moment from "moment/moment";
 
+
 export default function NavbarOne(props) {
     const navigate = useNavigate();
     const { siteSettings, myProfile, setUserProfile } = useContextData();
     const [socketConnection, setSocketConnection] = useState(null);
+    const [currNotification, setCurrNotification] = useState([]);
     const [userLogin, setUserLogin] = useState(false);
     const [isLoading, setisLoading] = useState(false);
     const [unread, setUnread] = useState(0);
     const [unreadData, setUnreadData] = useState([]);
     const [ids, setIds] = useState([]);
     const [userId, setUserId] = useState(null);
+
+
     useEffect(() => {
         if (myProfile && myProfile._id) {
             setUserId(myProfile._id);
+            if (Config.NOTIFICATION_STATUS == "Enable") {
+                fetchNotifications();
+            } else {
+                loginChk();
+            }
         }
     }, [myProfile]);
 
-    useEffect(() => {
-        if (socketConnection != null) {
-            if (typeof userId == "string" && userId) {
-                loadSocket();
-            }
-        }
-    }, [socketConnection]);
-    const handleToggle = () => {
-    }
-    const loadSocket = async () => {
-        var storeIds = [];
-        socketConnection.on('notificationSent', function (data) {
-            const filterUnread = data.msg.filter(noti => noti.status == 0 && noti.userId == userId || noti.status == 0);
-            setUnread(filterUnread.length);
-            setUnreadData(filterUnread);
-            filterUnread.map((send) => {
-                if (!send.notificationType) {
-                    storeIds.push(send._id);
-                }
-            })
-            setIds(storeIds);
-        });
-    };
     const modesetter = async (event) => {
         const mode = event.target.value;
         props.setTheme(mode);
@@ -91,86 +71,112 @@ export default function NavbarOne(props) {
         if (decodedToken.typ === 'JWT') {
             setUserLogin(true);
         }
-    }
-    const getNotification = async () => {
-        const params = {
-            url: `${Config.V1_API_URL}notification/notification`,
-            method: "POST",
-            data: {
-                userId: myProfile?._id
+    };
+    const fetchNotifications = async () => {
+        try {
+            loginChk();
+            let socket = socketIOClient(Config.SOCKET_URL, { transports: ['websocket'] });
+            var socketConnection = socket;
+            var storeIds = [];
+            const params = {
+                url: `${Config.V1_API_URL}notification/getAllNotification`,
+                method: 'POST',
+                body: { userId: userId }
             }
+            const { status, data, error } = await makeRequest(params);
+            if (status == true) {
+
+                const example = data;
+                setCurrNotification(example);
+                let filterUnread = 0;
+                if (data.length > 0) {
+                    filterUnread = data.filter((noti) => (
+                        noti.status == 0 && noti.userId == userId || noti.status == 0));
+                    if (filterUnread?.length) {
+                        setUnread(filterUnread.length);
+                        setUnreadData(filterUnread);
+                    }
+
+                    filterUnread.map((send) => {
+                        if (send.notificationType) {
+                            storeIds.push(send._id);
+                        }
+                    })
+                    setIds(storeIds);
+                } else {
+                    filterUnread = 0;
+                    setUnread(filterUnread);
+                }
+            } else {
+                console.log("Some error occur");
+            }
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
         }
-        setisLoading(true);
-        const response = (await makeRequest(params));
-        setisLoading(false);
-    }
-    const getPushNotification = async () => {
-        const params = {
-            url: `${Config.V1_API_URL}admin/pushNotifications`,
-            method: "GET",
-        }
-        setisLoading(true);
-        const response = (await makeRequest(params));
-        setisLoading(false);
-        // if(content == "next") {
-        //     window.location.href = "/notification"
-        // }
     };
 
-    // useEffect(() => {
-    //     window.scrollTo(0, 0);
-    //     loginChk();
-    // }, []);
-
     useEffect(() => {
-        window.scrollTo(0, 0);
-        loginChk();
-        let socket = socketIOClient(Config.SOCKET_URL, { transports: ['websocket'] });
-        let socketUnsubscribe;
-        if (socket) {
-            socket.on('connect', function () {
-                setSocketConnection(socket);
-                socketUnsubscribe = socket
-                console.log("socket connected")
+        if (Config.NOTIFICATION_STATUS == "Enable") {
+            window.scrollTo(0, 0);
+            loginChk();
+            let socket = socketIOClient(Config.SOCKET_URL, {
+                transports: ["websocket"],
             });
-            socket.on('connect_error', (err) => {
-                console.log('socket connect_error', err)
-            })
-            socket.on('disconnect', function () {
-                console.log('socket disconnected')
-            });
-        }
-        return () => {
-            if (socketUnsubscribe) {
-                socketUnsubscribe.disconnect();
+            let socketUnsubscribe;
+
+            if (socket) {
+                socket.on("notification", (data) => {
+                    console.log('socket---------',data);
+                    fetchNotifications();
+                });
+
+                socket.on("connect_error", (err) => {
+                    console.log("socket connect_error", err);
+                });
+                socket.on("disconnect", function () {
+                    console.log("socket disconnected");
+                });
+            }
+            return () => {
+                if (socketUnsubscribe) {
+                    socketUnsubscribe.disconnect();
+                }
             }
         }
     }, [myProfile]);
-    setTimeout(() => {
-        if (socketConnection != null) {
-            socketConnection.emit('notificationBack', "send")
-        }
-    }, 1000);
 
     const markAsRead = async (content) => {
         if (content == "same") {
-            // setUnreadData([]);
-            // setUnread(0)
-            // console.log("unreadData", unreadData)
+            let notifyId = [...new Set(ids)];
+            let payLoad = {
+                notifyId,
+                userId
+            }
+
+            let params = {
+                url: `${Config.V1_API_URL}notification/readNotification`,
+                method: "POST",
+                data: payLoad
+            }
+            setisLoading(true);
+            const response = await makeRequest(params);
+            console.log(response)
+            if (response) {
+                fetchNotifications();
+            }
+            setisLoading(false);
         } else if (content == "next") {
-            // setUnreadData([]);
-            // setUnread(0)
             window.location.href = "/notification"
         } else {
 
         }
-    }
+    };
     return (
         <Navbar id='classy-navbar-mobile' className="fixed-top" key="lg" expand="lg">
             <Container fluid className="col-lg-12 px-4">
                 <Link className="navbar-brand" to="/">
-                    {(siteSettings && siteSettings.siteLogo) ? <img src={siteSettings.siteLogo} alt="logo" id="navbar-img" />:
-                    <img src={"https://res.cloudinary.com/dweqs7aoz/image/upload/v1669628230/Images/wxmoitm42j0zr12ur9ur.png"} alt="logo" id="navbar-img" />}
+                    {(siteSettings && siteSettings.siteLogo) ? <img src={siteSettings.siteLogo} alt="logo" id="navbar-img" /> :
+                        <img src={"https://res.cloudinary.com/dweqs7aoz/image/upload/v1669628230/Images/wxmoitm42j0zr12ur9ur.png"} alt="logo" id="navbar-img" />}
                 </Link>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
                 <Navbar.Offcanvas
@@ -183,9 +189,9 @@ export default function NavbarOne(props) {
                         <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
                             <Link className="navbar-brand" to="/">
                                 {(siteSettings && siteSettings.siteLogo) ?
-                                <img src={siteSettings.siteLogo} alt="logo" id="navbar-img" />
-                                :
-                                <img src={"https://res.cloudinary.com/dweqs7aoz/image/upload/v1669628230/Images/wxmoitm42j0zr12ur9ur.png"} alt="logo" id="navbar-img" />
+                                    <img src={siteSettings.siteLogo} alt="logo" id="navbar-img" />
+                                    :
+                                    <img src={"https://res.cloudinary.com/dweqs7aoz/image/upload/v1669628230/Images/wxmoitm42j0zr12ur9ur.png"} alt="logo" id="navbar-img" />
                                 }
                             </Link>
                         </Offcanvas.Title>
@@ -401,9 +407,6 @@ export default function NavbarOne(props) {
                             <li className="nav-item ps-3">
                                 <a href="javascript:void(0);" onClick={() => { navigate("/faq") }} rel="noopener noreferrer" alt="nft" className="nav-link">FAQs</a>
                             </li>
-                            {Config.NOTIFICATION_STATUS == "Enable" && (
-                                <></>
-                            )}
                             <li className="nav-item dropdown ps-3 theme-mode-dropdown">
                                 <span className="nav-link dropdown-toggle" id="dappdrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Theme
@@ -457,76 +460,6 @@ export default function NavbarOne(props) {
                                 :
                                 <>
                                     {Config.NOTIFICATION_STATUS == "Enable" ?
-                                        // <li className="nav-item ps-3 bell-icon-dropdown-css">
-                                        //     <div class="btn-group">
-                                        //         <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                                        //             <BsBellFill className="fc-g f-25" />
-                                        //         </button>
-                                        //         <ul class="dropdown-menu ">
-                                        //             <li><button class="dropdown-item mb-4" type="button">
-                                        //                 <div className="d-flex flex-row justify-content-between bell-icon-notification-bg p-3">
-                                        //                     <div className="">
-                                        //                         <p className="mb-0 text-dark">106 <span className="text-black-grey f-13">Pending Notifications</span></p>
-                                        //                     </div>
-                                        //                     <div>
-                                        //                         <p className="mb-0 fc-g">Clear All</p>
-                                        //                     </div>
-                                        //                     <div>
-                                        //                         <p className="mb-0 text-dark">View All <span><BsArrowRightShort /></span></p>
-                                        //                     </div>
-                                        //                 </div>
-                                        //             </button></li>
-                                        //             <li><button class="dropdown-item  mb-4" type="button">
-                                        //                 <div className="d-flex flex-row ">
-                                        //                     <div>
-                                        //                         <BsFillEnvelopeCheckFill className="fc-g  f-20 ms-2 me-2" />
-                                        //                     </div>
-                                        //                     <div>
-                                        //                         <p className="mb-0">Login attempted from new IP</p>
-                                        //                         <p className="mb-0 text-grey f-15">The system has detected that your account is...
-                                        //                             17 d ago</p>
-                                        //                     </div>
-                                        //                 </div>
-                                        //             </button></li>
-                                        //             <li><button class="dropdown-item mb-4" type="button">
-                                        //                 <div className="d-flex flex-row ">
-                                        //                     <div>
-                                        //                         <BsFillEnvelopeExclamationFill className="fc-r  f-20 ms-2 me-2" />
-                                        //                     </div>
-                                        //                     <div>
-                                        //                         <p className="mb-0">Login attempted from new IP</p>
-                                        //                         <p className="mb-0 text-grey f-15">The system has detected that your account is...
-                                        //                             21 d ago</p>
-                                        //                     </div>
-                                        //                 </div>
-                                        //             </button></li>
-                                        //             <li><button class="dropdown-item mb-4" type="button">
-                                        //                 <div className="d-flex flex-row ">
-                                        //                     <div>
-                                        //                         <BsFillEnvelopeCheckFill className="fc-g  f-20 ms-2 me-2" />
-                                        //                     </div>
-                                        //                     <div>
-                                        //                         <p className="mb-0">Login attempted from new IP</p>
-                                        //                         <p className="mb-0 text-grey f-15">The system has detected that your account is...
-                                        //                             24 d ago</p>
-                                        //                     </div>
-                                        //                 </div>
-                                        //             </button></li>
-                                        //             <li><button class="dropdown-item mb-4" type="button">
-                                        //                 <div className="d-flex flex-row ">
-                                        //                     <div>
-                                        //                         <BsFillEnvelopeExclamationFill className="fc-r f-20 ms-2 me-2" />
-                                        //                     </div>
-                                        //                     <div>
-                                        //                         <p className="mb-0">Login attempted from new IP</p>
-                                        //                         <p className="mb-0 text-grey f-15">The system has detected that your account is...
-                                        //                         </p>
-                                        //                     </div>
-                                        //                 </div>
-                                        //             </button></li>
-                                        //         </ul>
-                                        //     </div>
-                                        // </li> 
                                         (
                                             <li className="nav-item ps-3 bell-icon-dropdown-css">
                                                 <div class="btn-group">
@@ -568,23 +501,6 @@ export default function NavbarOne(props) {
                                                                     </li>
                                                                 )
                                                             })
-                                                            // adminNoti.map((data, n) => {
-                                                            //     return (
-                                                            //         <li>
-                                                            //             <button class="dropdown-item  mb-4" type="button">
-                                                            //                 <div className="d-flex flex-row ">
-                                                            //                     <div>
-                                                            //                         <BsFillEnvelopeCheckFill className="fc-g  f-20 ms-2 me-2" />
-                                                            //                     </div>
-                                                            //                     <div>
-                                                            //                         <p className="mb-0">{data.remark}</p>
-                                                            //                         <p className="mb-0 text-grey f-15">{data.comment}.... {moment(new Date(data.dateTime), "YYYYMMDD").fromNow()}</p>
-                                                            //                     </div>
-                                                            //                 </div>
-                                                            //             </button>
-                                                            //         </li>    
-                                                            //     )
-                                                            // })
                                                         }
                                                     </ul>
                                                 </div>

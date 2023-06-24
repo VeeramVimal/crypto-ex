@@ -17,6 +17,7 @@ import $ from "jquery"
 import { toast } from "../../core/lib/toastAlert";
 
 export default function Maincopytrading(props) {
+    const { myProfile } = useContextData();
     const [traderAvatar, setTraderAvatar] = useState();
 
     $(document).ready(function () {
@@ -28,60 +29,50 @@ export default function Maincopytrading(props) {
         });
     });
 
-    const { myProfile } = useContextData();
-
     const validateTradeLeaderForm = useFormik({
-    
         initialValues: {
-          user_name: '',
-          user_email: '',
-          //user_intro: '',
+            user_name: '',
+            user_email: '',
+            //user_intro: '',
         },
         validationSchema: Yup.object().shape({
-          user_name: Yup.string().required(
-            "Nickname is required"
-          ),
-          user_email: Yup.string().email('Please enter valid email').required(
-            "Email is required"
-          ),
-        //   user_intro: Yup.string().required(
-        //     "Email is required"
-        //   )
+            user_name: Yup.string().required(
+                "Nickname is required"
+            ),
+            user_email: Yup.string().email('Please enter valid email').required(
+                "Email is required"
+            ),
+            //   user_intro: Yup.string().required(
+            //     "Email is required"
+            //   )
         }),
         onSubmit: async (values) => {
-          try
-          {            
-            const params = {
-                url: `${Config.V1_API_URL}copyTrade/addLeadTrader`,
-                method: "POST",
-                data: { 
-                  name:values.user_name,
-                  email:values.user_email,
-                  avatar:traderAvatar,
-                  discription:values.user_intro ? values.user_intro : '' ,
-                  trader_id:myProfile._id,
-                   },
-              };
-              const response = await makeRequest(params);
-              if (response.status && response.message) {
-                validateTradeLeaderForm.resetForm();
-                $(".jqueryavatar").removeClass("inactive-opacity");
-                $(".jqueryavatar").removeClass("active-opacity");
-                toast({ type: "success", message: 'Lead Trade Add Successfully' });
-              }
-              else
-              {
-                toast({ type: "error", message: 'Please try again later' });
-              }                
+            try {
+                const params = {
+                    url: `${Config.V1_API_URL}copyTrade/addLeadTrader`,
+                    method: "POST",
+                    data: {
+                        name: values.user_name,
+                        email: values.user_email,
+                        avatar: traderAvatar,
+                        discription: values.user_intro ? values.user_intro : '',
+                        trader_id: myProfile._id,
+                    },
+                };
+                const response = await makeRequest(params);
+                if (response.status && response.message) {
+                    validateTradeLeaderForm.resetForm();
+                    $(".jqueryavatar").removeClass("inactive-opacity");
+                    $(".jqueryavatar").removeClass("active-opacity");
+                    toast({ type: "success", message: 'Lead Trade Add Successfully' });
+                }
+                else toast({ type: "error", message: 'Please try again later' });
+            } catch (err) {
+                toast({ type: "error", message: err });
+                console.log(err);
+            }
         }
-        catch(err)
-        {
-            toast({ type: "error", message: err });
-            console.log(err);
-        }
-        }
-      });
-
+    });
 
     return (
         <div className="bealead-section-styling">
@@ -105,84 +96,77 @@ export default function Maincopytrading(props) {
                         </div>
                         <div className="col bealead-column-bg">
 
-                        <form onSubmit={(e) => {
-                            e.preventDefault();
-                            validateTradeLeaderForm.handleSubmit();
-                            return false;
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                validateTradeLeaderForm.handleSubmit();
+                                return false;
                             }}>
 
-                            <div className=" ">
-                                <div className="container  mx-0 px-0">
-                                    <p className="terms-text-1">Set your avatar</p>
-                                    <div className="d-flex">
-                                        <div>
-                                            <img src={avatar1} onClick={()=>setTraderAvatar('avatar1')} className="jqueryavatar " />
-                                        </div>
-                                        <div>
-                                            <img src={avatar2} onClick={()=>setTraderAvatar('avatar2')} className="jqueryavatar " />
-                                        </div>
-                                        <div>
-                                            <img src={avatar1} onClick={()=>setTraderAvatar('avatar1')} className="jqueryavatar " />
-                                        </div>
-                                        <div>
-                                            <img src={avatar2} onClick={()=>setTraderAvatar('avatar2')} className="jqueryavatar " />
-                                        </div>
-                                        <div>
-                                            <img src={avatar1} onClick={()=>setTraderAvatar('avatar1')} className="jqueryavatar " />
+                                <div className=" ">
+                                    <div className="container  mx-0 px-0">
+                                        <p className="terms-text-1">Set your avatar</p>
+                                        <div className="d-flex">
+                                            <div>
+                                                <img src={avatar1} onClick={() => setTraderAvatar('avatar1')} className="jqueryavatar " />
+                                            </div>
+                                            <div>
+                                                <img src={avatar2} onClick={() => setTraderAvatar('avatar2')} className="jqueryavatar " />
+                                            </div>
+                                            <div>
+                                                <img src={avatar1} onClick={() => setTraderAvatar('avatar1')} className="jqueryavatar " />
+                                            </div>
+                                            <div>
+                                                <img src={avatar2} onClick={() => setTraderAvatar('avatar2')} className="jqueryavatar " />
+                                            </div>
+                                            <div>
+                                                <img src={avatar1} onClick={() => setTraderAvatar('avatar1')} className="jqueryavatar " />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="py-3">
-                                    <p className="terms-text-1 line-height-be-a-lead">Please enter your nickname</p>
+                                    <div className="py-3">
+                                        <p className="terms-text-1 line-height-be-a-lead">Please enter your nickname</p>
 
-                                    <div class="input-group form-control-sm">
-                                        <input type="text" name="user_name" autoComplete="off" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" onChange={validateTradeLeaderForm.handleChange} onBlur={validateTradeLeaderForm.handleBlur} value={validateTradeLeaderForm.values.user_name || ""} invalid={validateTradeLeaderForm.touched.user_name && validateTradeLeaderForm.errors.user_name ? true : false} />
+                                        <div class="input-group form-control-sm">
+                                            <input type="text" name="user_name" autoComplete="off" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" onChange={validateTradeLeaderForm.handleChange} onBlur={validateTradeLeaderForm.handleBlur} value={validateTradeLeaderForm.values.user_name || ""} invalid={validateTradeLeaderForm.touched.user_name && validateTradeLeaderForm.errors.user_name ? true : false} />
+                                        </div>
+                                        {validateTradeLeaderForm.touched.user_name && validateTradeLeaderForm.errors.user_name ? (
+                                            <small className="invalid-email error password-text-33">{validateTradeLeaderForm.errors.user_name} </small>
+                                        ) : null}
                                     </div>
-                                    {validateTradeLeaderForm.touched.user_name && validateTradeLeaderForm.errors.user_name ? (                                    
-                                    <small className="invalid-email error password-text-33">{validateTradeLeaderForm.errors.user_name} </small>
-                                    ) : null}
-                                </div>
 
-                                <div className="py-3">
-                                    <p className="terms-text-1 ">Please enter your email address</p>
-                                    <p className="mb-2 f-15">Official communication related to Fibitpro will be sent to this email.</p>
-                                    <div class="input-group form-control-sm">
-                                        <input type="text" name="user_email" autoComplete="off" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" onChange={validateTradeLeaderForm.handleChange} onBlur={validateTradeLeaderForm.handleBlur} value={validateTradeLeaderForm.values.user_email || ""} invalid={validateTradeLeaderForm.touched.user_email && validateTradeLeaderForm.errors.user_email ? true : false} />
+                                    <div className="py-3">
+                                        <p className="terms-text-1 ">Please enter your email address</p>
+                                        <p className="mb-2 f-15">Official communication related to Fibitpro will be sent to this email.</p>
+                                        <div class="input-group form-control-sm">
+                                            <input type="text" name="user_email" autoComplete="off" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" onChange={validateTradeLeaderForm.handleChange} onBlur={validateTradeLeaderForm.handleBlur} value={validateTradeLeaderForm.values.user_email || ""} invalid={validateTradeLeaderForm.touched.user_email && validateTradeLeaderForm.errors.user_email ? true : false} />
+                                        </div>
+                                        {validateTradeLeaderForm.touched.user_email && validateTradeLeaderForm.errors.user_email ? (
+                                            <small className="invalid-email error password-text-33">{validateTradeLeaderForm.errors.user_email} </small>
+                                        ) : null}
                                     </div>
-                                    {validateTradeLeaderForm.touched.user_email && validateTradeLeaderForm.errors.user_email ? (                                    
-                                    <small className="invalid-email error password-text-33">{validateTradeLeaderForm.errors.user_email} </small>
-                                    ) : null}
-                                </div>
 
-                                <div className="py-3">
-                                    <p className="terms-text-1  line-height-be-a-lead">Please enter your self-introduction</p>
-                                    <div class="input-group form-control-sm">
-                                        <textarea class="form-control" name="user_intro" id="exampleFormControlTextarea1" rows="6" onChange={validateTradeLeaderForm.handleChange} onBlur={validateTradeLeaderForm.handleBlur} value={validateTradeLeaderForm.values.user_intro || ""} ></textarea>
-                                    </div>
-                                    {/* <p className="mb-0 f-12">0/500 characters</p> */}
-                                    {/* {validateTradeLeaderForm.touched.user_intro && validateTradeLeaderForm.errors.user_intro ? (
+                                    <div className="py-3">
+                                        <p className="terms-text-1  line-height-be-a-lead">Please enter your self-introduction</p>
+                                        <div class="input-group form-control-sm">
+                                            <textarea class="form-control" name="user_intro" id="exampleFormControlTextarea1" rows="6" onChange={validateTradeLeaderForm.handleChange} onBlur={validateTradeLeaderForm.handleBlur} value={validateTradeLeaderForm.values.user_intro || ""} ></textarea>
+                                        </div>
+                                        {/* <p className="mb-0 f-12">0/500 characters</p> */}
+                                        {/* {validateTradeLeaderForm.touched.user_intro && validateTradeLeaderForm.errors.user_intro ? (
                                     <small className="invalid-email error password-text-33">{validateTradeLeaderForm.errors.user_intro} </small>
                                     ) : null} */}
-                                </div>
+                                    </div>
 
-                            </div>
+                                </div>
                                 <div className="py-3">
                                     <button type="submit" className="btn banner-top-button-copy">Submit</button>
-                                </div>                            
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
-
-
             <Footer />
-
-
         </div>
     );
 }

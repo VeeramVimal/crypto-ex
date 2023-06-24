@@ -35,11 +35,15 @@ const ClosedPnl = (props) => {
                         entryPrice = 0,
                         exitPrice = 0,
                         type = "",
-                        profitLoss = 0,
                         pAndL = 0,
                         tradeFee = 0,
                     } = elem;
                     const clrClassName = closedDir == 'buy' ? 'color-green' : 'color-red';
+                    
+                    let profitLoss = elem.profitLoss ? elem.profitLoss : 0;
+                    if(type == "liquidation" && profitLoss > 0) {
+                        profitLoss = -(profitLoss);
+                    }
 
                     const {
                         decimalValue = 2,
@@ -50,11 +54,11 @@ const ClosedPnl = (props) => {
                         <td data-label="Date">{dateFormat(closedAt)}</td>
                         <td data-label="Pair">{pairName ? pairName.replace("_", "/") : ""}</td>
                         <td data-label="Type" className={clrClassName}>{amount}</td>
-                        <td data-label="Entry Price">{props.decimalValue(entryPrice, amountDecimal)}</td>
-                        <td data-label="Entry Price">{props.decimalValue(exitPrice, amountDecimal)}</td>
+                        <td data-label="Entry Price">{props.decimalValue(entryPrice, priceDecimal)}</td>
+                        <td data-label="Entry Price">{props.decimalValue(exitPrice, priceDecimal)}</td>
                         <td data-label="Type" className={"capitalizeText " + (clrClassName)}>{closedDir == 'buy' ? 'Close Long' : 'Close Short'}</td>
-                        <td data-label={"closedPnl "+ (profitLoss > 0 ? 'color-green': "color-red")} className={(pAndL > 0 ? 'color-green': "color-red")}>{props.decimalValue(pAndL, amountDecimal)}</td>
-                        <td data-label="Fee" className={"capitalizeText"}>{tradeFee}</td>
+                        <td data-label={"closedPnl "+ (pAndL > 0 ? 'color-green': "color-red")} className={(pAndL > 0 ? 'color-green': "color-red")}>{props.decimalValue(pAndL, amountDecimal)}</td>
+                        <td data-label="Fee" className={"capitalizeText"}>{props.decimalValue(tradeFee, priceDecimal)}</td>
                         <td data-label="Type" className={"capitalizeText"}>{type}</td>
                     </tr>
                 }) :

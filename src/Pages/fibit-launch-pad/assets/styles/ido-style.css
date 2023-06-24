@@ -314,6 +314,11 @@ input::-webkit-inner-spin-button {
         top: -2px;
     }
 
+    .ido-active-buy-section-modal .modal-content {
+        background-color: #151515;
+        color: #fff;
+    }
+
     .Ido-App-lanchpad .navbar-connect-wallet {
         border: 0px;
         border-radius: 16px;

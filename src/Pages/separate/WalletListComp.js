@@ -97,6 +97,12 @@ const headCells = [
     label: "Main Wallet Balance",
   },
   {
+    id: "cryptoLoanAmount",
+    numeric: true,
+    disablePadding: false,
+    label: "Crypto Loan Balance",
+  },
+  {
     id: "P2PBalance",
     numeric: true,
     disablePadding: false,
@@ -292,7 +298,6 @@ export default function WalletListComp(props) {
   const [estimateINR, setestimateINR] = useState(0)
   const [isLoading, setisLoading] = useState(false);
   const [walletData, setWalletData] = useState([]);
-  console.log("currency==============", currency);
   const handleClose = () => {
     setOpen(false);
     formik.values.amount = "";
@@ -390,7 +395,6 @@ export default function WalletListComp(props) {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      setisLoading(true);
       let balance = fromAccount == 'Main Wallet' ? currency.balance : fromAccount == 'Loan Wallet' ? currency.cryptoLoanAmount : currency.p2pAmount;
       let amount = values.amount;
       if (balance >= amount) {
@@ -405,6 +409,7 @@ export default function WalletListComp(props) {
           method: 'POST',
           body
         }
+        setisLoading(true);
         const response = (await makeRequest(params));
         let type = 'error';
         setisLoading(false);
@@ -527,6 +532,9 @@ export default function WalletListComp(props) {
                         </TableCell>
                         <TableCell align="right">
                           {balShow ? (row.balance > 0 ? decimalValueFunc(row.balance, row.siteDecimal, "removeZero") : 0) : "******"}
+                        </TableCell>
+                        <TableCell align="right">
+                          {balShow ? (row.cryptoLoanAmount > 0 ? decimalValueFunc(row.cryptoLoanAmount, row.siteDecimal, "removeZero") : 0) : "******"}
                         </TableCell>
                         <TableCell align="right">
                           {balShow ? (row.p2pAmount > 0 ? decimalValueFunc(row.p2pAmount, row.siteDecimal, "removeZero") : 0) : "******"}

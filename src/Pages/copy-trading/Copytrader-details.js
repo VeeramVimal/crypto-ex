@@ -389,10 +389,7 @@ export default function Copytraderdetails(props) {
                     </div>
                 </div>
             </div>
-
             <Footer />
-
-
         </div>
     );
 }

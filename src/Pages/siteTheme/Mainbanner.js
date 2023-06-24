@@ -198,7 +198,14 @@ function Mainbanner(props) {
                         >
                             {cmsData && cmsData.adBanner && cmsData.adBanner.map((data, index) => (
                                 <SwiperSlide>
-                                    <img src={data.image} alt="swiper" />
+                                    {
+                                        data.link ?
+                                        <a href={data.link} target="_blank">
+                                            <img src={data.image} alt="swiper" />
+                                        </a>
+                                        :
+                                        <img src={data.image} alt="swiper" />
+                                    }
                                 </SwiperSlide>
                             ))}
                         </Swiper>

@@ -480,19 +480,40 @@ export default function OrderDetails(props) {
   async function selectPayment(data) {
     setselectedPaymentData(data);
   }
-  const formik1 = useFormik({
-    initialValues: {
-      OTPCode: '',
-    },
-    validationSchema: otpvalidationSchema,
-    onSubmit: async (values) => {
-      const data = { orderNo: orderId, userId: myProfile?._id, OTPCode: values.OTPCode }
+  // const formik1 = useFormik({
+  //   initialValues: {
+  //     OTPCode: '',
+  //   },
+  //   validationSchema: otpvalidationSchema,
+  //   onSubmit: async (values) => {
+  //     const data = { orderNo: orderId, userId: myProfile?._id, OTPCode: values.OTPCode }
+  //     const params = {
+  //       url: `${Config.V1_API_URL}p2p/submitOrder`,
+  //       method: 'POST',
+  //       body: data
+  //     }
+  //     const response = (await makeRequest(params));
+  //     let type = 'error';
+  //     if (response.status) {
+  //       type = 'success';
+  //       setpaymentformOpen(false);
+  //       getp2pOrders();
+  //       socketConnection.emit('createp2pOrder', response?.data);
+  //     }
+  //     toast({ type, message: response.message });
+  //   }
+  // });
+  async function confirmOrderRelease() {
+    try{
+      const data = { orderNo: orderId }
       const params = {
-        url: `${Config.V1_API_URL}p2p/submitOrder`,
+        url: `${Config.V1_API_URL}p2p/orderReleased`,
         method: 'POST',
         body: data
       }
+      setisLoading(true);
       const response = (await makeRequest(params));
+      setisLoading(false);
       let type = 'error';
       if (response.status) {
         type = 'success';
@@ -501,8 +522,10 @@ export default function OrderDetails(props) {
         socketConnection.emit('createp2pOrder', response?.data);
       }
       toast({ type, message: response.message });
+    } catch (err) {
+      console.log("err",err)
     }
-  });
+  }
   async function Transfer() {
     setconfirmformOpen(true);
   }
@@ -984,7 +1007,7 @@ export default function OrderDetails(props) {
                               <center>
                                 <div className="col-12">
                                   <div className="alert alert-warning text-start" role="alert">
-                                    <small>Notes: Make sure you will receive the Funds from the above Bank beneficiary name only.</small>
+                                    <small>Notes: Make sure you will receive the Funds in the above Bank beneficiary name only.</small>
                                   </div>
                                 </div>
                               </center>
@@ -1443,7 +1466,7 @@ export default function OrderDetails(props) {
         </Modal.Body>
       </Modal>
       {/* payment received */}
-      <Modal show={paymentformOpen} onHide={() => setpaymentformOpen(false)}>
+      {/* <Modal show={paymentformOpen} onHide={() => setpaymentformOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Verification</Modal.Title>
         </Modal.Header>
@@ -1478,6 +1501,26 @@ export default function OrderDetails(props) {
               </div>
             </div>
           </form>
+        </Modal.Body>
+      </Modal> */}
+      {/* order released */}
+      <Modal show={paymentformOpen} onHide={() => setpaymentformOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Are you sure you want to order released?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row  ">
+            <div className='row mt-5'>
+              <div className='col'>
+                <button type="submit" className="btn text-white btn-col w-100 mt-4" disabled={isLoading} onClick={()=>confirmOrderRelease()}>
+                    Confirm
+                </button>
+                <button type="button" className="btn text-white btn-col w-100 mt-4" onClick={() => setpaymentformOpen(false)}>
+                    Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </Modal.Body>
       </Modal>
       {/* Cancel order */}
