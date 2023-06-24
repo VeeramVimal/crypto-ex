@@ -9,14 +9,16 @@ import '../../assets/styles/ido-style.css';
 import { toast } from '../../../../core/lib/toastAlert';
 import Config from '../../../../core/config/index';
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 const BlockChain = [
-    { value: 0, label: 'Ethereum', name: 'Eth' },
-    { value: 1, label: 'Binance Smart Chain', name: 'btn' },
-    { value: 2, label: 'Polygon (Matic)', name: 'polygon' },
-    { value: 3, label: 'OKExChain', name: 'OKEx' },
-    { value: 4, label: 'Polkadot', name: 'polkadot' },
-    { value: 5, label: 'Solana', name: 'solana' },
-    { value: 6, label: 'Other', name: 'other' },
+    { value: 0, label: 'Ethereum', name: 'Eth', token: "ERC-20" },
+    { value: 1, label: 'Binance Smart Chain', name: 'btn', token: "BEP-20" },
+    { value: 2, label: 'TRON', name: 'TRON', token: "TRC-20" },
+    // { value: 3, label: 'OKExChain', name: 'OKEx' },
+    // { value: 4, label: 'Polkadot', name: 'polkadot' },
+    // { value: 5, label: 'Solana', name: 'solana' },
+    // { value: 6, label: 'Other', name: 'other' },
 ];
 
 const Terms = [
@@ -28,29 +30,15 @@ function Home() {
     const navigate = useNavigate();
     const userApplicationContext = createContext()
     const [userData, setUserData] = useState({
-        userName: "",
-        email: "",
-        projectName: "",
-        projectInfo: "",
-        // blackChainSelect: [],
-        // userTeam: [],
-        investors: "",
-        smartContractAudited: "",
-        paper_link: "",
-        websiteLink: "",
-        gitLink: "",
-        telegramGrpLink: "",
-        telegramUserName: "",
         blockChainSelected: "",
         userTermSelected: "",
-        twitterLink: ""
     });
     const [validationErr, setValidationErr] = useState({
         userNameErr: "",
         emailErr: "",
         projectNameErr: "",
         projectInfoErr: "",
-        blackChainSelectErr: "",
+        blockChainSelectErr: "",
         userTeamErr: "",
         investorsErr: "",
         smartContractAuditedErr: "",
@@ -63,184 +51,83 @@ function Home() {
     });
 
     //** chain and user team select functionality */ 
-    const handleChainSelect = async (event) => {
-        let chain = await BlockChain.filter((ele) => ele.value == event.target.value);
-        setUserData((prevSelect) => ({ ...prevSelect, blockChainSelected: chain[0].name }))
-    };
-    const handleTeamSelect = async (event) => {
-        let term = await Terms.filter((val) => val.value == event.target.value);
-        setUserData((prevSelect) => ({ ...prevSelect, userTermSelected: term[0].name }))
-    };
-    //** enter the value to set state functions */
-    const handleChange = async (event) => {
-        setUserData((preProp) => ({
-            ...preProp,
-            [event.target.name]: event.target.value
-        }));
-        ValidationCheckErr();
-    };
-    //** form validation functions */
-    const ValidationCheckErr = async () => {
-        let isValid = true;
-        if (userData.userName == "" || userData.userName === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, userNameErr: "User Name must be between 1 and 32 characters!" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, userNameErr: "" }))
-        }
+    // const handleChainSelect = async (event) => {
+    //     let chain = await BlockChain.filter((ele) => ele.value == event.target.value);
+    //     setUserData((prevSelect) => ({ ...prevSelect, blockChainSelected: chain[0].name }))
+    // };
+    // const handleTeamSelect = async (event) => {
+    //     let term = await Terms.filter((val) => val.value == event.target.value);
+    //     setUserData((prevSelect) => ({ ...prevSelect, userTermSelected: term[0].name }))
+    // };
 
-        let emailReg = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
-        if (userData.email == "" || userData.email === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, emailErr: "Email field is required" }))
-            isValid = false
-        } else if (!emailReg.test(userData.email)) {
-            setValidationErr((prevErr) => ({ ...prevErr, emailErr: "Email Address does not appear to be valid" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, emailErr: "" }))
+    const { handleChange, handleSubmit, handleBlur, touched, errors, values } = useFormik({
+        initialValues: {
+            userName: "",
+            email: "",
+            projectName: "",
+            projectInfo: "",
+            investors: "",
+            smartContractAudited: "",
+            paper_link: "",
+            websiteLink: "",
+            gitLink: "",
+            telegramGrpLink: "",
+            telegramUserName: "",
+            blockChainSelected: userData.blockChainSelected,
+            userTermSelected: userData.userTermSelected,
+            twitterLink: ""
+        },
+        //** form validation functions */
+        validationSchema: Yup.object().shape({
+            userName: Yup.string().required("User Name must be between 1 and 32 characters!"),
+            email: Yup.string().email('Please enter valid email').required("Email field is required!"),
+            projectName: Yup.string().required("Project Name field is required!"),
+            projectInfo: Yup.string().required("Project information field is required!"),
+            investors: Yup.string().required("Investors field is required!"),
+            smartContractAudited: Yup.string().required("smart contract audited field is required!"),
+            paper_link: Yup.string().required("Whitepaper field is required!"),
+            websiteLink: Yup.string().required("Website link field is required!"),
+            gitLink: Yup.string().required("GitHub link field is required!"),
+            telegramGrpLink: Yup.string().required("Telegram group link field is required!"),
+            telegramUserName: Yup.string().required("Telegram field is required!"),
+            blockChainSelected: Yup.string().required("Select any one block chain"),
+            userTermSelected: Yup.string().required("Select any one user team"),
+            twitterLink: Yup.string().required("Twitter link field is required!"),
+        }),
+        //** enter the value to set state functions */
+        onChange: async (event) => {
+        },
+        //** submit functionality */
+        onSubmit: async (values) => {
+            try {
+                var chain = await BlockChain.filter((ele) => ele.value == Number(values.blockChainSelected));
+                var term = await Terms.filter((val) => val.value == Number(values.userTermSelected)); 
+                const data = {
+                    userName: values.userName,
+                    email: values.email,
+                    projectName: values.projectName,
+                    projectInfo: values.projectInfo,
+                    blockChainSelect: chain[0].name,
+                    tokenName: chain[0].token,
+                    userTeam: term[0].name,
+                    investors: values.investors,
+                    smartContractAudited: values.smartContractAudited,
+                    paper_link: values.paper_link,
+                    websiteLink: values.websiteLink,
+                    gitLink: values.gitLink,
+                    telegramGrpLink: values.telegramGrpLink,
+                    telegramUserName: values.telegramUserName,
+                    twitterLink: values.twitterLink
+                };
+                navigate("/idoformtoken", { state: { data: data } })
+            } catch (error) {
+                toast({ type: "error", message: "Your form field is required!" });
+            }
         }
-
-        if (userData.projectName == "" || userData.projectName === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, projectNameErr: "Project Name field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, projectNameErr: "" }))
-        }
-        console.log("userData.projectInfo============", userData.projectInfo);
-        if (userData.projectInfo == "" || userData.projectInfo === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, projectInfoErr: "Project information field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, projectInfoErr: "" }))
-        }
-
-        if (userData.blockChainSelected == "" || userData.blockChainSelected === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, blackChainSelectErr: "Select any one block chain" }));
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, blackChainSelectErr: "" }));
-        }
-        // let teamValidation = (Object.values(userTeams).includes(true));
-        if (userData.userTermSelected == "" || userData.userTermSelected === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, userTeamErr: "Select any one user team" }));
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, userTeamErr: "" }));
-        }
-        if (userData.investors == "" || userData.investors === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, investorsErr: "Investors field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, investorsErr: "" }))
-        }
-
-        if (userData.smartContractAudited == "" || userData.smartContractAudited === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, smartContractAuditedErr: "smart contract audited field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, smartContractAuditedErr: "" }))
-        }
-
-        if (userData.paper_link == "" || userData.paper_link === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, paper_linkErr: "Whitepaper field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, paper_linkErr: "" }))
-        }
-
-        if (userData.websiteLink == "" || userData.websiteLink === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, websiteLinkErr: "Website link field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, websiteLinkErr: "" }))
-        }
-
-        if (userData.gitLink == "" || userData.gitLink === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, gitLinkErr: "GitHub link field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, gitLinkErr: "" }))
-        }
-        if (userData.twitterLink == "" || userData.twitterLink === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, twitterLinkErr: "twitter link field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, twitterLinkErr: "" }))
-        }
-        if (userData.telegramGrpLink == "" || userData.telegramGrpLink === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, telegramGrpLinkErr: "Telegram group link field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, telegramGrpLinkErr: "" }))
-        }
-
-        if (userData.telegramUserName == "" || userData.telegramUserName === undefined) {
-            setValidationErr((prevErr) => ({ ...prevErr, telegramUserNameErr: "Telegram field is required" }))
-            isValid = false
-        } else {
-            setValidationErr((prevErr) => ({ ...prevErr, telegramUserNameErr: "" }))
-        }
-        return isValid;
-    }
-    // //** submit functionality */
-    const { userName, email, projectName, projectInfo, investors,
-        smartContractAudited, paper_link, websiteLink, gitLink, telegramGrpLink, telegramUserName,
-        userTermSelected, blockChainSelected, twitterLink
-    } = userData;
-    const data = {
-        userName: userName,
-        email: email,
-        projectName: projectName,
-        projectInfo: projectInfo,
-        blackChainSelect: blockChainSelected,
-        userTeam: userTermSelected,
-        investors: investors,
-        smartContractAudited: smartContractAudited,
-        paper_link: paper_link,
-        websiteLink: websiteLink,
-        gitLink: gitLink,
-        telegramGrpLink: telegramGrpLink,
-        telegramUserName: telegramUserName,
-        twitterLink: twitterLink
-    };
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        var validstatus = await ValidationCheckErr();
-        // var validSelect = await ValidationSelectCheckErr();
-        // console.log("data==========", data);
-        if (validstatus) {
-            //    await axios({
-            //         method: 'POST',
-            //         url: `${APP_API_URL}user/create`,
-            //         data: data
-            //     }).then((response) => {
-            //         if (response) {
-            //             Swal.fire({
-            //                 // title: "Wow!",
-            //                 text: "Thanks For Joining our Community!!",
-            //                 icon: "success",
-            //             }).then(() => {
-            //                 window.location.reload()
-            //             });
-            //         }
-            //     }).catch((err) => console.log(err))
-            navigate("/idoformtoken", { state: { data: data } })
-        } else {
-            // toast.error("Your form field is required!", {
-            //     position: "bottom-right",
-            //     autoClose: 5000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            //     theme: "colored",
-            // });
-            toast({ type: "error", message: "Your form field is required!" });
-
-        }
-
-    };
+    });
+    // const handleChange = async (event) => {
+    //     console.log("sdfghjk==========", event);
+    // }
     return (
         <div className="Ido-App-lanchpad">
             <Navbar />
@@ -253,66 +140,120 @@ function Home() {
                             <p className="ido-text-3 mb-4" style={{ textTransform: "capitalize" }}>
                                 Welcome! :) Please apply to launch on Fibit Pro so we can begin to review your project application.
                             </p>
-                            <form className="" onSubmit={handleSubmit}>
+                            <form className="" onSubmit={(e) => {
+                                e.preventDefault();
+                                handleSubmit();
+                                return false;
+                            }}>
                                 <div className="mb-4">
-                                    <label for="exampleInputEmail1" className="form-label">Your Name</label>
+                                    {/* <label for="exampleInputEmail1" className="form-label">Your Name</label> */}
+                                    <p className="ido-active-text-2 mb-1">Your Name</p>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="exampleInputEmail1"
+                                        id="userName"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="userName"
-                                        value={userData.userName}
+                                        value={values.userName || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.userName && errors.userName ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.userNameErr}
-                                    </div>
+                                    {
+                                        touched.userName && errors.userName && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.userName}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Email address</label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="exampleInputPassword1"
-                                        name="email"
-                                        placeholder="example@example.com"
-                                        onChange={handleChange}
-                                    />
-                                    <div className="error">
-                                        {validationErr.emailErr}
-                                    </div>
-                                    {/* <div id="emailHelp" className="form-text">example@example.com</div> */}
-                                </div>
-                                <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Project Name</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Email address</label> */}
+                                    <p className="ido-active-text-2 mb-1">Email Address</p>
+
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="exampleInputPassword1"
-                                        name="projectName"
+                                        id="email"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
+                                        name="email"
+                                        placeholder="example@example.com"
+                                        value={values.email || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.email && errors.email ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.projectNameErr}
-                                    </div>
+                                    {
+                                        touched.email && errors.email && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.email}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleFormControlTextarea1" className="form-label">Tell us more about your project, the more info you give us the more likely we will consider your application.</label>
-                                    <textarea
+                                    {/* <label for="exampleInputPassword1" className="form-label">Project Name</label> */}
+                                    <p className="ido-active-text-2 mb-1">Project Name</p>
+
+                                    <input
+                                        type="text"
                                         className="form-control"
-                                        id="exampleFormControlTextarea1"
-                                        name="projectInfo"
+                                        id="projectName"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
+                                        name="projectName"
+                                        value={values.projectName || ""}
                                         onChange={handleChange}
-                                        rows="3"></textarea>
-                                    <div className="error">
-                                        {validationErr.projectInfoErr}
-                                    </div>
+                                        onBlur={handleBlur}
+                                        invalid={touched.projectName && errors.projectName ? true : false}
+                                    />
+                                    {
+                                        touched.projectName && errors.projectName && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.projectName}
+                                            </small>
+                                        )
+                                    }
+                                </div>
+                                <div className="mb-4">
+                                    {/* <label for="exampleFormControlTextarea1" className="form-label">Tell us more about your project, the more info you give us the more likely we will consider your application.</label> */}
+                                    <p className="ido-active-text-2 mb-1">
+                                        Tell us more about your project, the more info you give us the more likely we will consider your application.
+                                    </p>
+
+                                    <textarea
+                                        type="text"
+                                        className="form-control"
+                                        id="projectInfo"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
+                                        name="projectInfo"
+                                        rows="3"
+                                        value={values.projectInfo || ""}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.projectInfo && errors.projectInfo ? true : false}
+                                    ></textarea>
+                                    {
+                                        touched.projectInfo && errors.projectInfo && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.projectInfo}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4" >
-                                    <label for="exampleFormControlTextarea1" className="form-label">Blockchain</label>
+                                    {/* <label for="exampleFormControlTextarea1" className="form-label">Blockchain</label> */}
+                                    <p className="ido-active-text-2 mb-1">Blockchain</p>
+
                                     <div className="form-group">
-                                        <select
+                                        {/* <select
                                             className="form-control form-dropdown"
                                             placeholder="Select"
                                             name="blockChainSelected"
@@ -333,21 +274,54 @@ function Home() {
                                                     )
                                                 })
                                             }
+                                        </select> */}
+                                        <select
+                                            className="form-control form-dropdown"
+                                            placeholder="Select"
+                                            name="blockChainSelected"
+                                            onChange={handleChange}
+                                            option={BlockChain}
+                                            onBlur={handleBlur}
+                                        >
+                                            {
+                                                BlockChain.map((chain) => {
+                                                    return (
+                                                        <>
+                                                            <option className="form-select" value="" disabled selected hidden>Select option...</option>
+                                                            <option
+                                                                className="form-select"
+                                                                value={chain.value} >
+                                                                {chain.label}
+                                                            </option>
+                                                        </>
+                                                    )
+                                                })
+                                            }
                                         </select>
                                     </div>
-                                    <div className="error">
-                                        {validationErr.blackChainSelectErr}
-                                    </div>
+                                    {/* <div className="error">
+                                        {validationErr.blockChainSelectErr}
+                                    </div> */}
+                                    {
+                                        touched.blockChainSelected && errors.blockChainSelected && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.blockChainSelected}
+                                            </small>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="mb-4">
-                                    <label for="exampleFormControlTextarea1" className="form-label">Is your team Public or Anon?</label>
+                                    {/* <label for="exampleFormControlTextarea1" className="form-label">Is your team Public or Anon?</label> */}
+                                    <p className="ido-active-text-2 mb-1">Is your team Public or Anon?</p>
+
                                     <div className="form-group">
                                         <select
                                             className="form-control form-dropdown"
                                             placeholder="Select"
                                             name="userTermSelected"
-                                            onChange={handleTeamSelect}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
                                             option={Terms}
                                         >
                                             {
@@ -367,114 +341,216 @@ function Home() {
                                         </select>
                                     </div>
 
-                                    <div className="error">
+                                    {/* <div className="error">
                                         {validationErr.userTeamErr}
-                                    </div>
+                                    </div> */}
+                                    {
+                                        touched.userTermSelected && errors.userTermSelected && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.userTermSelected}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Advisors/Backers/Investors</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Advisors/Backers/Investors</label> */}
+                                    <p className="ido-active-text-2 mb-1">Advisors/Backers/Investors</p>
+
                                     <input
                                         type="text"
                                         className="form-control"
+                                        id="investors"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
                                         name="investors"
-                                        id="exampleInputPassword1"
+                                        value={values.investors || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.investors && errors.investors ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.investorsErr}
-                                    </div>
+                                    {
+                                        touched.investors && errors.investors && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.investors}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Your smart contract have been audited?</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Your smart contract have been audited?</label> */}
+                                    <p className="ido-active-text-2 mb-1">Your smart contract have been audited?</p>
+
                                     <input
                                         type="text"
+                                        className="form-control"
+                                        id="smartContractAudited"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
                                         name="smartContractAudited"
-                                        className="form-control"
-                                        id="exampleInputPassword1"
+                                        value={values.smartContractAudited || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.smartContractAudited && errors.smartContractAudited ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.smartContractAuditedErr}
-                                    </div>
+                                    {
+                                        touched.smartContractAudited && errors.smartContractAudited && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.smartContractAudited}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Link to Whitepaper or Lite paper?</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Link to Whitepaper or Lite paper?</label> */}
+                                    <p className="ido-active-text-2 mb-1">Link to Whitepaper or Lite paper?</p>
+
                                     <input
                                         type="text"
+                                        className="form-control"
+                                        id="paper_link"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
                                         name="paper_link"
-                                        className="form-control"
-                                        id="exampleInputPassword1"
+                                        value={values.paper_link || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.paper_link && errors.paper_link ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.paper_linkErr}
-                                    </div>
+                                    {
+                                        touched.paper_link && errors.paper_link && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.paper_link}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Website Link (if any)?</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Website Link (if any)?</label> */}
+                                    <p className="ido-active-text-2 mb-1">Website Link (if any)?</p>
+
                                     <input
                                         type="text"
+                                        className="form-control"
+                                        id="websiteLink"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
                                         name="websiteLink"
-                                        className="form-control"
-                                        id="exampleInputPassword1"
+                                        value={values.websiteLink || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.websiteLink && errors.websiteLink ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.websiteLinkErr}
-                                    </div>
+                                    {
+                                        touched.websiteLink && errors.websiteLink && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.websiteLink}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">GitHub Link?</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">GitHub Link?</label> */}
+                                    <p className="ido-active-text-2 mb-1">GitHub Link?</p>
+
                                     <input
                                         type="text"
+                                        className="form-control"
+                                        id="gitLink"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
                                         name="gitLink"
-                                        className="form-control"
-                                        id="exampleInputPassword1"
+                                        value={values.gitLink || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.gitLink && errors.gitLink ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.gitLinkErr}
-                                    </div>
+                                    {
+                                        touched.gitLink && errors.gitLink && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.gitLink}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Twitter Link?</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Twitter Link?</label> */}
+                                    <p className="ido-active-text-2 mb-1">Twitter Link?</p>
+
                                     <input
                                         type="text"
-                                        name="twitterLink"
                                         className="form-control"
                                         id="twitterLink"
-                                        value={userData.twitterLink}
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
+                                        name="twitterLink"
+                                        value={values.twitterLink || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.twitterLink && errors.twitterLink ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.twitterLinkErr}
-                                    </div>
+                                    {
+                                        touched.twitterLink && errors.twitterLink && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.twitterLink}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Telegram Group Link?</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Telegram Group Link?</label> */}
+                                    <p className="ido-active-text-2 mb-1">Telegram Group Link?</p>
+
                                     <input
                                         type="text"
+                                        className="form-control"
+                                        id="telegramGrpLink"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
                                         name="telegramGrpLink"
-                                        className="form-control"
-                                        id="exampleInputPassword1"
+                                        value={values.telegramGrpLink || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.telegramGrpLink && errors.telegramGrpLink ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.telegramGrpLinkErr}
-                                    </div>
+                                    {
+                                        touched.telegramGrpLink && errors.telegramGrpLink && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.telegramGrpLink}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="mb-4">
-                                    <label for="exampleInputPassword1" className="form-label">Your Telegram handle (@username)</label>
+                                    {/* <label for="exampleInputPassword1" className="form-label">Your Telegram handle (@username)</label> */}
+                                    <p className="ido-active-text-2 mb-1">Your Telegram handle (@username)</p>
+
                                     <input
                                         type="text"
-                                        name="telegramUserName"
                                         className="form-control"
-                                        id="exampleInputPassword1"
+                                        id="telegramUserName"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
+                                        name="telegramUserName"
+                                        value={values.telegramUserName || ""}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        invalid={touched.telegramUserName && errors.telegramUserName ? true : false}
                                     />
-                                    <div className="error">
-                                        {validationErr.telegramUserNameErr}
-                                    </div>
+                                    {
+                                        touched.telegramUserName && errors.telegramUserName && (
+                                            <small className="invalid-email error password-text-33">
+                                                {errors.telegramUserName}
+                                            </small>
+                                        )
+                                    }
                                 </div>
                                 <div className="text-center">
                                     {/* <a href="/idoformtoken" type="submit" className=""> */}

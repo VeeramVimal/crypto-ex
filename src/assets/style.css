@@ -8416,6 +8416,7 @@ tbody tr:nth-child(odd) {
   background-color: rgb(34, 36, 40);
 }
 
+.dark-new 
 .form-check-input {
   filter: brightness(90%) !important;
 }
@@ -10511,7 +10512,22 @@ width: 50px;
   
 }
 
+.crypto-loan-input-field {
+  display: flex !important;
+  justify-content: space-between !important;
+  padding: 1rem !important;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(234, 236, 239);
+  cursor: pointer;
 
+}
+/* bg-light-green-2 p-1 mx-2 */
+.crypto-loan-low-rate {
+  background-color: rgb(14, 203, 129);
+  border-radius: 0.5em
+}
 /* .bell-icon-dropdown-css .dropdown-menu[data-bs-popper]{
   right: 0 !important;
 } */

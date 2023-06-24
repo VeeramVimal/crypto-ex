@@ -109,6 +109,10 @@ import Notification from "./Pages/notification"; //** notification import file l
 // import PostNewAddFinal from "./Pages/PostNewAddFinal";
 // import PostNewAddStart from "./Pages/PostNewAddStart";
 
+//** bear and bull predication gaming import location */
+import Predictiontrade from "./Pages/Prediction/Prediction-trade";
+import Predictionhome from "./Pages/Prediction/Prediction-home";
+
 function App() {
   const mode = localStorage.getItem("mode")
     ? localStorage.getItem("mode")
@@ -420,6 +424,12 @@ function App() {
 
     // { path: '*', component: <Error404 setTheme = {setTheme} theme={theme} />},
     // { path: '*', component: <UnderMain setTheme = {setTheme} theme={theme} />},
+
+    {
+      path: "/prediction-trade",
+      authChk: "afterLoginOnly",
+      component: <Predictiontrade setTheme={setTheme} theme={theme} />,
+    },
   ];
 
   useEffect(() => {

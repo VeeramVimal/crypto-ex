@@ -13,7 +13,6 @@ import { toast } from "../../../core/lib/toastAlert";
 import Config from "../../../core/config/";
 
 const STEP = 1;
-const MIN = 1;
 
 export default function Spot(props) {
 
@@ -23,6 +22,7 @@ export default function Spot(props) {
 
   const leverageFutures = localStorage.getItem('leverageFutures') ? localStorage.getItem('leverageFutures') : 25;
 
+  const [MIN, setMIN] = useState(1);
   const [MAX, setMAX] = useState(0);
 
   useEffect(() => {
@@ -32,7 +32,11 @@ export default function Spot(props) {
       if (localLeve > props.pairDetails.maxLeverage) {
         localLeve = 2;
       }
-      console.log("---", props.pairDetails.maxLeverage, localLeve);
+
+      if (localLeve < props.pairDetails.minLeverage) {
+        localLeve = props.pairDetails.minLeverage;
+      }
+      setMIN(parseInt(props.pairDetails.minLeverage));
       setMAX(parseInt(props.pairDetails.maxLeverage));
       props.setRange({ leverage: [localLeve] });
     }

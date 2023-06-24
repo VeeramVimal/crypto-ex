@@ -5,10 +5,8 @@ import Footer from "../../Pages/siteTheme/Footer";
 import { GoChevronLeft } from "react-icons/go";
 import tradingswiperimg from '../../assets/images/trading-swiper-image.png';
 import tradinglogo from '../../assets/images/tradinglogo.png';
-
 import $ from "jquery"
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import { IoMdArrowDropright } from "react-icons/io";
 // import { TbBrandDrops } from "react-icons/tb";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
@@ -37,91 +35,67 @@ export default function Maincopytrading(props) {
     const { myProfile } = useContextData();
     const [userBalance, setUserBalance] = useState();
 
-    async function getAllLeadTraders(){
-        try
-        {
+    async function getAllLeadTraders() {
+        try {
             const params = {
                 url: `${Config.V1_API_URL}copyTrade/getAllLeadTrader`,
                 method: "POST",
-                data: {trader_status:1,userId:myProfile._id},
-                };
-                const response = await makeRequest(params);
-                if (response) {
-                    setTraderDetails(response.data)
-                //console.log('aaaaaaaakkk',response)
-            
-                }
-                else
-                {
-                    toast({ type: "error", message: 'Leader Not Found' });
-                    //console.log('bbbbbbbbb')
-                }
+                data: { trader_status: 1, userId: myProfile._id },
+            };
+            const response = await makeRequest(params);
+            if (response) {
+                setTraderDetails(response.data)
+            }
+            else toast({ type: "error", message: 'Leader Not Found' });
+        } catch (err) {
+            console.log("lead-trader error", err);
         }
-        catch(e)
-        {
+    }
 
-        }        
-    
-      }
-
-
-      async function create_lead_trader(){
-    
+    async function create_lead_trader() {
         const params = {
-          url: `${Config.V1_API_URL}copyTrade/addLeadTrader`,
-          method: "POST",
-          data: { 
-            name:'isakki',
-            email:'isakkimuthu@clarisco.com',
-            discription:'hello i am a software developer',
-            trader_id:'6453550ca9a6dd29f823498c',
-             },
+            url: `${Config.V1_API_URL}copyTrade/addLeadTrader`,
+            method: "POST",
+            data: {
+                name: 'isakki',
+                email: 'isakkimuthu@clarisco.com',
+                discription: 'hello i am a software developer',
+                trader_id: '6453550ca9a6dd29f823498c',
+            },
         };
         const response = await makeRequest(params);
         if (response.status && response.Msg) {
-          console.log('hhhhhhhh')
-    
-        }
-        else
-        {
-          console.log('ssssss')
-        }
-    
-      }
+            console.log('hhhhhhhh')
+        } else console.log('ssssss')
+    }
 
-      async function getUserBalance(){
-        console.log('checkbalanceeeeeeeee')
+    async function getUserBalance() {
         const params = {
-          url: `${Config.V1_API_URL}copyTrade/getUserBalance`,
-          method: "POST",
-          data: {userId:myProfile._id,currency_id:'61330e0fedf7c88c84357055'},
+            url: `${Config.V1_API_URL}copyTrade/getUserBalance`,
+            method: "POST",
+            data: { userId: myProfile._id, currency_id: '61330e0fedf7c88c84357055' },
         };
         const response = await makeRequest(params);
-        if (response) {          
-          setUserBalance(response.data);
-    
-        }
-        else
-        {
-          console.log('bbbbbbbbb')
-        }
-    
-      }
+        if (response) {
+            setUserBalance(response.data);
+        } else console.log('bbbbbbbbb');
 
-      async function copyTrader(data){
+    }
+
+    async function copyTrader(data) {
 
         // const { value: formValues } = await Swal.fire({
         //     title: 'Copy Portfolio',
         //     confirmButtonText: 'Submit',
         //     html:
-            
+
         //     //  Cost per Order  <input id="swal_cost_per_order" type="number" step="0.5" class="swal2-input"><br>
         //      `Fixed Amount  <input id="swal_copy_amt" type="number" step="0.5" class="swal2-input"><br>
         //      Take Profit <input id="swal_take_profit" type="number" step="0.5" class="swal2-input"><br>
         //      Stop Loss   <input id="swal_stop_loss" type="number" step="0.5" class="swal2-input">`,
         //     focusConfirm: false,
         //     preConfirm: async() => {
-                
+
         //         let cost_per_order = document.getElementById('swal_cost_per_order').value;
         //         let copy_amt = document.getElementById('swal_copy_amt').value;
         //         let take_profit = document.getElementById('swal_take_profit').value;
@@ -154,18 +128,18 @@ export default function Maincopytrading(props) {
         //           }
         //     }
         //   })
-          
+
         //   if (formValues) {
         //     Swal.fire(JSON.stringify(formValues))
         //   }
-        
-      }
-    
+
+    }
+
     useEffect(() => {
         //getUserBalance();
         getAllLeadTraders();
         //create_lead_trader();
-    },[myProfile]);
+    }, [myProfile]);
 
     //console.log('traderDetailstraderDetails...',traderDetails)
     return (
@@ -284,67 +258,67 @@ export default function Maincopytrading(props) {
                                 </div>
                                 <div className="container  px-0 pb-5">
                                     <div className="row g-4 row-cols-lg-4 row-cols-1">
-                                    { traderDetails ?
-                                    traderDetails.map((res)=>{
-                                        return (<div className="col ">
-                                            <div className="copytrading-card-css-styling">
-                                                <div className="d-flex align-items-center">
-                                                    <div className="">
-                                                        <CgProfile className="trading-page-profile-icon-image me-3" />
-                                                    </div>
-                                                    <div className="">
-                                                        <p className="mb-0">{res.name}</p>
-                                                        {/* <p className="text-grey mb-0">{res.email}</p> */}
-                                                    </div>
-                                                </div>
-                                                <div className="d-flex mt-2 align-items-center">
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="">
-                                                            <FaCommentDollar className="text-grey" />
-                                                            <span className="mx-1 f-13 fw-500">USD-M</span>
+                                        {traderDetails ?
+                                            traderDetails.map((res) => {
+                                                return (<div className="col ">
+                                                    <div className="copytrading-card-css-styling">
+                                                        <div className="d-flex align-items-center">
+                                                            <div className="">
+                                                                <CgProfile className="trading-page-profile-icon-image me-3" />
+                                                            </div>
+                                                            <div className="">
+                                                                <p className="mb-0">{res.name}</p>
+                                                                {/* <p className="text-grey mb-0">{res.email}</p> */}
+                                                            </div>
                                                         </div>
-                                                        <div className="mx-1">
-                                                            <CgProfile className="text-grey" />
-                                                            <span className="mx-1 f-13 fw-500">180/250</span>
+                                                        <div className="d-flex mt-2 align-items-center">
+                                                            <div className="d-flex align-items-center">
+                                                                <div className="">
+                                                                    <FaCommentDollar className="text-grey" />
+                                                                    <span className="mx-1 f-13 fw-500">USD-M</span>
+                                                                </div>
+                                                                <div className="mx-1">
+                                                                    <CgProfile className="text-grey" />
+                                                                    <span className="mx-1 f-13 fw-500">180/250</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex mt-3 justify-content-between align-items-center">
+                                                            <div className="">
+                                                                <p className="mb-0 fc-g f-20">113.14%</p>
+                                                                <p className="text-grey">30D ROI</p>
+                                                            </div>
+                                                            <div className="">
+                                                                <p className="mb-0 fc-g f-20">21,272.51</p>
+                                                                <p className="text-grey">30D PNL</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex mt-3 justify-content-between align-items-center">
+                                                            <div className="">
+                                                                <p className="mb-0 f-20">38.14%</p>
+                                                                <p className="text-grey">30D ROI</p>
+                                                            </div>
+                                                            <div className="">
+                                                                <p className="mb-0 f-20">80.80%</p>
+                                                                <p className="text-grey">30D PNL</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex mt-2 justify-content-between align-items-center">
+                                                            <div className="">
+                                                                <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">AUM:</span>197,635.12 USD</p>
+                                                                <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">Runtime:</span>65 days</p>
+                                                            </div>
+                                                            <div className="mx-1">
+
+                                                                <button className='btn  banner-top-button-copy' onClick={() => navigate("/copy-trade-port?id=" + btoa(res.trader_id))}> {/* onClick={()=>copyTrader(res)} */}
+                                                                    Copy
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div className="d-flex mt-3 justify-content-between align-items-center">
-                                                    <div className="">
-                                                        <p className="mb-0 fc-g f-20">113.14%</p>
-                                                        <p className="text-grey">30D ROI</p>
-                                                    </div>
-                                                    <div className="">
-                                                        <p className="mb-0 fc-g f-20">21,272.51</p>
-                                                        <p className="text-grey">30D PNL</p>
-                                                    </div>
-                                                </div>
-                                                <div className="d-flex mt-3 justify-content-between align-items-center">
-                                                    <div className="">
-                                                        <p className="mb-0 f-20">38.14%</p>
-                                                        <p className="text-grey">30D ROI</p>
-                                                    </div>
-                                                    <div className="">
-                                                        <p className="mb-0 f-20">80.80%</p>
-                                                        <p className="text-grey">30D PNL</p>
-                                                    </div>
-                                                </div>
-                                                <div className="d-flex mt-2 justify-content-between align-items-center">
-                                                    <div className="">
-                                                        <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">AUM:</span>197,635.12 USD</p>
-                                                        <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">Runtime:</span>65 days</p>
-                                                    </div>
-                                                    <div className="mx-1">
-                                                    
-                                                        <button className='btn  banner-top-button-copy' onClick={()=>navigate("/copy-trade-port?id="+btoa(res.trader_id))}> {/* onClick={()=>copyTrader(res)} */}
-                                                            Copy
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>)
-                                    })
-                                        :''}
+                                                </div>)
+                                            })
+                                            : ''}
 
 
                                         {/* <div className="col ">

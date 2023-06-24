@@ -165,6 +165,11 @@ export default function UpdateMyadspage(props) {
       } = response;
       if (status) {
         setpairDetails(respData);
+        if (respData.status === 0) {
+          navigate("/myads");
+          toast({ type: "error", message: respData.pair + " pair is De-Activated!" });
+          return false;
+        }
         var value = { userId: myProfile?._id, currencyId: respData.fromCurrency }
         const params = {
           url: `${Config.V1_API_URL}p2p/getBalance`,
@@ -532,7 +537,9 @@ export default function UpdateMyadspage(props) {
       method: 'POST',
       body: passData
     }
+    setisLoading(true);
     const response = (await makeRequest(params));
+    setisLoading(false);
     if (response.status) {
       setconfirmformOpen(true);
       setverificationformOpen(false);

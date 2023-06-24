@@ -691,3 +691,8 @@ table thead {
 .trading-card-box-design{
   background-color: var(--background-color-3) !important;
 }
+
+.crypto-loan-input-field {
+  background-color: var(--background-color-3) !important;
+
+}

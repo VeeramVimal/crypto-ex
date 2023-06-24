@@ -103,12 +103,8 @@ export default function PostNewAdd(props) {
   const [toCurrencyList, settoCurrencyList] = useState([]);
   const [isLoggedIn, setisLoggedIn] = useState(null);
   const [refreshloader, setrefreshloader] = useState(0);
-  const [intervalFunc, setIntervalFunc] = useState({});
 
   const [countryList, setCountryList] = useState([]);
-  const [currentTab, setCurrentTab] = useState("buy");
-  const [selectPair, setselectPair] = useState("");
-
   const [selectedData, setselectedData] = useState([]);
   const [selectedType, setselectedType] = useState([]);
 
@@ -188,7 +184,6 @@ export default function PostNewAdd(props) {
               let pairnames = item?.pairs[0]?.pair?.split(/[_]+/)
               setpairList({ fromCurrencyName: pairnames[0], toCurrencyName: pairnames[1], toCurrencySymbol: item.pairs[0].toCurrency.currencySymbolCode })
               setpairDetails(item.pairs[0])
-              setselectPair(pairnames);
               setTimeout(() => {
                 getCurrentPairPrice(item.pairs[0].pair);
               }, 300)
@@ -209,6 +204,10 @@ export default function PostNewAdd(props) {
               }
             }
           })
+        } else {
+          navigate("/trade/all-payments");
+          toast({ type: "error", message: "All pairs is De-Activated!" });
+          return false;
         }
         setfromCurrencyList(fromCurrency);
         settoCurrencyList(toCurrency);
@@ -317,26 +316,53 @@ export default function PostNewAdd(props) {
       toast({ type, message: "Please add payment details.." });
       navigate("/p2p-user-center");
     }
-    formik.values = "";
+    // formik.values = "";
     passData.orderType = type;
     setpassData(passData);
-    setCurrentTab(type);
     setorderType(type);
     getpriceRangeDet(type, pairList);
     setpairList({ fromCurrencyName: pairList?.fromCurrencyName, toCurrencyName: pairList?.toCurrencyName, toCurrencySymbol: pairList?.toCurrencySymbol })
     getp2pPair(pairList?.fromCurrencyName + "_" + pairList?.toCurrencyName);
     getCurrentPairPrice(pairList?.fromCurrencyName + "_" + pairList?.toCurrencyName);
   };
-  const formik = useFormik({
-    initialValues: {
-      authCode: '',
-    },
-    validationSchema: authcodevalidationSchema,
-    onSubmit: async (values) => {
-      setisLoading(true);
+  // const formik = useFormik({
+  //   initialValues: {
+  //     authCode: '',
+  //   },
+  //   validationSchema: authcodevalidationSchema,
+  //   onSubmit: async (values) => {
+  //     setisLoading(true);
+  //     const data = {
+  //       userId: myProfile?._id,
+  //       authCode: values.authCode,
+  //       passData: passData
+  //     }
+  //     const params = {
+  //       url: `${Config.V1_API_URL}p2p/submitVerification`,
+  //       method: 'POST',
+  //       body: data
+  //     }
+  //     const response = (await makeRequest(params));
+  //     if (response.status) {
+  //       setconfirmformOpen(true);
+  //       setverificationformOpen(false);
+  //     } else {
+  //       let type = 'error';
+  //       toast({ type, message: response.message });
+  //       if (response.type == "KYC") {
+  //         navigate("/my/identification");
+  //       } else if (response.type == "TFA" || response.type == "2FA") {
+  //         navigate("/google-authenticator");
+  //       }
+  //     }
+  //     setisLoading(false);
+  //   },
+  // });
+
+  async function confirmOrder(){
+    try{
       const data = {
         userId: myProfile?._id,
-        authCode: values.authCode,
         passData: passData
       }
       const params = {
@@ -344,22 +370,25 @@ export default function PostNewAdd(props) {
         method: 'POST',
         body: data
       }
+      setisLoading(true);
       const response = (await makeRequest(params));
+      setisLoading(false);
+      let type = 'error';
       if (response.status) {
-        setconfirmformOpen(true);
+        type = 'success';
         setverificationformOpen(false);
+        navigate("/myAds");
       } else {
-        let type = 'error';
-        toast({ type, message: response.message });
         if (response.type == "KYC") {
           navigate("/my/identification");
         } else if (response.type == "TFA" || response.type == "2FA") {
           navigate("/google-authenticator");
         }
       }
-      setisLoading(false);
-    },
-  });
+      toast({ type, message: response.message });
+    } catch (err){}
+  }
+
   function decimalValue(value, decimal) {
     if (value != undefined) {
       value = value.toString();
@@ -1384,7 +1413,7 @@ export default function PostNewAdd(props) {
         </Modal.Body>
       </Modal>
 
-      <Modal show={verificationformOpen} onHide={() => setverificationformOpen(false)}>
+      {/* <Modal show={verificationformOpen} onHide={() => setverificationformOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Google verification code</Modal.Title>
         </Modal.Header>
@@ -1420,8 +1449,27 @@ export default function PostNewAdd(props) {
             </div>
           </form>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
+      <Modal show={verificationformOpen} onHide={() => setverificationformOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Are you sure you want to post this ad?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div className="row  ">
+          <div className='row mt-5'>
+            <div className='col'>
+              <button type="submit" className="btn text-white btn-col w-100 mt-4" disabled={isLoading} onClick={()=>confirmOrder()}>
+                Confirm
+              </button>
+              <button type="button" className="btn text-white btn-col w-100 mt-4" onClick={() => { setverificationformOpen(false); navigate('/p2p-user-center')}}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+        </Modal.Body>
+      </Modal>
       <Modal className='successfullyposted-modal' show={confirmformOpen} onHide={() => setconfirmformOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Successfully posted</Modal.Title>

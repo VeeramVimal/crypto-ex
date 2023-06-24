@@ -206,12 +206,9 @@ EnhancedTableToolbar.propTypes = {
 
 //** stable terms data */
 const stableTerms = [
-
   { value: 1, label: { head: "7 Days - Stable Rate", descripe: "Use spot wallet assets as collateral" }, days: 7, interestKey: "sevenDaysFixedInterest" },
   { value: 2, label: { head: "14 Days - Stable Rate", descripe: "Use spot wallet assets as collateral" }, days: 14, interestKey: "fourteenDaysFixedInterest" },
   { value: 3, label: { head: "30 Days - Stable Rate", descripe: "Use spot wallet assets as collateral" }, days: 30, interestKey: "thirtyDaysFixedInterest" }
-
-
 ]
 export default function EnhancedTable() {
   const navigate = useNavigate();
@@ -359,7 +356,6 @@ export default function EnhancedTable() {
     }
     const response = await makeRequest(params);
     const { data } = response;
-    console.log("data=======", data);
     if (data?.length > 0) { setLoaderStatus(true); setCollateralCoins(data); }
     else { setLoaderStatus(false) }
   };
@@ -428,11 +424,13 @@ export default function EnhancedTable() {
     // setTermDate(term.days)
   };
 
+  const blockInvalidChar = (event) => {
+    return ['e', 'E', '+', '-'].includes(event.key) && event.preventDefault();
+  }
 
   //** collateral and borrow input field handle functions */
   const handleChangeLoan = async (event) => {
     // var USD_value = selectCollateral?.userData.USDvalue;
-    const regexNum = /^[0-9\b]+$/;
     var USD_value = pairsData && pairsData.price;
     var estimateOneHr = "", interst = '', estimateInterest = "";
     var estimateTermInrst = "", repayAmount = "";
@@ -857,7 +855,9 @@ export default function EnhancedTable() {
                                   <p>
                                     <span className='text-grey'>{`${row.borrowCoinDetails.sevenDaysFixedRate.hourlyRate}%`}</span>
                                     <span className='text-grey mx-1'>/</span>
-                                    <span className=''>{`${parseFloat(((row.borrowCoinDetails.sevenDaysFixedRate.annuallyRate) % 100) * 100).toFixed(2)}%`}</span>
+                                    {/* <span className=''>{`${parseFloat(((row.borrowCoinDetails.sevenDaysFixedRate.annuallyRate) % 100) * 100).toFixed(2)}%`}</span> */}
+                                    <span className=''>{`${row.borrowCoinDetails.sevenDaysFixedRate.annuallyRate}%`}</span>
+
                                   </p>
                                 ) : null
                             }
@@ -870,7 +870,9 @@ export default function EnhancedTable() {
                                   <p>
                                     <span className='text-grey'>{`${row.borrowCoinDetails.fourteenDaysFixedRate.hourlyRate}%`}</span>
                                     <span className='text-grey mx-1'>/</span>
-                                    <span className=''>{`${parseFloat(((row.borrowCoinDetails.fourteenDaysFixedRate.annuallyRate) % 100) * 100).toFixed(2)}%`}</span>
+                                    {/* <span className=''>{`${parseFloat(((row.borrowCoinDetails.fourteenDaysFixedRate.annuallyRate) % 100) * 100).toFixed(2)}%`}</span> */}
+                                    <span className=''>{`${row.borrowCoinDetails.fourteenDaysFixedRate.annuallyRate}%`}</span>
+
                                   </p>
                                 ) : null
                             }
@@ -885,7 +887,9 @@ export default function EnhancedTable() {
                                   <p>
                                     <span className='text-grey'>{`${row.borrowCoinDetails.thirtyDaysFixedRate.hourlyRate}%`}</span>
                                     <span className='text-grey mx-1'>/</span>
-                                    <span className=''>{`${parseFloat(((row.borrowCoinDetails.thirtyDaysFixedRate.annuallyRate) % 100) * 100).toFixed(2)}%`}</span>
+                                    {/* <span className=''>{`${parseFloat(((row.borrowCoinDetails.thirtyDaysFixedRate.annuallyRate) % 100) * 100).toFixed(2)}%`}</span> */}
+                                    <span className=''>{`${row.borrowCoinDetails.thirtyDaysFixedRate.annuallyRate}%`}</span>
+
                                   </p>
                                 ) : null
                             }
@@ -964,11 +968,11 @@ export default function EnhancedTable() {
 
                     </span>
                   </p>
-                  <div className='d-flex justify-content-between bg-grey p-3' onClick={handleShow} >
+                  <div className='crypto-loan-input-field' onClick={handleShow} >
                     <p className='mb-0'>
                       {/* { termDetail ? termDetail.label.head : stableTerms[0].label.head }  */}
                       {`${selectTerm}`}
-                      <span className='bg-light-green-2 p-1 mx-2'>
+                      <span className='crypto-loan-low-rate p-1 mx-2'>
                         Low Rates
                       </span>
                     </p>
@@ -977,7 +981,7 @@ export default function EnhancedTable() {
                 </div>
                 <div className='mt-3'>
                   <p>I want to borrow</p>
-                  <div className='d-flex justify-content-between bg-grey p-3'>
+                  <div className='crypto-loan-input-field'>
 
                     <input
                       type="number"
@@ -989,6 +993,7 @@ export default function EnhancedTable() {
                       name='wantBorrow'
                       pattern="^-?[0-9]\d*\.?\d*$"
                       value={data.wantBorrow}
+                      onKeyDown={blockInvalidChar}
                       onChange={handleChangeLoan}
                     />
 
@@ -1041,7 +1046,7 @@ export default function EnhancedTable() {
                       />
                     </span>
                   </p>
-                  <div className='d-flex justify-content-between bg-grey p-3'>
+                  <div className='crypto-loan-input-field'>
                     <input
                       type="number"
                       min="0"
@@ -1052,7 +1057,7 @@ export default function EnhancedTable() {
                       name='collateral'
                       value={data.collateral}
                       pattern='^-?[0-9]\d*\.?\d*$'
-                      // pattern="^-?[0-9]\d*\.?\d*$"
+                      onKeyDown={blockInvalidChar}
                       onChange={handleChangeLoan}
                     />
                     {/* className="max-btn" */}
@@ -1429,21 +1434,23 @@ export default function EnhancedTable() {
                     onBlur={() => terms == true ? true : false}
                   />
                   <span className='me-5'>
-                    I have read and I agreed to Fibit Loan Service Agreement
+                    <span className='d-flex justify-content-between flex-column flex-lg-row text-grey align-items-center p-1'>
+                      I have read and I agreed to Fibit Loan Service Agreement
+                    </span>
                   </span>
                 </div>
               </div>
             </div>
             <div className='row'>
               <div className='col text-center'>
-                <div className='d-flex justify-content-between flex-column flex-lg-row align-items-center mb-3'>
-                  <button
-                    className='btn banner-top-button-login align-items-center mx-5 '
-                    disabled={terms ? false : true}
-                    onClick={handleBorrowClick}>
-                    Confirm
-                  </button>
-                </div>
+                {/* <div className='d-flex justify-content-between flex-column flex-lg-row align-items-center mb-3'> */}
+                <button
+                  className='btn banner-top-button-login align-items-center mx-5 '
+                  disabled={terms ? false : true}
+                  onClick={handleBorrowClick}>
+                  Confirm
+                </button>
+                {/* </div> */}
               </div>
             </div>
           </Modal.Body>

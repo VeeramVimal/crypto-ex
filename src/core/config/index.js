@@ -1,5 +1,5 @@
 const {
-    REACT_APP_API_URL = "http://localhost:3004/api/",
+    REACT_APP_API_URL = "http://localhost:3004/webapi/",
     REACT_APP_BACKEND_URL = "http://localhost:3004/",
     REACT_APP_SOCKET_URL = "http://localhost:3004/",
     REACT_APP_FRONTEND_URL = "http://localhost:3000",
@@ -20,6 +20,7 @@ const {
     REACT_APP_NOTIFICATION_STATUS = "Disable",
     REACT_APP_COPY_TRADING_STATUS = "Disable",
     REACT_APP_IDO_LAUNCHPAD_STATUS = "Disable",
+    REACT_APP_BEAR_AND_BULL_STATUS = "Disable"
 } = process.env;
 
 const KEY = {
@@ -45,6 +46,7 @@ const KEY = {
     NOTIFICATION_STATUS: REACT_APP_NOTIFICATION_STATUS,
     COPY_TRADING_STATUS: REACT_APP_COPY_TRADING_STATUS,
     LAUNCHPAD_STATUS: REACT_APP_IDO_LAUNCHPAD_STATUS,
+    BEAR_AND_BULL: REACT_APP_BEAR_AND_BULL_STATUS,
     whitepaper: "Whitepaper",
 
     TFA: {
