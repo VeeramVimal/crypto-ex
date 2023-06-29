@@ -70,7 +70,7 @@ export default function UpdateMyadspage(props) {
   const [floatingPrice, setfloatingPrice] = useState(100);
   const [totalFloat, settotalFloat] = useState(0);
   const [minAmount, setminAmount] = useState(15);
-  const [maxAmount, setmaxAmount] = useState(2000000);
+  const [maxAmount, setmaxAmount] = useState(0);
   const [paymentTime, setpaymentTime] = useState(1);
   const [orderPrice, setorderPrice] = useState(0);
   const [priceType, setpriceType] = useState('Fixed');
@@ -112,6 +112,7 @@ export default function UpdateMyadspage(props) {
   const [buyPaymentList, setbuyPaymentList] = useState([]);
   const [sellPaymentList, setsellPaymentList] = useState([]);
   const [changePriceStatus, setchangePriceStatus] = useState(false);
+  const [totalAmount, settotalAmount] = useState(0);
 
 
   useEffect(() => {
@@ -120,7 +121,7 @@ export default function UpdateMyadspage(props) {
         setminAmount(pairDetails.minTrade)
       }
       if (pairDetails.maxTrade) {
-        setmaxAmount(pairDetails.maxTrade);
+        // setmaxAmount(pairDetails.maxTrade);
       }
     }
   }, [pairDetails]);
@@ -216,9 +217,9 @@ export default function UpdateMyadspage(props) {
               setpairDetails(item.pairName)
               setselectPair(item.pairName);
               setsellPaymentList(item.sellpaymentDet);
-              
+              setmaxAmount(item.maxAmt)
               setTimeout(() => {
-                getCurrentPairPrice(item.pairName);
+                getCurrentPairPrice(item.pairName, item.usdtPrice);
                 getpriceRangeDet(item.orderType, item.pairName)
               }, 300);
               setTimeout(() => {
@@ -231,7 +232,6 @@ export default function UpdateMyadspage(props) {
               if (item.orderType == "buy") {
                 setselectedData(item.buypaymentDet)
               }
-              
             }
           })
         } else {
@@ -250,7 +250,7 @@ export default function UpdateMyadspage(props) {
       setSelectedCountry([{ label: "Select All", value: "*" }, ...countryArray]);
     } catch (err) { }
   }
-  async function getCurrentPairPrice(selectPair) {
+  async function getCurrentPairPrice(selectPair,usdtBal) {
     try {
       const params = {
         url: `${Config.V1_API_URL}p2p/getCurrentpair`,
@@ -264,7 +264,8 @@ export default function UpdateMyadspage(props) {
         settotalFloat(floatingPrice * lastPrice / 100);
         let minFixedVal = (lastPrice * (p2pSettings && p2pSettings.minPercentage)) / 100;
         let maxFixedVal = (lastPrice * (p2pSettings && p2pSettings.maxPercentage)) / 100;
-        setfixedMinMaxData({ min: minFixedVal, max: maxFixedVal })
+        setfixedMinMaxData({ min: minFixedVal, max: maxFixedVal });
+       
       }
     } catch (err) { }
   }
@@ -497,24 +498,34 @@ export default function UpdateMyadspage(props) {
     } catch (err) { console.log("error:", err) }
   }
   const nextStep2 = async (values) => {
-    let tradeFiatAmount = values.maxAmt;
-    if (pairDetails?.minTrade > Number(values.minAmt)) {
-      setprice_validation_errors({ minAmt_err: "Min limit should not be less than " + minAmount+" "+ (pairDetails?.pair?.split(/[_]+/)[1]) });
-      return false;
-    } else if (pairDetails?.maxTrade < Number(values.maxAmt)) {
-      setprice_validation_errors({ maxAmt_err: values.maxAmt+"Max order limit " + pairDetails?.maxTrade });
-      return false;
-    } else if (tradeFiatAmount < Number(values.minAmt)) {
-      setprice_validation_errors({ minAmt_err: "Min limit should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1])});
-      return false;
-    } else if (tradeFiatAmount < Number(values.maxAmt) && orderType === 'sell') {
-      setprice_validation_errors({ maxAmt_err: "Exceeds the maximum available amount" });
-      return false;
-    } else if (Number(values.maxAmt) < Number(values.minAmt)) {
-      setprice_validation_errors({ maxAmt_err: "Max order should not be less than min amount" });
+    // let tradeFiatAmount = maxAmount;
+    // if (pairDetails?.minTrade > Number(minAmount)) {
+    //   setprice_validation_errors({ minAmt_err: "Min limit should not be less than " + minAmount+" "+ (pairDetails?.pair?.split(/[_]+/)[1]) });
+    //   return false;
+    // } else if (pairDetails?.maxTrade < Number(maxAmount)) {
+    //   setprice_validation_errors({ maxAmt_err: values.maxAmt+"Max order limit " + pairDetails?.maxTrade });
+    //   return false;
+    // } else if (tradeFiatAmount < Number(values.minAmt)) {
+    //   setprice_validation_errors({ minAmt_err: "Min limit should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1])});
+    //   return false;
+    // } else if (tradeFiatAmount < Number(values.maxAmt) && orderType === 'sell') {
+    //   setprice_validation_errors({ maxAmt_err: "Exceeds the maximum available amount" });
+    //   return false;
+    // } else if (Number(values.maxAmt) < Number(values.minAmt)) {
+    //   setprice_validation_errors({ maxAmt_err: "Max order should not be less than min amount" });
+    //   return false;
+    // }
+    // setprice_validation_errors({ minAmt_err: "", maxAmt_err: "", total_err: "" });
+
+
+    const price_validation_errors_cpy = await chkFormValidation(totalAmount, minAmount, maxAmount);
+
+    console.log({price_validation_errors_cpy})
+
+    if(price_validation_errors_cpy.total_err !== "" || price_validation_errors_cpy.minAmt_err !== "" || price_validation_errors_cpy.maxAmt_err !== "") {
       return false;
     }
-    setprice_validation_errors({ minAmt_err: "", maxAmt_err: "", total_err: "" });
+
     if (orderType === "buy" && mypaymentNames === "") {
       let type = 'error'
       toast({ type, message: 'Please select at least 1 payment method' });
@@ -524,9 +535,10 @@ export default function UpdateMyadspage(props) {
       toast({ type, message: 'Select up to' + p2pSettings?.selectionLimit + 'methods' });
       return false;
     }
+
     values.maxAmt = (values.total * currentInrPrice)?.toFixed(pairDetails?.toDecimal)
-    passData.minAmt = values.minAmt;
-    passData.maxAmt = values.maxAmt;
+    passData.minAmt = minAmount;
+    passData.maxAmt = maxAmount;
     passData.timeLimit = paymentTime;
     passData.orderId = editId;
     passData.paymentId = selectedType;
@@ -587,6 +599,89 @@ export default function UpdateMyadspage(props) {
     setp2ppayementOpen(true);
     getPayment();
   }
+
+  async function allAvaiBal() {
+    const availableBal = userWallet?.p2pAmount;
+    settotalAmount(availableBal);
+    chkFormValidation(availableBal, minAmount, maxAmount);
+  }
+
+  const calculateorderLimit = (placeValue, placeType) => {
+
+    let newTotAmt = 0;
+    if (placeType === "totalAmount") {
+      settotalAmount(placeValue);
+      newTotAmt = placeValue;      
+      const chkMaxAmt = placeValue*currentInrPrice;
+      if(maxAmount > chkMaxAmt || maxAmount === 0 || minAmount > maxAmount) {
+        setmaxAmount(chkMaxAmt);
+        chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
+      }
+      else {
+        chkFormValidation(newTotAmt, minAmount, maxAmount);
+      }
+    }
+    else if (placeType === "minLimit") {
+      setminAmount(placeValue);
+      chkFormValidation(totalAmount, placeValue, maxAmount);
+    }
+    else if (placeType === "maxLimit") {
+      setmaxAmount(placeValue);
+      let chkTotAmt = placeValue/currentInrPrice;
+      if(chkTotAmt > totalAmount) {
+        newTotAmt = chkTotAmt;
+        settotalAmount(chkTotAmt);
+        chkFormValidation(newTotAmt, minAmount, placeValue);
+      }
+      else {
+        chkFormValidation(totalAmount, minAmount, placeValue);
+      }
+    }
+    
+  }
+  async function chkFormValidation(chkTotAmt, chkMinAmt, chkMaxAmt) {
+
+    const availableBal = userWallet?.p2pAmount;
+    const tradeFiatAmount = (currentInrPrice * total)?.toFixed(2);
+
+    chkMinAmt = chkMinAmt ? parseFloat(chkMinAmt).toFixed(2) : 0;
+    chkMaxAmt = chkMaxAmt ? parseFloat(chkMaxAmt).toFixed(2) : 0;
+
+    let price_validation_errors_cpy = Object.assign({}, price_validation_errors);
+
+    if (availableBal < Number(chkTotAmt) && orderType === 'sell') {
+      price_validation_errors_cpy.total_err = "The total amount should not exceed the available balance";
+    }
+    else {
+      price_validation_errors_cpy.total_err = "";
+    }
+
+    if (pairDetails?.minTrade > Number(chkMinAmt)) {
+      price_validation_errors_cpy.minAmt_err = "Min limit should not be less than " + pairDetails.minTrade +" "+ (pairDetails?.pair?.split(/[_]+/)[1]);;
+    }
+    else {
+      price_validation_errors_cpy.minAmt_err = "";
+    }
+
+    if (pairDetails?.maxTrade < Number(chkMaxAmt)) {
+      price_validation_errors_cpy.maxAmt_err = "Max limit should not exceed " + pairDetails.maxTrade;
+    }
+    else if (tradeFiatAmount < Number(chkMaxAmt)) {
+      price_validation_errors_cpy.maxAmt_err = "Exceeds the maximum available amount";
+    }
+    else if (Number(chkMaxAmt) < Number(chkMinAmt)) {
+      price_validation_errors_cpy.maxAmt_err = "Max order should not be less than min amount";
+    }
+    else {
+      price_validation_errors_cpy.maxAmt_err = "";
+    }
+
+    console.log({price_validation_errors_cpy});
+    setprice_validation_errors(price_validation_errors_cpy);
+    return price_validation_errors_cpy;
+
+  }
+  
   return (
     <div>
       <NavbarOne
@@ -751,7 +846,7 @@ export default function UpdateMyadspage(props) {
                                   <div className='d-flex justify-content-between'>
                                     {(myadsList && myadsList[0] && myadsList[0].orderType) == 'sell' ?
                                       <div>
-                                        <p>available : {decimalValue(userWallet?.p2pAmount, 2)} {(myadsList && myadsList[0] && myadsList[0]?.fromCurrency)}</p>
+                                        <p>Available : {decimalValue(userWallet?.p2pAmount, 2)} {(myadsList && myadsList[0] && myadsList[0]?.fromCurrency)}</p>
                                       </div>
                                       :
                                       <div><p></p></div>
@@ -774,7 +869,7 @@ export default function UpdateMyadspage(props) {
                                     <div>
                                       <label>Order Limit</label>
                                       <div className="input-group mb-3">
-                                        <input type="text" className="form-control"
+                                        {/* <input type="text" className="form-control"
                                           aria-label="Username"
                                           aria-describedby="basic-addon1"
                                           name="minAmt"
@@ -784,6 +879,22 @@ export default function UpdateMyadspage(props) {
                                           autoComplete="off"
                                           error={touched.minAmt && Boolean(errors.minAmt)}
                                           helperText={touched.minAmt && errors.minAmt}
+                                        /> */}
+                                        <input 
+                                          type="number"  
+                                          name="minAmount" 
+                                          id="minAmount" 
+                                          className="form-control"
+                                          aria-label="Username"
+                                          aria-describedby="basic-addon1"
+                                          autoComplete="off"
+                                          value={decimalValue(minAmount,pairDetails?.toDecimal)}
+                                          onChange={(event) =>
+                                            calculateorderLimit(
+                                              event.target.value,
+                                              "minLimit"
+                                            )
+                                          }
                                         />
                                         <span className="input-group-text bg-white" id="basic-addon1">{(myadsList && myadsList[0] && myadsList[0]?.toCurrency)}</span>
                                       </div>
@@ -795,7 +906,7 @@ export default function UpdateMyadspage(props) {
                                     </div>
                                     <div className=' mt-4 float-end'>
                                       <div className="input-group mb-3">
-                                      {(Number(values.total) > 0) ?
+                                      {/* {(Number(values.total) > 0) ?
                                         <input type="text" className="form-control"
                                           aria-label="Username" aria-describedby="basic-addon1"
                                           name="maxAmt"
@@ -817,7 +928,23 @@ export default function UpdateMyadspage(props) {
                                           error={touched.maxAmt && Boolean(errors.maxAmt)}
                                           helperText={touched.maxAmt && errors.maxAmt}
                                         />
-                                      }
+                                      } */}
+                                      <input 
+                                          type="number"  
+                                          name="maxLimit" 
+                                          id="maxLimit" 
+                                          className="form-control"
+                                          aria-label="Username"
+                                          aria-describedby="basic-addon1"
+                                          autoComplete="off"
+                                          value={decimalValue(maxAmount,pairDetails?.fromDecimal)}
+                                          onChange={(event) =>
+                                            calculateorderLimit(
+                                              event.target.value,
+                                              "maxLimit"
+                                            )
+                                          }
+                                          />
                                         <span className="input-group-text bg-white" id="basic-addon1">{(myadsList && myadsList[0] && myadsList[0]?.toCurrency)}</span>
                                       </div>
                                       {errors.maxAmt ? <small className="invalid-maxAmt error">{errors.maxAmt}</small> : null}

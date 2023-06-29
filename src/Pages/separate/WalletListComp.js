@@ -28,13 +28,13 @@ import { showNumber } from '../../core/helper/date-format';
 const validationSchema = yup.object({
   amount: yup
     .number()
-    .typeError('Only allowed 2 decimal')
+    // .typeError('Only allowed 2 decimal')
     .required('Amount is required')
-    .test(
-      "maxDigitsAfterDecimal",
-      "Only allowed 2 decimal",
-      (number) => /^\d+(\.\d{1,2})?$/.test(number)
-    ),
+    // .test(
+    //   "maxDigitsAfterDecimal",
+    //   "Only allowed 2 decimal",
+    //   (number) => /^\d+(\.\d{1,2})?$/.test(number)
+    // ),
 });
 
 function descendingComparator(a, b, orderBy) {
@@ -396,7 +396,11 @@ export default function WalletListComp(props) {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       let balance = fromAccount == 'Main Wallet' ? currency.balance : fromAccount == 'Loan Wallet' ? currency.cryptoLoanAmount : currency.p2pAmount;
-      let amount = values.amount;
+      let amount = parseFloat(values.amount);
+      if (Number.isInteger(amount) === false) {
+        toast({ type: 'error', message: 'Decimal value not allowed!'});
+        return false;
+      }
       if (balance >= amount) {
         const body = {
           amount: amount,

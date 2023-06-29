@@ -116,9 +116,9 @@ export default function NavbarOne(props) {
     };
 
     useEffect(() => {
+        loginChk();
+        window.scrollTo(0, 0);
         if (Config.NOTIFICATION_STATUS == "Enable") {
-            window.scrollTo(0, 0);
-            loginChk();
             let socket = socketIOClient(Config.SOCKET_URL, {
                 transports: ["websocket"],
             });
