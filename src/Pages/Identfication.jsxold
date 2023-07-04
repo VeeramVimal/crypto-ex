@@ -1,0 +1,43 @@
+import React from "react";
+import { GrContactInfo } from "react-icons/gr";
+import { BiIdCard } from "react-icons/bi";
+import { FiUser } from "react-icons/fi";
+export default function Identfication() {
+  return (
+    <div>
+      <div className="container-fluid px-0">
+        <div className="row">
+          <div className="col-lg-12">
+            <h3 className="head-profile">Verified</h3>
+          </div>
+          <div className="col-lg-7">
+            <p>
+              <span className="icon-mob">
+                <GrContactInfo />
+              </span>{" "}
+              <span className="sub-head-profile">Personal information</span>
+            </p>
+          </div>
+          <div className="col-lg-7">
+            <p>
+              <span className="icon-mob">
+                <BiIdCard />
+              </span>{" "}
+              <span className="sub-head-profile">
+                information Government-issued ID
+              </span>
+            </p>
+          </div>
+          <div className="col-lg-7">
+            <p>
+              <span className="icon-mob">
+                <FiUser />
+              </span>{" "}
+              <span className="sub-head-profile">Facial recognition</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

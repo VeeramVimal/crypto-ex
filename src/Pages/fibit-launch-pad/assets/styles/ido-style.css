@@ -1,0 +1,1269 @@
+.Ido-App-lanchpad {
+    height: 100%;
+    background: linear-gradient(160deg, #27187b, #16014e);
+    color: #fff;
+    font-family: "Cera";
+    overflow-x: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* @font-face {
+    font-family: "Cera";
+    src: url("../Pages/fibit-launch-pad/assets/font/Cera-Medium.ttf");
+} */
+
+@font-face {
+    font-family: "Cera";
+    src: url("../font/Cera-Medium.ttf");
+};
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-track {
+    width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg,
+            #1b9ffe 0%,
+            rgb(115, 90, 255) 100%) !important;
+}
+
+/* Typography css begin */
+h5 {
+    font-size: 1rem;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: inherit;
+}
+
+/* Typography css end */
+
+/* Font size css begin */
+.fs-10 {
+    font-size: 10px !important;
+}
+
+.fs-12 {
+    font-size: 12px !important;
+}
+
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.fs-16 {
+    font-size: 16px !important;
+}
+
+.fs-20 {
+    font-size: 20px !important;
+}
+
+.fs-24 {
+    font-size: 24px !important;
+}
+
+.fs-30 {
+    font-size: 30px !important;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+/* Font size css end */
+
+.Ido-Navbar .navbar-brand img {
+    height: 50px;
+    width: 160px;
+}
+
+.Ido-Navbar .nav-link {
+    color: #fff;
+    font-size: 16px;
+    margin-right: 30px;
+}
+
+.Ido-Navbar .nav-link:hover {
+    color: #fff;
+}
+
+.Ido-Navbar .nav-link:focus,
+.Ido-Navbar .nav-link:hover {
+    color: #fff;
+}
+
+.Ido-Navbar .navbar-navlink-icon {
+    font-size: 16px;
+    margin-top: -2px;
+    margin-right: 4px;
+    color: #ff04b4;
+}
+
+.Ido-Navbar .navbar-nav a {
+    letter-spacing: 0.05em;
+    display: inline-block;
+    position: relative;
+}
+
+.Ido-Navbar .navbar-nav a:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #fff;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+
+.Ido-Navbar .navbar-nav a:hover:after {
+    width: 100%;
+    left: 0;
+}
+
+.progress {
+    --bs-progress-height: 0.5rem;
+    --bs-progress-bar-bg: #ff04b4ce;
+
+    background-color: #fff;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    display: none;
+}
+
+/* Firefox */
+.Ido-App-lanchpad input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.Ido-App-lanchpad .modal-header .btn-close {
+    box-shadow: none !important;
+}
+
+.Ido-App-lanchpad .modal-content {
+    background: #000;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.247);
+}
+
+/* .btn-close {
+    background: url("../Pages/fibit-launch-pad/assets/images/cross.white.svg");
+    width: 0.4em !important;
+    height: 0.4em !important;
+} */
+
+.Ido-App-lanchpad .btn-close {
+    background: url("../images/cross.white.svg");
+    width: 0.4em !important;
+    height: 0.4em !important;
+}
+.Ido-App-lanchpad .modal-header {
+    border-bottom: 1px solid #ececec67;
+}
+
+.Ido-App-lanchpad .modal-footer {
+    border-top: 1px solid #ececec67;
+}
+
+.Ido-App-lanchpad form .error {
+    color: #db3232;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+    /* margin-left: 5rem; */
+    display: relative;
+
+}
+
+.Ido-App-lanchpad .input-error {
+    border-color: #e63946;
+}
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+    .Ido-App-lanchpad .floating-hand-image-4 {
+        right: -130px;
+        position: absolute;
+        text-align: center;
+        width: 250px;
+        height: 480px;
+    }
+
+    .Ido-App-lanchpad .floating-hand-image-3 {
+        right: -130px;
+        position: absolute;
+        text-align: center;
+        width: 250px;
+        height: 280px;
+        opacity: 0.4;
+    }
+
+    .floating-hand-image-2 {
+        left: -130px;
+        position: absolute;
+        text-align: center;
+        width: 250px;
+        height: 280px;
+        opacity: 0.4;
+    }
+
+    .floating-hand-image-1 {
+        width: 200px;
+        height: 300px;
+        position: absolute;
+    }
+
+    .get-start-1-connect-wallet {
+        padding: 10px 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 0px;
+        border: none;
+        background-color: #ff04fd;
+        background-image: linear-gradient(202deg,
+                #ff04fd 0%,
+                #ca41a7 46%,
+                #cc45e7 100%);
+        color: rgb(255, 255, 255) !important;
+        overflow: hidden;
+        font-size: 14px !important;
+        font-weight: 300 !important;
+        transition: all 0.3s ease-in-out;
+        outline: none !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .get-start-1 {
+        padding: 10px 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-radius: 25px;
+        border: none;
+        background-color: transparent;
+        border: 1px solid #b67b03 !important;
+
+        color: rgb(255, 255, 255) !important;
+        overflow: hidden;
+        font-size: 14px !important;
+        font-weight: 300 !important;
+        transition: all 0.3s ease-in-out;
+        outline: none !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .ido-active-buy-section-modal .input-group {
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    }
+
+    .ido-active-buy-section-modal .input-group-sm>.form-control {
+        padding: 0.05rem 0.5rem;
+    }
+
+    .ido-active-buy-section-modal ::placeholder {
+        color: #fff !important;
+    }
+
+    .ido-active-buy-section-modal .input-group-text {
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+    }
+
+    .ido-active-buy-section-modal .input-group-text img {
+        width: 22px;
+        height: 22px;
+        margin-right: 4px;
+        position: relative;
+        top: -2px;
+    }
+
+    .ido-active-buy-section-modal .modal-content {
+        background-color: #151515;
+        color: #fff;
+    }
+
+    .Ido-App-lanchpad .navbar-connect-wallet {
+        border: 0px;
+        border-radius: 16px;
+        box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: #1b9ffe;
+        text-decoration: none !important;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 600;
+        padding: 10px 20px;
+        position: relative;
+        top: 4px;
+    }
+
+    .ido-enable-disable {
+        pointer-events: none;
+        opacity: 0.1;
+    }
+
+    .approve-connect-wallet-section {
+        position: absolute;
+        top: 28%;
+        left: 28%;
+    }
+
+    .ido-active-buy-approve {
+        background: #372683;
+        border: 1px solid #b67b03 !important;
+        border-radius: 8px;
+        padding: 8px 0px;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .ido-active-buy-text-1 {
+        font-size: 13px;
+    }
+
+    .ido-active-buy-section .input-group {
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    }
+
+    .ido-active-buy-section .input-group-sm>.form-control {
+        padding: 0.05rem 0.5rem;
+    }
+
+    .ido-active-buy-section ::placeholder {
+        color: #fff !important;
+    }
+
+    .Ido-App-lanchpad .form-control:focus {
+        background-color: transparent;
+    }
+
+    .Ido-App-lanchpad .form-control {
+        box-shadow: none !important;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #fff !important;
+        background-color: transparent;
+        border: 0px solid #ced4da;
+    }
+
+    .ido-active-buy-max {
+        background-color: #ff04b4a6;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border: none;
+        height: 22px;
+        margin-top: 2px;
+        color: #fff;
+    }
+
+    .ido-active-buy-section .input-group-text {
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+    }
+
+    .ido-active-buy-section .input-group-text img {
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+        position: relative;
+        top: -2px;
+    }
+
+    .ido-active-buy-section {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        padding: 22px 16px;
+        border-radius: 15px;
+        position: relative;
+    }
+
+    .ido-active-text-8 {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .ido-active-text-7 {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .id-active-background-bg {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        padding: 12px 16px;
+        border-radius: 15px;
+    }
+
+    .ido-active-text-6 {
+        color: #c2c2c2;
+    }
+
+    .ido-active-text-5 {
+        font-size: 18px;
+    }
+
+    .ido-level-button-1 {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        border-radius: 12px;
+        padding: 4px 8px;
+        font-size: 14px;
+    }
+
+    .ido-active-image-3 img {
+        width: 60px;
+        border-radius: 50%;
+    }
+
+    .ido-copy-button {
+        color: #fff;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 4px 12px 4px 8px;
+        background: linear-gradient(160deg, #27187b, #16014e);
+        /* border: 1px solid #b67b03 !important; */
+        border-radius: 3px;
+        border: none;
+    }
+
+    .ido-active-text-4 {
+        font-size: 16px;
+    }
+
+    .ido-active-text-3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .active-ido-background {
+        background-color: #372683;
+        padding: 20px 25px;
+        border-radius: 10px;
+    }
+
+    .ido-icon-button-1 {
+        position: relative;
+        top: -2px;
+        background-color: #ff04b4a6;
+        border-radius: 50%;
+        padding: 6px;
+        font-size: 28px;
+        margin-right: 4px;
+        color: rgb(255, 255, 255);
+    }
+
+    .ido-active-text-2 {
+        font-size: 18px;
+        line-height: 180%;
+        letter-spacing: -0.02em;
+        color: #c2c2c2;
+        width: 70%;
+    }
+
+    .ido-active-button-1 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: -0.02em;
+        padding: 6px 18px;
+        color: #ffffff;
+        background: #372683;
+        border: 1px solid #b67b03 !important;
+        border-radius: 8px;
+    }
+
+    .ido-active-image-1 img {
+        width: 90px;
+        border-radius: 50%;
+    }
+
+    .hero-section-ido-launchpad-tabs-banner .nav-pills .nav-link.active,
+    .hero-section-ido-launchpad-tabs-banner .nav-pills .show>.nav-link {
+        background-color: #ef88cd;
+        background-image: linear-gradient(315deg,
+                #e688ef 0%,
+                #ff6adf 55%,
+                #f6a4e4 100%);
+
+        color: rgb(0, 0, 0) !important;
+    }
+
+    .hero-section-ido-launchpad-tabs-banner .form-control {
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #fff;
+        background-color: #0000;
+        background-clip: padding-box;
+        border: 1px solid #daaf08;
+        border-left: 0px;
+        box-shadow: none !important;
+    }
+
+    .hero-section-ido-launchpad-tabs-banner .input-group-text {
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        background-color: #0000;
+        border: 1px solid #daaf08;
+        border-radius: 0.375rem;
+        box-shadow: none !important;
+    }
+
+    .ido-launchpad-button {
+        /* background: #d48730;
+      background: linear-gradient(
+        to right,
+        #30d49d 0%,
+        #3ce0d2 12%,
+        #55dafb 49%,
+        #55f5fb 55%,
+        #30ced4 90%,
+        #308ad4 100%
+      ); */
+
+        background-color: #ef88cd;
+        background-image: linear-gradient(315deg,
+                #e688ef 0%,
+                #ff6adf 55%,
+                #f6a4e4 100%);
+
+        color: rgb(0, 0, 0) !important;
+        width: 300px;
+        height: 40px;
+
+        border-radius: 6px;
+    }
+
+    .application-form-ido-section .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background: linear-gradient(160deg, #27187b, #16014e);
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0.375rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        box-shadow: none !important;
+    }
+
+    .application-form-ido-section {
+        background-color: #372683;
+        padding: 30px 30px;
+        border-radius: 12px;
+    }
+
+    .footer-link-section a {
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: capitalize;
+        margin-right: 16px;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+
+    .team-image-1 {
+        width: 150px;
+        height: 150px;
+    }
+
+    .team-text-1 {
+        font-size: 24px;
+    }
+
+    .team-text-2 {
+        font-size: 18px;
+    }
+
+    .team-text-3 {
+        margin-right: 6px;
+        font-size: 18px;
+    }
+
+    .Ido-App-lanchpad .card {
+        background-color: #372683;
+    }
+
+    .active-ido-section-2 {
+        background: #ff04b46b;
+        padding: 2px 20px;
+        border-radius: 14px;
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .active-ido-section-1 {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        padding: 15px 20px;
+        border-radius: 12px;
+    }
+
+    .ido-text-7 {
+        font-size: 16px;
+    }
+
+    .ido-text-6 {
+        font-size: 14px;
+    }
+
+    .ido-text-5 {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .ido-text-4 {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .ido-image-1 {
+        width: 60px;
+        height: 60px;
+    }
+
+    .Ido-banner-section-3 .card {
+        background-color: #372683;
+    }
+
+    /* .Ido-banner-section-2 {
+      background: linear-gradient(160deg, #27187b, #16014e);
+    } */
+
+    .Ido-banner-image-2 {
+        width: 80%;
+    }
+
+    .Ido-banner-image-1 {
+        width: 60%;
+        float: right;
+    }
+
+    .ido-button-1 {
+        width: 300px;
+        background-color: transparent;
+        border: 1px solid #b67b03 !important;
+        color: #fff;
+        height: 50px;
+        border-radius: 30px;
+    }
+
+    .ido-text-3 {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .ido-text-2 {
+        font-size: 18px;
+        line-height: 0.95em;
+        letter-spacing: 0.03em;
+        font-weight: bold;
+        color: transparent;
+        background: repeating-linear-gradient(0deg,
+                #b6039e 0.1em,
+                #da08be 0.2em,
+                #fea0e6 0.3em,
+                #da08ad 0.4em,
+                #b60389 0.5em);
+        -webkit-background-clip: text;
+    }
+
+    .ido-text-1 {
+        font-size: 3.5rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+
+    .ido-icon-1 {
+        position: relative;
+        left: -100px;
+        font-size: 4.5rem;
+        top: 70px;
+    }
+}
+
+/* ============ mobile view ============ */
+
+@media (max-width: 991px) {
+    .floating-hand-image-4 {
+        right: -130px;
+        position: absolute;
+        text-align: center;
+        width: 250px;
+        height: 480px;
+    }
+
+    .floating-hand-image-3 {
+        right: -130px;
+        position: absolute;
+        text-align: center;
+        width: 250px;
+        height: 280px;
+        opacity: 0.4;
+    }
+
+    .floating-hand-image-2 {
+        left: -130px;
+        position: absolute;
+        text-align: center;
+        width: 250px;
+        height: 280px;
+        opacity: 0.4;
+    }
+
+    .floating-hand-image-1 {
+        width: 200px;
+        height: 300px;
+        position: absolute;
+    }
+
+    .get-start-1-connect-wallet {
+        padding: 10px 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 15px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 0px;
+        border: none;
+        background-color: #ff04fd;
+        background-image: linear-gradient(202deg,
+                #ff04fd 0%,
+                #ca41a7 46%,
+                #cc45e7 100%);
+        color: rgb(255, 255, 255) !important;
+        overflow: hidden;
+        font-size: 14px !important;
+        font-weight: 300 !important;
+        transition: all 0.3s ease-in-out;
+        outline: none !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .get-start-1 {
+        padding: 10px 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border-radius: 25px;
+        border: none;
+        background-color: transparent;
+        border: 1px solid #b67b03 !important;
+
+        color: rgb(255, 255, 255) !important;
+        overflow: hidden;
+        font-size: 14px !important;
+        font-weight: 300 !important;
+        transition: all 0.3s ease-in-out;
+        outline: none !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .ido-active-buy-section-modal .input-group {
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    }
+
+    .ido-active-buy-section-modal .input-group-sm>.form-control {
+        padding: 0.05rem 0.5rem;
+    }
+
+    .ido-active-buy-section-modal ::placeholder {
+        color: #fff !important;
+    }
+
+    .ido-active-buy-section-modal .input-group-text {
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+    }
+
+    .ido-active-buy-section-modal .input-group-text img {
+        width: 22px;
+        height: 22px;
+        margin-right: 4px;
+        position: relative;
+        top: -2px;
+    }
+
+    .navbar-connect-wallet {
+        border: 0px;
+        border-radius: 16px;
+        box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: #1b9ffe;
+        text-decoration: none !important;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 600;
+        padding: 10px 20px;
+        position: relative;
+        top: 4px;
+    }
+
+    .ido-enable-disable {
+        pointer-events: none;
+        opacity: 0.1;
+    }
+
+    .approve-connect-wallet-section {
+        position: absolute;
+        top: 28%;
+        left: 28%;
+    }
+
+    .ido-active-buy-approve {
+        background: #372683;
+        border: 1px solid #b67b03 !important;
+        border-radius: 8px;
+        padding: 8px 0px;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .ido-active-buy-text-1 {
+        font-size: 13px;
+    }
+
+    .ido-active-buy-section .input-group {
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.363);
+    }
+
+    .ido-active-buy-section .input-group-sm>.form-control {
+        padding: 0.05rem 0.5rem;
+    }
+
+    .ido-active-buy-section ::placeholder {
+        color: #fff !important;
+    }
+
+    .Ido-App-lanchpad .form-control:focus {
+        background-color: transparent;
+    }
+
+    .Ido-App-lanchpad .form-control {
+        box-shadow: none !important;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #fff !important;
+        background-color: transparent;
+        border: 0px solid #ced4da;
+    }
+
+    .ido-active-buy-max {
+        background-color: #ff04b4a6;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border: none;
+        height: 22px;
+        margin-top: 2px;
+        color: #fff;
+    }
+
+    .ido-active-buy-section .input-group-text {
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+    }
+
+    .ido-active-buy-section .input-group-text img {
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+        position: relative;
+        top: -2px;
+    }
+
+    .ido-active-buy-section {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        padding: 22px 16px;
+        border-radius: 15px;
+        position: relative;
+    }
+
+    .ido-active-text-8 {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .ido-active-text-7 {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .id-active-background-bg {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        padding: 12px 16px;
+        border-radius: 15px;
+    }
+
+    .ido-active-text-6 {
+        color: #c2c2c2;
+    }
+
+    .ido-active-text-5 {
+        font-size: 18px;
+    }
+
+    .ido-level-button-1 {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        border-radius: 12px;
+        padding: 4px 8px;
+        font-size: 14px;
+    }
+
+    .ido-active-image-3 img {
+        width: 60px;
+        border-radius: 50%;
+    }
+
+    .ido-copy-button {
+        color: #fff;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 4px 12px 4px 8px;
+        background: linear-gradient(160deg, #27187b, #16014e);
+        /* border: 1px solid #b67b03 !important; */
+        border-radius: 3px;
+        border: none;
+    }
+
+    .ido-active-text-4 {
+        font-size: 16px;
+    }
+
+    .ido-active-text-3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .active-ido-background {
+        background-color: #372683;
+        padding: 20px 25px;
+        border-radius: 10px;
+    }
+
+    .ido-icon-button-1 {
+        position: relative;
+        top: -2px;
+        background-color: #ff04b4a6;
+        border-radius: 50%;
+        padding: 6px;
+        font-size: 28px;
+        margin-right: 4px;
+        color: rgb(255, 255, 255);
+    }
+
+    .ido-active-text-2 {
+        font-size: 18px;
+        line-height: 180%;
+        letter-spacing: -0.02em;
+        color: #c2c2c2;
+        width: 70%;
+    }
+
+    .ido-active-button-1 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: -0.02em;
+        padding: 6px 18px;
+        color: #ffffff;
+        background: #372683;
+        border: 1px solid #b67b03 !important;
+        border-radius: 8px;
+    }
+
+    .ido-active-image-1 img {
+        width: 90px;
+        border-radius: 50%;
+    }
+
+    .hero-section-ido-launchpad-tabs-banner .nav-pills .nav-link.active,
+    .hero-section-ido-launchpad-tabs-banner .nav-pills .show>.nav-link {
+        background-color: #ef88cd;
+        background-image: linear-gradient(315deg,
+                #e688ef 0%,
+                #ff6adf 55%,
+                #f6a4e4 100%);
+
+        color: rgb(0, 0, 0) !important;
+    }
+
+    .hero-section-ido-launchpad-tabs-banner .form-control {
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #fff;
+        background-color: #0000;
+        background-clip: padding-box;
+        border: 1px solid #daaf08;
+        border-left: 0px;
+        box-shadow: none !important;
+    }
+
+    .hero-section-ido-launchpad-tabs-banner .input-group-text {
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        background-color: #0000;
+        border: 1px solid #daaf08;
+        border-radius: 0.375rem;
+        box-shadow: none !important;
+    }
+
+    .ido-launchpad-button {
+        /* background: #d48730;
+      background: linear-gradient(
+        to right,
+        #30d49d 0%,
+        #3ce0d2 12%,
+        #55dafb 49%,
+        #55f5fb 55%,
+        #30ced4 90%,
+        #308ad4 100%
+      ); */
+
+        background-color: #ef88cd;
+        background-image: linear-gradient(315deg,
+                #e688ef 0%,
+                #ff6adf 55%,
+                #f6a4e4 100%);
+
+        color: rgb(0, 0, 0) !important;
+        width: 300px;
+        height: 40px;
+
+        border-radius: 6px;
+    }
+
+    .application-form-ido-section .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background: linear-gradient(160deg, #27187b, #16014e);
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0.375rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        box-shadow: none !important;
+    }
+
+    .application-form-ido-section {
+        background-color: #372683;
+        padding: 30px 30px;
+        border-radius: 12px;
+    }
+
+    .footer-link-section a {
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: capitalize;
+        margin-right: 16px;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+
+    .team-image-1 {
+        width: 150px;
+        height: 150px;
+    }
+
+    .team-text-1 {
+        font-size: 24px;
+    }
+
+    .team-text-2 {
+        font-size: 18px;
+    }
+
+    .team-text-3 {
+        margin-right: 6px;
+        font-size: 18px;
+    }
+
+    .Ido-App-lanchpad .card {
+        background-color: #372683;
+    }
+
+    .active-ido-section-2 {
+        background: #ff04b46b;
+        padding: 2px 20px;
+        border-radius: 14px;
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .active-ido-section-1 {
+        background: linear-gradient(160deg, #27187b, #16014e);
+        padding: 15px 20px;
+        border-radius: 12px;
+    }
+
+    .ido-text-7 {
+        font-size: 16px;
+    }
+
+    .ido-text-6 {
+        font-size: 14px;
+    }
+
+    .ido-text-5 {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .ido-text-4 {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .ido-image-1 {
+        width: 60px;
+        height: 60px;
+    }
+
+    .Ido-banner-section-3 .card {
+        background-color: #372683;
+    }
+
+    /* .Ido-banner-section-2 {
+      background: linear-gradient(160deg, #27187b, #16014e);
+    } */
+
+    .Ido-banner-image-2 {
+        width: 80%;
+    }
+
+    .Ido-banner-image-1 {
+        width: 60%;
+        float: right;
+    }
+
+    .ido-button-1 {
+        width: 300px;
+        background-color: transparent;
+        border: 1px solid #b67b03 !important;
+        color: #fff;
+        height: 50px;
+        border-radius: 30px;
+    }
+
+    .ido-text-3 {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .ido-text-2 {
+        font-size: 18px;
+        line-height: 0.95em;
+        letter-spacing: 0.03em;
+        font-weight: bold;
+        color: transparent;
+        background: repeating-linear-gradient(0deg,
+                #b6039e 0.1em,
+                #da08be 0.2em,
+                #fea0e6 0.3em,
+                #da08ad 0.4em,
+                #b60389 0.5em);
+        -webkit-background-clip: text;
+    }
+
+    .ido-text-1 {
+        font-size: 3.5rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+
+    .ido-icon-1 {
+        position: relative;
+        left: -100px;
+        font-size: 4.5rem;
+        top: 70px;
+    }
+}
