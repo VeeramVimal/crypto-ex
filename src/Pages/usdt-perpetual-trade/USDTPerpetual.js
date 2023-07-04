@@ -98,7 +98,7 @@ export default function Futures(props) {
   }
 
   useEffect(() => {
-    let socket = socketIOClient(Config.SOCKET_URL, {
+    let socket = socketIOClient(Config.USDM_SOCKET_URL, {
       // transports: ["polling"],
       transports: ["websocket"],
       // rejectUnauthorized: false
@@ -107,15 +107,15 @@ export default function Futures(props) {
     getMarkets();
     if (socket) {
       socket.on("connect", function () {
-        console.log("socket connected");
+        console.log("socket connected : USDM");
         setSocketConnection(socket);
         socketUnsubscribe = socket;
       });
       socket.on("connect_error", (err) => {
-        console.log("socket connect_error", err);
+        console.log("socket connect_error : USDM", err);
       });
       socket.on("disconnect", function () {
-        console.log("socket disconnected");
+        console.log("socket disconnected : USDM");
       });
     }
     return () => {
@@ -572,7 +572,7 @@ export default function Futures(props) {
   async function orderDetail(orderId) {
     try {
       // const params = {
-      //   url: `${Config.V2_API_URL}trade/getOrderDetail`,
+      //   url: `${Config.USDM_V2_API_URL}trade/getOrderDetail`,
       //   method: "POST",
       //   data: { orderId: orderId },
       // };
@@ -588,7 +588,7 @@ export default function Futures(props) {
   async function cancelOrder(orderId) {
     try {
       const params = {
-        url: `${Config.V1_API_URL}usdt-perpetual/cancelOrder`,
+        url: `${Config.USDM_V1_API_URL}usdt-perpetual/cancelOrder`,
         method: "POST",
         data: { orderId: orderId },
       };
@@ -647,7 +647,7 @@ export default function Futures(props) {
   async function getMarkets() {
     try {
       const params = {
-        url: `${Config.V1_API_URL}usdt-perpetual/getMarketsTab`,
+        url: `${Config.USDM_V1_API_URL}usdt-perpetual/getMarketsTab`,
         method: "GET",
       };
       const response = await makeRequest(params);
@@ -670,7 +670,7 @@ export default function Futures(props) {
   async function getPairDetails() {
     try {
       const params = {
-        url: `${Config.V1_API_URL}usdt-perpetual/checkPair`,
+        url: `${Config.USDM_V1_API_URL}usdt-perpetual/checkPair`,
         method: "POST",
         data: { pair: pairName },
       };
@@ -698,7 +698,7 @@ export default function Futures(props) {
       }
       else {
         const params = {
-          url: `${Config.V1_API_URL}trade-futures/checkPair`,
+          url: `${Config.USDM_V1_API_URL}trade-futures/checkPair`,
           method: "POST",
           data: { pair: "", exchangeType: "FUTURES" },
         };
@@ -746,7 +746,7 @@ export default function Futures(props) {
         offset: recordsPerPage * (newCurrentPage - 1)
       }
       const params = {
-        url: `${Config.V2_API_URL}trade-futures/profit/list`,
+        url: `${Config.USDM_V2_API_URL}trade-futures/profit/list`,
         method: "POST",
         body: data
       };
@@ -768,7 +768,7 @@ export default function Futures(props) {
   //         offset: recordsPerPage * (currentPage_tradeHis - 1 )
   //       };
   //       const params = {
-  //         url: `${Config.V2_API_URL}trade/profit/list`,
+  //         url: `${Config.USDM_V2_API_URL}trade/profit/list`,
   //         method: "POST",
   //         body: data,
   //       };

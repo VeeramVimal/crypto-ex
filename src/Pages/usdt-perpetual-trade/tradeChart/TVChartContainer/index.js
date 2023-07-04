@@ -60,7 +60,7 @@ export default class TVChartContainer extends React.PureComponent {
     // console.log("componentWillReceiveProps : ", {nextProps});
   }
   async componentDidMount() {
-    let socket = socketIOClient(Config.SOCKET_URL, {
+    let socket = socketIOClient(Config.USDM_SOCKET_URL, {
       transports: ["websocket"],
       // rejectUnauthorized: false
     });
@@ -184,7 +184,7 @@ export default class TVChartContainer extends React.PureComponent {
 
           axios
             .post(Config.V1_API_URL + "trade/market_data/candles", qs)
-            // .post(Config.V1_API_URL + "usdt-perpetual/market_data/candles", qs)
+            // .post(Config.USDM_V1_API_URL + "usdt-perpetual/market_data/candles", qs)
             .then(function (response) {
               let data = response.data;
               chartLength = response.data.length;

@@ -466,9 +466,9 @@ export default function P2pusercenter(props) {
         orderId: selectOrderDetails?._id,
         ownerId: selectOrderDetails?.userId,
         pairId: selectOrderDetails?.pairId,
-        paymentId: (selectOrderDetails.orderType == "sell") ? buyerpaymentId : (selectOrderDetails?.paymentId),
+        paymentId: (selectOrderDetails.orderType === "sell") ? (selectOrderDetails?.paymentId) : buyerpaymentId,
         orderLimit: selectOrderDetails?.timeLimit,
-        orderType: selectOrderDetails.orderType,
+        orderType: selectOrderDetails.orderType === "buy" ? "sell" : "buy",
       }
       const params = {
         url: `${Config.V1_API_URL}p2p/submitOrder`,
