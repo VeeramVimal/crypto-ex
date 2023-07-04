@@ -193,6 +193,22 @@ export default function Myadspage(props) {
       toast({ type, message: "Trade quantity must be greather than zero" });
     }
   }
+  async function changeMode(Id){
+    try {
+      const params = { 
+        url: `${Config.V1_API_URL}p2p/changeMode`,
+        method: 'POST',
+        body: { modeId : Id}
+      }
+      const response = (await makeRequest(params));
+      let error = "error";
+      if (response.status) {  
+        error = "success";
+        getp2pMyads();
+      }
+      toast({ type: error, message: response.message});
+    } catch (err){}
+  }
 
   return (
       <div>
@@ -303,7 +319,17 @@ export default function Myadspage(props) {
                                     </td>
                                     <td data-label="Payment Method" className="p2p-trade-table-td"><span className="table-data-7">{row?.paymentNames}</span></td>
                                     <td data-label="Status" className="p2p-trade-table-td">
-                                    <span className="table-data-6"> {(row?.orderMode == "Online") ? "Online" : "Offline"}</span>
+                                    <span className="table-data-6">
+                                    <div class="form-check form-switch">
+                                    { row?.orderMode == 'Online' ?
+                                      <input class="form-check-input" type="checkbox" role="switch" onClick={()=>changeMode(row?._id)} id="flexSwitchCheckDefault" defaultChecked/>
+                                        :
+                                      <input class="form-check-input" type="checkbox" role="switch" onClick={()=>changeMode(row?._id)} id="flexSwitchCheckDefault" />
+                                    }
+                                    <label class="form-check-label" for="flexSwitchCheckDefault"> {(row?.orderMode == "Online") ? "Online" : "Offline"}</label>
+                                  </div>
+                                     
+                                    </span>
                                     </td>
                                     <td data-label="Actions" className="p2p-trade-table-td">
                                         <button  className="btn-invoice" onClick={()=>navigate("/edit-myads/"+row?._id)}> edit </button> &nbsp;

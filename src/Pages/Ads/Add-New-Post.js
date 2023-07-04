@@ -35,18 +35,18 @@ var jq = jQuery.noConflict();
 const countries = Country.getAllCountries();
 
 const validationSchema = yup.object({
-  total: yup
-    .number()
-    .typeError('Enter trading amount')
-    .required('Enter trading amount'),
-  minAmt: yup
-    .number()
-    .typeError('Please enter min order limit')
-    .required('Please enter min order limit'),
-  maxAmt: yup
-    .number()
-    .typeError('Please enter max order limit')
-    .required('Please enter max order limit')
+  // total: yup
+  //   .number()
+  //   .typeError('Enter trading amount')
+  //   .required('Enter trading amount'),
+  // minAmt: yup
+  //   .number()
+  //   .typeError('Please enter min order limit')
+  //   .required('Please enter min order limit'),
+  // maxAmt: yup
+  //   .number()
+  //   .typeError('Please enter max order limit')
+  //   .required('Please enter max order limit')
 });
 const authcodevalidationSchema = yup.object({
   authCode: yup
@@ -110,6 +110,7 @@ export default function PostNewAdd(props) {
 
   const [selectedCountry, setSelectedCountry] = useState([{ label: "", value: "" }]);
   const [loaderStatus, setloaderStatus] = useState(false);
+  const [totalAmount, settotalAmount] = useState(0);
 
   const [errors, errors_set] = useState("");
   const [errors1, errors_set1] = useState("");
@@ -655,45 +656,38 @@ export default function PostNewAdd(props) {
       setStep(step + 1);
     } catch (err) { }
   }
+
   const nextStep2 = async (values) => {
     const availableBal = userWallet?.p2pAmount;
-    const usdtBal = Number(values.total);
+    const usdtBal = Number(totalAmount);
     const tradeFiatAmount = (currentInrPrice * usdtBal)?.toFixed(2);
     // values.maxAmt = Number(values.maxAmt) <=  (usdtBal * currentInrPrice) ? (usdtBal * currentInrPrice)?.toFixed(2) : Number(values.maxAmt)
-    values.maxAmt = (usdtBal * currentInrPrice)?.toFixed(2);
+    // setmaxAmount(usdtBal * currentInrPrice);
     let errMsg = '';
-    if (orderType == 'sell') {
+    if (orderType === 'sell') {
       if (availableBal === 0) {
         errMsg = 'Insufficient Balance';
       }
     }
+
+    if (errMsg === "" && tradeFiatAmount < Number(minAmount)) {
+      errMsg = "Min limit should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1]);
+    }
+
     if (errMsg) {
       toast({ type: errorType, message: errMsg });
       return false;
     }
-    if (availableBal < Number(usdtBal) && orderType == 'sell') {
-      setprice_validation_errors({ total_err: "The total amount should not exceed the available balance" });
-      return false;
-    } else if (pairDetails?.minTrade > Number(values.minAmt)) {
-      setprice_validation_errors({ minAmt_err: "Min limit should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1])});
-      return false;
-    } else if (pairDetails?.maxTrade < Number(values.maxAmt)) {
-      setprice_validation_errors({ maxAmt_err: "Max order limit " + pairDetails?.maxTrade });
+
+    const price_validation_errors_cpy = await chkFormValidation(totalAmount, minAmount, maxAmount);
+
+    console.log({price_validation_errors_cpy})
+
+    if(price_validation_errors_cpy.total_err !== "" || price_validation_errors_cpy.minAmt_err !== "" || price_validation_errors_cpy.maxAmt_err !== "") {
       return false;
     }
-    else if (tradeFiatAmount < Number(values.minAmt)) {
-      toast({ type: errorType, message: "Min limit should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1]) });
-      return false;
-    } else if (tradeFiatAmount < Number(values.maxAmt) && orderType == 'sell') {
-      setprice_validation_errors({ maxAmt_err: "Exceeds the maximum available amount" });
-      return false;
-    } else if (Number(values.maxAmt) < Number(values.minAmt)) {
-      setprice_validation_errors({ maxAmt_err: "Max order should not be less than min amount" });
-      return false;
-    } else {
-      setprice_validation_errors({ minAmt_err: "", maxAmt_err: "", total_err: "" });
-    }
-    if (selectedData.length != 0) {
+
+    if (selectedData.length !== 0) {
       if (p2pSettings?.selectionLimit < selectValue.length) {
         let type = 'error'
         toast({ type, message: 'Select up to' + p2pSettings?.selectionLimit + 'methods' });
@@ -704,15 +698,15 @@ export default function PostNewAdd(props) {
       const floatingVal = priceType == "Floating" ? (floatingPrice) : 0;
       const buypriceRange = orderType == "buy" ? (orderPrice) : 0;
       const sellpriceRange = orderType == "sell" ? (orderPrice) : 0;
-      const totalVal = values.total * price;
+      const totalVal = totalAmount * price;
       const data = {
         totalPrice: totalVal,
-        usdtPrice: values.total,
+        usdtPrice: totalAmount,
         price,
         highestPrice: (buypriceRange != 0) ? buypriceRange : 0,
         lowestPrice: (sellpriceRange != 0) ? sellpriceRange : 0,
-        minAmt: values.minAmt,
-        maxAmt: values.maxAmt,
+        minAmt: minAmount,
+        maxAmt: maxAmount,
         paymentId: selectedType,
         paymentNames: paymentNames,
         timeLimit: values.paymentTime,
@@ -760,6 +754,91 @@ export default function PostNewAdd(props) {
         setrefreshloader(false);
       }
     } catch (err) { }
+  }
+
+  async function allAvaiBal() {
+    const availableBal = userWallet?.p2pAmount;
+    settotalAmount(availableBal);
+    chkFormValidation(availableBal, minAmount, maxAmount);
+  }
+
+  const calculateorderLimit = (placeValue, placeType) => {
+
+    let newTotAmt = 0;
+    if (placeType === "totalAmount") {
+      settotalAmount(placeValue);
+      newTotAmt = placeValue;      
+      const chkMaxAmt = placeValue*currentInrPrice;
+      if(maxAmount > chkMaxAmt || maxAmount === 0 || minAmount > maxAmount) {
+        setmaxAmount(chkMaxAmt);
+        chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
+      }
+      else {
+        chkFormValidation(newTotAmt, minAmount, maxAmount);
+      }
+    }
+    else if (placeType === "minLimit") {
+      setminAmount(placeValue);
+      chkFormValidation(totalAmount, placeValue, maxAmount);
+    }
+    else if (placeType === "maxLimit") {
+      setmaxAmount(placeValue);
+      let chkTotAmt = placeValue/currentInrPrice;
+      if(chkTotAmt > totalAmount) {
+        newTotAmt = chkTotAmt;
+        settotalAmount(chkTotAmt);
+        chkFormValidation(newTotAmt, minAmount, placeValue);
+      }
+      else {
+        chkFormValidation(totalAmount, minAmount, placeValue);
+      }
+    }
+    
+  }
+  async function chkFormValidation(chkTotAmt, chkMinAmt, chkMaxAmt) {
+
+    const availableBal = userWallet?.p2pAmount;
+    const tradeFiatAmount = (currentInrPrice * chkTotAmt)?.toFixed(2);
+
+    chkMinAmt = chkMinAmt ? parseFloat(chkMinAmt).toFixed(2) : 0;
+    chkMaxAmt = chkMaxAmt ? parseFloat(chkMaxAmt).toFixed(2) : 0;
+
+    console.log({tradeFiatAmount, currentInrPrice, chkTotAmt, chkMinAmt, chkMaxAmt, maxTrade: pairDetails?.maxTrade});
+
+    let price_validation_errors_cpy = Object.assign({}, price_validation_errors);
+
+    if (availableBal < Number(chkTotAmt) && orderType === 'sell') {
+      price_validation_errors_cpy.total_err = "The total amount should not exceed the available balance";
+    }
+    else {
+      price_validation_errors_cpy.total_err = "";
+    }
+
+    if (pairDetails?.minTrade > Number(chkMinAmt)) {
+      price_validation_errors_cpy.minAmt_err = "Min limit should not be less than " + pairDetails.minTrade +" "+ (pairDetails?.pair?.split(/[_]+/)[1]);;
+    }
+    else {
+      price_validation_errors_cpy.minAmt_err = "";
+    }
+
+    if (pairDetails?.maxTrade < Number(chkMaxAmt)) {
+      price_validation_errors_cpy.maxAmt_err = "Max limit should not exceed " + pairDetails.maxTrade;
+    }
+    else if (tradeFiatAmount < Number(chkMaxAmt) && orderType === 'sell') {
+      console.log(tradeFiatAmount, Number(chkMaxAmt))
+      price_validation_errors_cpy.maxAmt_err = "Exceeds the maximum available amount";
+    }
+    else if (Number(chkMaxAmt) < Number(chkMinAmt)) {
+      price_validation_errors_cpy.maxAmt_err = "Max order should not be less than min amount";
+    }
+    else {
+      price_validation_errors_cpy.maxAmt_err = "";
+    }
+
+    console.log({price_validation_errors_cpy});
+    setprice_validation_errors(price_validation_errors_cpy);
+    return price_validation_errors_cpy;
+
   }
 
   return (
@@ -962,7 +1041,7 @@ export default function PostNewAdd(props) {
                               <div className="row ">
                                 <div className="col-lg-8 ">
                                   <div className="input-group mb-3">
-                                    <input type="text" className="form-control"
+                                    {/* <input type="text" className="form-control"
                                       aria-label="Username"
                                       aria-describedby="basic-addon1"
                                       name="total"
@@ -972,20 +1051,39 @@ export default function PostNewAdd(props) {
                                       onBlur={handleBlur}
                                       error={touched.total && Boolean(errors.total)}
                                       helperText={touched.total && errors.total}
-                                    />
+                                    /> */}
+                                      <input 
+                                        type="number"  
+                                        name="totalAmount" 
+                                        id="totalAmount" 
+                                        className="form-control"
+                                        aria-label="Username"
+                                        aria-describedby="basic-addon1"
+                                        autoComplete="off"
+                                        value={decimalValue(totalAmount, pairDetails?.fromDecimal)}
+                                        onChange={(event) =>
+                                          calculateorderLimit(
+                                            event.target.value,
+                                            "totalAmount"
+                                          )
+                                        }
+                                      />
                                     <span className="input-group-text bg-white" id="basic-addon1">{(pairList && pairList?.fromCurrencyName)}</span>
                                   </div>
                                   {errors.total ? <small className="invalid-total error">{errors.total}</small> : null}
-                                  {price_validation_errors.total_err && values.total > 0 ? <small className="invalid-total error">{price_validation_errors.total_err}</small> : null}
+                                  {(price_validation_errors.total_err && totalAmount > 0) ? <small className="invalid-total error">{price_validation_errors.total_err}</small> : null}
                                   <div className='d-flex justify-content-between'>
                                     {orderType == "sell" &&
                                       <div>
-                                        <p>available : {decimalValue(userWallet?.p2pAmount, 2)} {(pairList && pairList?.fromCurrencyName)}</p>
+                                        <p>
+                                          Available : {decimalValue(userWallet?.p2pAmount, 2)} {(pairList && pairList?.fromCurrencyName)}
+                                          <small className='curPointer color-yellow' onClick={() => allAvaiBal()}> All</small>
+                                        </p>
                                       </div>
                                     }
                                     <div></div>
                                     <div>
-                                      <p>= {(Number(values.total) * currentInrPrice)?.toFixed(2)} {(pairList && pairList?.toCurrencyName)}</p>
+                                      <p>= {(Number(totalAmount) * currentInrPrice)?.toFixed(2)} {(pairList && pairList?.toCurrencyName)}</p>
                                     </div>
                                   </div>
                                 </div>
@@ -996,7 +1094,7 @@ export default function PostNewAdd(props) {
                                     <div>
                                       <label>Order Limit</label>
                                       <div className="input-group mb-3">
-                                        <input type="text" className="form-control"
+                                        {/* <input type="text" className="form-control"
                                           aria-label="Username"
                                           aria-describedby="basic-addon1"
                                           name="minAmt"
@@ -1006,11 +1104,26 @@ export default function PostNewAdd(props) {
                                           autoComplete="off"
                                           error={touched.minAmt && Boolean(errors.minAmt)}
                                           helperText={touched.minAmt && errors.minAmt}
-                                        />
+                                        /> */}
+                                         <input 
+                                            type="number"  
+                                            name="minAmount" 
+                                            id="minAmount" 
+                                            className="form-control"
+                                            aria-label="Username"
+                                            aria-describedby="basic-addon1"
+                                            autoComplete="off"
+                                            value={decimalValue(minAmount,pairDetails?.toDecimal)}
+                                            onChange={(event) =>
+                                              calculateorderLimit(
+                                                event.target.value,
+                                                "minLimit"
+                                              )
+                                            }
+                                          />
                                         <span className="input-group-text bg-white" id="basic-addon1">{(pairList && pairList?.toCurrencyName)}</span>
                                       </div>
                                       {price_validation_errors.minAmt_err ? <small className="invalid-minAmt error">{price_validation_errors.minAmt_err}</small> : null}
-
                                       {errors.minAmt ? <small className="invalid-minAmt error">{errors.minAmt}</small> : null}
                                     </div>
                                     <div className='d-flex align-items-center'>
@@ -1018,9 +1131,27 @@ export default function PostNewAdd(props) {
                                     </div>
                                     <div className=' mt-4 float-end'>
                                       <div className="input-group mb-3">
-                                        {(Number(values.total) > 0) ?
+                                        <input 
+                                          type="number"  
+                                          name="maxLimit" 
+                                          id="maxLimit" 
+                                          className="form-control"
+                                          aria-label="Username"
+                                          aria-describedby="basic-addon1"
+                                          autoComplete="off"
+                                          value={decimalValue(maxAmount,pairDetails?.fromDecimal)}
+                                          onChange={(event) =>
+                                            calculateorderLimit(
+                                              event.target.value,
+                                              "maxLimit"
+                                            )
+                                          }
+                                          />
+
+                                        {/* {(Number(values.total) > 0) ?
                                           <input
-                                            type="text" className="form-control"
+                                            type="text" 
+                                            className="form-control"
                                             aria-label="Username"
                                             aria-describedby="basic-addon1"
                                             name="maxAmt"
@@ -1042,7 +1173,7 @@ export default function PostNewAdd(props) {
                                             error={touched.maxAmt && Boolean(errors.maxAmt)}
                                             helperText={touched.maxAmt && errors.maxAmt}
                                           />
-                                        }
+                                        } */}
 
                                         <span className="input-group-text bg-white" id="basic-addon1">{(pairList && pairList?.toCurrencyName)}</span>
                                       </div>
@@ -1556,8 +1687,7 @@ export default function PostNewAdd(props) {
           <div className='row'>
             <div className='col-6'>
               <label className="custom-left color-white f-17 " htmlFor="FirstName">
-                <span> Order Limit
-                </span>
+                <span> Order Limit</span>
               </label>
             </div>
             <div className='col-6'>

@@ -462,7 +462,7 @@ export default function Spot(props) {
                     type="button"
                     onClick={(event) => props.submitTrade()}
                     style={{ backgroundColor: "#14B269" }}
-                    disabled={props.socketOrdCreLoad || Config.TRADE_STATUS == "Disable" ? true : false}
+                    disabled={props.socketOrdCreLoad || Config.DERIVATIVES_STATUS == "Disable" ? true : false}
                   >
                     {props.socketOrdCreLoad
                       ?
@@ -479,7 +479,7 @@ export default function Spot(props) {
                     type="button"
                     onClick={(event) => props.submitTrade()}
                     style={{ backgroundColor: "#FF4B5E" }}
-                    disabled={props.socketOrdCreLoad || Config.TRADE_STATUS == "Disable" ? true : false}
+                    disabled={props.socketOrdCreLoad || Config.DERIVATIVES_STATUS == "Disable" ? true : false}
                   >
                     {props.socketOrdCreLoad
                       ?
