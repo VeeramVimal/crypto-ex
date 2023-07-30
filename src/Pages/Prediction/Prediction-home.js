@@ -107,19 +107,19 @@ export default function Prediction(props) {
                               <BiLeftArrow className="prediction-caro-icon" data-bs-target="#carouselExampleControls" data-bs-slide="prev" />
                             </div>
                             <div className="prediction-caro-2">
-                              <div id="carouselExampleControls" class="carousel slide text-center" data-bs-ride="carousel" data-interval="false">
-                                <div class="carousel-inner">
-                                  <div class="carousel-item active">
+                              <div id="carouselExampleControls" className="carousel slide text-center" data-bs-ride="carousel" data-interval="false">
+                                <div className="carousel-inner">
+                                  <div className="carousel-item active">
                                     <img src="https://rollbit.com/static/media/sidebets.4346476978708a536997.webp" alt="SIDEBETS" />
                                     <h5 className="prediction-text-6">CASINO SIDEBETS</h5>
                                     <p className="prediction-text-7 mb-0">Rollbit Exclusive, bet on outcome of slot spins</p>
                                   </div>
-                                  <div class="carousel-item">
+                                  <div className="carousel-item">
                                     <img src="https://rollbit.com/static/media/sidebets.4346476978708a536997.webp" alt="SIDEBETS" />
                                     <h5 className="prediction-text-6">CASINO SIDEBETS</h5>
                                     <p className="prediction-text-7 mb-0">Rollbit Exclusive, bet on outcome of slot spins</p>
                                   </div>
-                                  <div class="carousel-item">
+                                  <div className="carousel-item">
                                     <img src="https://rollbit.com/static/media/sidebets.4346476978708a536997.webp" alt="SIDEBETS" />
                                     <h5 className="prediction-text-6">CASINO SIDEBETS</h5>
                                     <p className="prediction-text-7 mb-0">Rollbit Exclusive, bet on outcome of slot spins</p>
@@ -286,21 +286,21 @@ export default function Prediction(props) {
                     </div>
                     <div className="ms-auto">
                       <div className="prediction-bets-tabs-section">
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                          <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="pills-all-bets-tab" data-bs-toggle="pill" data-bs-target="#pills-all-bets" type="button" role="tab" aria-controls="pills-all-bets" aria-selected="true">All Bets</button>
+                        <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link active" id="pills-all-bets-tab" data-bs-toggle="pill" data-bs-target="#pills-all-bets" type="button" role="tab" aria-controls="pills-all-bets" aria-selected="true">All Bets</button>
                           </li>
-                          <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-high-rollers-tab" data-bs-toggle="pill" data-bs-target="#pills-high-rollers" type="button" role="tab" aria-controls="pills-high-rollers" aria-selected="false">High Rollers</button>
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link" id="pills-high-rollers-tab" data-bs-toggle="pill" data-bs-target="#pills-high-rollers" type="button" role="tab" aria-controls="pills-high-rollers" aria-selected="false">High Rollers</button>
                           </li>
-                          <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-lucky-bets-tab" data-bs-toggle="pill" data-bs-target="#pills-lucky-bets" type="button" role="tab" aria-controls="pills-lucky-bets" aria-selected="false">Lucky Bets</button>
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link" id="pills-lucky-bets-tab" data-bs-toggle="pill" data-bs-target="#pills-lucky-bets" type="button" role="tab" aria-controls="pills-lucky-bets" aria-selected="false">Lucky Bets</button>
                           </li>
-                          <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-Trades-tab" data-bs-toggle="pill" data-bs-target="#pills-Trades" type="button" role="tab" aria-controls="pills-Trades" aria-selected="false">Trades</button>
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link" id="pills-Trades-tab" data-bs-toggle="pill" data-bs-target="#pills-Trades" type="button" role="tab" aria-controls="pills-Trades" aria-selected="false">Trades</button>
                           </li>
-                          <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-my-bets-tab" data-bs-toggle="pill" data-bs-target="#pills-my-bets" type="button" role="tab" aria-controls="pills-my-bets" aria-selected="false">My Bets</button>
+                          <li className="nav-item" role="presentation">
+                            <button className="nav-link" id="pills-my-bets-tab" data-bs-toggle="pill" data-bs-target="#pills-my-bets" type="button" role="tab" aria-controls="pills-my-bets" aria-selected="false">My Bets</button>
                           </li>
                         </ul>
                       </div>
@@ -308,7 +308,7 @@ export default function Prediction(props) {
                   </div>
                   <div className="mt-3">
                     <div className="prediction-bets-table-section">
-                      <table class="table">
+                      <table className="table">
                         <thead>
                           <tr>
                             <th scope="col" className="bets-table-1">Game</th>
@@ -440,12 +440,12 @@ export default function Prediction(props) {
               <div className="prediction-padding-right">
                 <div className="d-flex flex-row prediction-page-features-section align-items-center prediction-page-right-1">
                   <div>
-                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                      <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-chat-tab" data-bs-toggle="pill" data-bs-target="#pills-chat" type="button" role="tab" aria-controls="pills-chat" aria-selected="true">Chat</button>
+                    <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                      <li className="nav-item" role="presentation">
+                        <button className="nav-link active" id="pills-chat-tab" data-bs-toggle="pill" data-bs-target="#pills-chat" type="button" role="tab" aria-controls="pills-chat" aria-selected="true">Chat</button>
                       </li>
-                      <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-trades-tab" data-bs-toggle="pill" data-bs-target="#pills-trades" type="button" role="tab" aria-controls="pills-trades" aria-selected="false">Trades</button>
+                      <li className="nav-item" role="presentation">
+                        <button className="nav-link" id="pills-trades-tab" data-bs-toggle="pill" data-bs-target="#pills-trades" type="button" role="tab" aria-controls="pills-trades" aria-selected="false">Trades</button>
                       </li>
                     </ul>
                   </div>
@@ -454,8 +454,8 @@ export default function Prediction(props) {
                   </div>
                 </div>
                 <div className="prediction-page-right-2">
-                  <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab" tabindex="0">
+                  <div className="tab-content" id="pills-tabContent">
+                    <div className="tab-pane fade show active" id="pills-chat" role="tabpanel" aria-labelledby="pills-chat-tab" tabindex="0">
                       <div className="prediction-chat-section">
                         <img className="prediction-image-1" src="https://rollbit.com/static/media/Icon%204%20(gold).f4e2ce04577a1bca3964.png" alt="user" /><span className="prediction-text-1">thud:</span><span className="prediction-text-2">Lorem ipsum is placeholder text commonly used in the graphic, print.</span>
                       </div>
@@ -469,7 +469,7 @@ export default function Prediction(props) {
                         <img className="prediction-image-1" src="https://rollbit.com/static/media/Icon%204%20(gold).f4e2ce04577a1bca3964.png" alt="user" /><span className="prediction-text-1">thud:</span><span className="prediction-text-2">Lorem ipsum is placeholder text commonly used in the graphic, print.</span>
                       </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-trades" role="tabpanel" aria-labelledby="pills-trades-tab" tabindex="0">
+                    <div className="tab-pane fade" id="pills-trades" role="tabpanel" aria-labelledby="pills-trades-tab" tabindex="0">
                       <div className="prediction-chat-section">
                         <img className="prediction-image-1" src="https://rollbit.com/static/media/Icon%204%20(gold).f4e2ce04577a1bca3964.png" alt="user" /><span className="prediction-text-1">thud:</span><span className="prediction-text-2">Lorem ipsum is placeholder text commonly used in the graphic, print.</span>
                       </div>
@@ -489,9 +489,9 @@ export default function Prediction(props) {
               <div className="prediction-page-right-3">
                 <div className="d-flex flex-row prediction-page-features-section-2 align-items-center">
                   <div>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="login to chat" aria-label="Username" aria-describedby="basic-addon1" />
-                      <span class="input-group-text" id="basic-addon1"><AiOutlineSearch /></span>
+                    <div className="input-group">
+                      <input type="text" className="form-control" placeholder="login to chat" aria-label="Username" aria-describedby="basic-addon1" />
+                      <span className="input-group-text" id="basic-addon1"><AiOutlineSearch /></span>
                     </div>
                   </div>
                 </div>

@@ -85,7 +85,7 @@ export default function Tradingcompetitiondashboard(props) {
 
     const setdata = { currencySymbol };
     const getcompetiton = await axios.post(
-      `${Config.V1_API_URL}tradecompetion/getcurrencycompdash`,
+      `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/getcurrencycompdash`,
       setdata
     );
     const firstarr = getcompetiton.data.comp;
@@ -121,7 +121,7 @@ export default function Tradingcompetitiondashboard(props) {
         const currencypair = splitpath[5];
         const tradepair = { currencypair }
         const tradespair = await axios.post(
-          `${Config.V1_API_URL}tradecompetion/gettotalvolumeemail`,
+          `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolumeemail`,
           tradepair
         );
         const arr3 = tradespair.data.countarrs;

@@ -343,25 +343,39 @@ img {
 }
 
 .prediction-manual-updown-tabs .nav-pills .nav-link.manual-active-up.active,
-.prediction-manual-updown-tabs .nav-pills .show>.nav-link.manual-active-up {
+.prediction-manual-updown-tabs .nav-pills .show > .nav-link.manual-active-up {
   color: #72f238 !important;
   background-color: #0c491d !important;
 }
 
 .prediction-manual-updown-tabs .nav-pills .nav-link.manual-active-down.active,
-.prediction-manual-updown-tabs .nav-pills .show>.nav-link.manual-active-down {
+.prediction-manual-updown-tabs .nav-pills .show > .nav-link.manual-active-down {
   color: #ff4949 !important;
   background-color: #360c0e !important;
 }
 
-.dark-new .prediction-manual-updown-tabs .nav-pills .nav-link.manual-active-up.active,
-.dark-new .prediction-manual-updown-tabs .nav-pills .show>.nav-link.manual-active-up {
+.dark-new
+  .prediction-manual-updown-tabs
+  .nav-pills
+  .nav-link.manual-active-up.active,
+.dark-new
+  .prediction-manual-updown-tabs
+  .nav-pills
+  .show
+  > .nav-link.manual-active-up {
   color: #72f238 !important;
   background-color: #2a3c2f !important;
 }
 
-.dark-new .prediction-manual-updown-tabs .nav-pills .nav-link.manual-active-down.active,
-.dark-new .prediction-manual-updown-tabs .nav-pills .show>.nav-link.manual-active-down {
+.dark-new
+  .prediction-manual-updown-tabs
+  .nav-pills
+  .nav-link.manual-active-down.active,
+.dark-new
+  .prediction-manual-updown-tabs
+  .nav-pills
+  .show
+  > .nav-link.manual-active-down {
   color: #ff4949 !important;
   background-color: #3c2631 !important;
 }
@@ -394,18 +408,155 @@ img {
 }
 
 /* =======prediction bear and bull CSS end===============*/
-
 /* ============ DESKTOP-VIEW ============  */
 
 @media all and (min-width: 992px) {
-  /* =======prediction bear and bull CSS start===============*/
+  /*====================== Simple-earn CSS Start===============================*/
+  .simpleearn-history-filter-status {
+    background-color: #7cffe5;
+    padding: 10px;
+    color: #000 !important;
+  }
+  .simpleearn-history-filter-1 {
+    background-color: #00dbae;
+    font-size: 14px;
+  }
+  .accountearn-staking-table-tabs-section .form-check {
+    margin-bottom: 0px;
+  }
+  .simpleearn-redeem {
+    color: #00dbae !important;
+  }
+  .accountearn-staking-table-tabs-section .nav-link {
+    font-size: 14px;
+  }
+  .accountearn-text-4 {
+    font-size: 20px;
+  }
+  .accountearn-staking-tabs-section .nav-link {
+    font-size: 14px;
+  }
+  .accountearn-staking-tabs-section .nav-pills .nav-link.active,
+  .accountearn-staking-tabs-section .nav-pills .show > .nav-link {
+    color: #000000 !important;
+    background-color: #7cffe5;
+  }
+  .accountearn-top-value-section-3 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .accountearn-all-assest {
+    padding: 6px 10px;
+    border-radius: 4px;
+    position: relative;
+    top: -4px;
+    font-size: 14px;
+  }
+  .accountearn-text-3 {
+    font-size: 24px;
+  }
+  .accountearn-top-value-section-2 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .accountearn-text-2 {
+    font-size: 18px;
+  }
+  .accountearn-text-1 {
+    font-size: 2vw;
+  }
+  .accountearn-top-banner-section {
+    padding-top: 65px;
+  }
+  .simpleearn-staking-subscribe-table #row-1 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .simpleearn-subscribe-button {
+    background-color: #00dbae;
+    border: none;
+    padding: 8px;
+    color: #000;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .simpleearn-text-17 {
+    font-size: 14px;
+    margin-bottom: 0px;
+  }
+  .simpleearn-text-16 {
+    font-size: 10px;
+  }
+  .simpleearn-text-15 {
+    font-size: 13px;
+  }
+  .simpleearn-enough-crypto {
+    background-color: #78f5dc;
+    padding: 4px;
+    border-radius: 4px;
+    margin-top: 20px;
+    box-shadow: rgba(24, 26, 32, 0.1) 0px 0px 1px,
+      rgba(71, 77, 87, 0.08) 0px 7px 14px, rgba(24, 26, 32, 0.08) 0px 3px 6px;
+  }
+  .simpleearn-text-14 {
+    font-size: 12px;
+    text-decoration: underline;
+  }
+  .simpleearn-text-13 {
+    font-size: 20px;
+  }
+  .simpleearn-text-12 {
+    color: #00dbae;
+    text-decoration: underline;
+  }
+  .subscription-amount-group-1 {
+    border-left: none;
+    border-right: none;
+  }
+  .subscription-amount-group-2 {
+    border-left: none;
+  }
+  .simpleearn-subscription-amount .form-control {
+    background-color: transparent !important;
+    border-right: 0px;
+    border-right: 0px;
+    font-size: 12px;
+  }
+  .simpleearn-subscription-amount .form-control:focus {
+    border-color: #ced4da;
+  }
+  .simpleearn-subscription-amount .input-group-text {
+    background-color: transparent !important;
+  }
+  .simpleearn-max-button {
+    background-color: transparent;
+    border: none;
+    color: #00dbae !important;
+    padding-right: 14px !important;
+    border-right: 1px solid #ced4da;
+    padding: 0px;
+  }
+  .simpleearn-text-11 {
+    font-size: 12px;
+  }
+  .simpleearn-subscribe-img {
+    width: 20px;
+    height: 20px;
+  }
+  .btn-simpleearn-filter-table {
+    background-color: #00dbae;
+    color: #000 !important;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 0px;
+  }
   .simpleearn-table-tabs-duration .nav-link {
     position: relative;
   }
 
   .simpleearn-table-tabs-duration .nav-link.active::before {
-    transition: .15s;
-    content: '✔';
+    transition: 0.15s;
+    content: "✔";
     position: absolute;
     top: 0px;
     right: 0px;
@@ -418,7 +569,7 @@ img {
   }
 
   .simpleearn-table-tabs-duration.nav-pills .nav-link.active,
-  .simpleearn-table-tabs-duration.nav-pills .show>.nav-link {
+  .simpleearn-table-tabs-duration.nav-pills .show > .nav-link {
     color: #fff;
     background-color: transparent !important;
     border: 1px solid #00dbae;
@@ -515,6 +666,7 @@ img {
 
   .simpleearn-text-3 {
     font-size: 20px;
+    cursor: pointer;
   }
 
   .simpleearn-top-value-section .card {
@@ -540,7 +692,7 @@ img {
   .simpleearn-top-banner-section {
     padding-top: 65px;
   }
-
+  /*====================== Simple-earn CSS End===============================*/
   #trading-competition-width {
     width: 100%;
   }
@@ -555,7 +707,7 @@ img {
     right: auto;
     margin-top: 0rem;
   }
-
+  /* ==================prediction bear and bull CSS start============================*/
   .prediction-trade-right-section .f-control {
     font-size: 12px !important;
   }
@@ -663,6 +815,18 @@ img {
     border-radius: 8px;
     letter-spacing: 0.5px;
   }
+  
+    /* Disabled placebet buttons */	
+.prediction-bet-button-up:disabled,	
+.prediction-bet-button-down:disabled {	
+  opacity: 0.6; 	
+  cursor: not-allowed; 	
+}	
+.error-message {	
+  color: red;	
+  font-size: 12px;	
+  margin-top: 8px;	
+}
 
   .prediction-trade-text-6 {
     font-size: 12px;
@@ -675,8 +839,11 @@ img {
   .prediction-updown-button {
     border: none !important;
     margin: 6px;
-    padding: 4px 22px;
-    font-size: 13px;
+    padding: 4px 12px;
+    font-size: 11px;
+    background-color: #00dbae !important;
+    color: #000 !important;
+    border-radius: 4px !important;
   }
 
   .prediction-trade-updown-input .input-group-text {
@@ -727,7 +894,7 @@ img {
   }
 
   .prediction-manual-auto-tabs .nav-pills .nav-link.active,
-  .prediction-manual-auto-tabs .nav-pills .show>.nav-link {
+  .prediction-manual-auto-tabs .nav-pills .show > .nav-link {
     color: #000 !important;
     background-color: #00dbae;
   }
@@ -814,7 +981,7 @@ img {
   }
 
   .prediction-trade-right-section {
-    width: 84%;
+   /* width: 84%; */
 
     /* height: calc(100vh - 65px);
     overflow-y: scroll; */
@@ -844,7 +1011,7 @@ img {
     width: 8%;
   }
 
-  .prediction-bets-table-section .table> :not(caption)>*>* {
+  .prediction-bets-table-section .table > :not(caption) > * > * {
     border: none !important;
   }
 
@@ -868,12 +1035,12 @@ img {
     border: none !important;
   }
 
-  .prediction-bets-table-section .table> :not(:first-child) {
+  .prediction-bets-table-section .table > :not(:first-child) {
     border-top: 0px solid currentColor;
   }
 
   .prediction-bets-tabs-section .nav-pills .nav-link.active,
-  .prediction-bets-tabs-section .nav-pills .show>.nav-link {
+  .prediction-bets-tabs-section .nav-pills .show > .nav-link {
     color: #000 !important;
     background-color: #3cffd8;
   }
@@ -1032,9 +1199,11 @@ img {
   }
 
   .prediction-page-middle-slider-inner {
-    background: radial-gradient(circle at 79.5% 88%,
-        rgb(17, 51, 103) 8%,
-        transparent 90%);
+    background: radial-gradient(
+      circle at 79.5% 88%,
+      rgb(17, 51, 103) 8%,
+      transparent 90%
+    );
     padding: 20px 40px;
     border-radius: 8px;
   }
@@ -1103,7 +1272,7 @@ img {
   }
 
   .prediction-page-right-section .nav-pills .nav-link.active,
-  .prediction-page-right-section .nav-pills .show>.nav-link {
+  .prediction-page-right-section .nav-pills .show > .nav-link {
     color: #000 !important;
     background-color: #3cffd8;
   }
@@ -1171,6 +1340,7 @@ img {
   }
 
   /* =======prediction bear and bull CSS end===============*/
+
   .popup {
     display: none;
     position: fixed;
@@ -4947,9 +5117,265 @@ input:focus {
 /* =========================================== MOBILE-VIEW =================================== */
 
 @media (max-width: 991px) {
+  /*======================Simple-earn CSS Start ===============================*/
+  .simpleearn-history-filter-status {
+    background-color: #7cffe5;
+    padding: 10px;
+    color: #000 !important;
+  }
+  .simpleearn-history-filter-1 {
+    background-color: #00dbae;
+    font-size: 14px;
+  }
+  .accountearn-staking-table-tabs-section .form-check {
+    margin-bottom: 0px;
+  }
+  .simpleearn-redeem {
+    color: #00dbae !important;
+  }
+  .accountearn-staking-table-tabs-section .nav-link {
+    font-size: 14px;
+  }
+  .accountearn-text-4 {
+    font-size: 18px;
+  }
+  .accountearn-staking-tabs-section .nav-link {
+    font-size: 14px;
+  }
+  .accountearn-staking-tabs-section .nav-pills .nav-link.active,
+  .accountearn-staking-tabs-section .nav-pills .show > .nav-link {
+    color: #000000 !important;
+    background-color: #7cffe5;
+  }
+  .accountearn-top-value-section-3 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .accountearn-all-assest {
+    padding: 6px 10px;
+    border-radius: 4px;
+    position: relative;
+    top: -4px;
+    font-size: 12px;
+  }
+  .accountearn-text-3 {
+    font-size: 16px;
+  }
+  .accountearn-top-value-section-2 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .accountearn-text-2 {
+    font-size: 14px;
+  }
+  .accountearn-text-1 {
+    font-size: 1.6rem;
+  }
+  .accountearn-top-banner-section {
+    padding-top: 65px;
+  }
+  .simpleearn-staking-subscribe-table #row-1 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .simpleearn-subscribe-button {
+    background-color: #00dbae;
+    border: none;
+    padding: 8px;
+    color: #000;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .simpleearn-text-17 {
+    font-size: 14px;
+    margin-bottom: 0px;
+  }
+  .simpleearn-text-16 {
+    font-size: 10px;
+  }
+  .simpleearn-text-15 {
+    font-size: 13px;
+  }
+  .simpleearn-enough-crypto {
+    background-color: #78f5dc;
+    padding: 4px;
+    border-radius: 4px;
+    margin-top: 20px;
+    box-shadow: rgba(24, 26, 32, 0.1) 0px 0px 1px,
+      rgba(71, 77, 87, 0.08) 0px 7px 14px, rgba(24, 26, 32, 0.08) 0px 3px 6px;
+  }
+  .simpleearn-text-14 {
+    font-size: 12px;
+    text-decoration: underline;
+  }
+  .simpleearn-text-13 {
+    font-size: 20px;
+  }
+  .simpleearn-text-12 {
+    color: #00dbae;
+    text-decoration: underline;
+  }
+  .subscription-amount-group-1 {
+    border-left: none;
+    border-right: none;
+  }
+  .subscription-amount-group-2 {
+    border-left: none;
+  }
+  .simpleearn-subscription-amount .form-control {
+    background-color: transparent !important;
+    border-right: 0px;
+    border-right: 0px;
+    font-size: 12px;
+  }
+  .simpleearn-subscription-amount .form-control:focus {
+    border-color: #ced4da;
+  }
+  .simpleearn-subscription-amount .input-group-text {
+    background-color: transparent !important;
+  }
+  .simpleearn-max-button {
+    background-color: transparent;
+    border: none;
+    color: #00dbae !important;
+    padding-right: 14px !important;
+    border-right: 1px solid #ced4da;
+    padding: 0px;
+  }
+  .simpleearn-text-11 {
+    font-size: 12px;
+  }
+  .simpleearn-subscribe-img {
+    width: 20px;
+    height: 20px;
+  }
+  .btn-simpleearn-filter-table {
+    background-color: #00dbae;
+    color: #000 !important;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 0px;
+  }
+  .simpleearn-table-tabs-duration .nav-link {
+    position: relative;
+  }
+  .simpleearn-table-tabs-duration .nav-link.active::before {
+    transition: 0.15s;
+    content: "✔";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: #00dbae;
+    border-bottom-left-radius: 10px;
+    color: #000000;
+  }
+  .simpleearn-table-tabs-duration.nav-pills .nav-link.active,
+  .simpleearn-table-tabs-duration.nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: transparent !important;
+    border: 1px solid #00dbae;
+  }
+  .simpleearn-text-10 {
+    font-size: 14px;
+  }
+  .simpleearn-text-9 {
+    font-size: 16px;
+  }
+  .simpleearn-table-coin-img {
+    width: 25px;
+    height: 25px;
+  }
+  .simpleearn-text-7 {
+    font-size: 26px;
+  }
+  .simpleearn-text-8 {
+    font-size: 14px;
+  }
+  .simpleearn-top-filter-section .searchBox {
+    font-size: 14px;
+  }
+  .simpleearn-top-filter-section .chip {
+    align-items: center;
+    background: #00dbae !important;
+    margin-bottom: 0px !important;
+  }
+  .simpleearn-top-filter-section .multiSelectContainer li:hover {
+    background: #00dbae !important;
+    color: #fff;
+    cursor: pointer;
+  }
+  .simpleearn-top-filter-section .highlightOption {
+    background: #00dbae !important;
+    color: #fff;
+  }
+  .simpleearn-top-filter-section .Multiselect-simple-earn {
+    background-color: transparent;
+    border-color: #ced4da;
+    font-size: 14px;
+  }
+  .simpleearn-top-filter-section .search-wrapper {
+    padding: 7px 10px !important;
+  }
+  .simpleearn-top-filter-section .input-group-text-1 {
+    background-color: transparent !important;
+    border-right: 0px;
+  }
+  .simpleearn-top-filter-section .input-group-text-2 {
+    background-color: transparent !important;
+    border-left: 0px;
+    font-size: 12px;
+  }
+  .simpleearn-top-filter-section .form-control {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-left: 0px;
+    border-right: 0px;
+    font-size: 14px;
+    padding: 9px 0px;
+  }
+  .simpleearn-top-filter-section .form-control:focus {
+    border-color: #ced4da;
+  }
+  .simpleearn-text-6 {
+    font-size: 10px;
+  }
+  .simpleearn-text-5 {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .simpleearn-text-4 {
+    font-size: 14px;
+  }
+  .simpleearn-text-3 {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .simpleearn-top-value-section .card {
+    border: 1px solid #00dbaf60;
+    padding: 18px;
+  }
+  .simpleearn-text-1 {
+    font-size: 1.6rem;
+    margin-bottom: 0px;
+  }
+  .simpleearn-text-2 {
+    font-size: 16px;
+    margin-bottom: 0px;
+  }
+  .simpleearn-top-value-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  .simpleearn-top-banner-section {
+    padding-top: 65px;
+  }
+  /*========================Simple-earn CSS End ====================================*/
 
-   /*======================prediction Bear and Bull CSS Start==========================*/
-   .prediction-bets-table-section {
+  /*======================prediction Bear and Bull CSS Start==========================*/
+  .prediction-bets-table-section {
     overflow-x: scroll;
   }
 
@@ -5076,8 +5502,11 @@ input:focus {
   .prediction-updown-button {
     border: none !important;
     margin: 6px;
-    padding: 4px 22px;
-    font-size: 13px;
+    padding: 4px 12px;
+    font-size: 11px;
+    background-color: #00dbae !important;
+    color: #000 !important;
+    border-radius: 4px !important;
   }
 
   .prediction-trade-updown-input .input-group-text {
@@ -5128,7 +5557,7 @@ input:focus {
   }
 
   .prediction-manual-auto-tabs .nav-pills .nav-link.active,
-  .prediction-manual-auto-tabs .nav-pills .show>.nav-link {
+  .prediction-manual-auto-tabs .nav-pills .show > .nav-link {
     color: #000 !important;
     background-color: #00dbae;
   }
@@ -5238,7 +5667,7 @@ input:focus {
     width: 8%;
   }
 
-  .prediction-bets-table-section .table> :not(caption)>*>* {
+  .prediction-bets-table-section .table > :not(caption) > * > * {
     border: none !important;
   }
 
@@ -5262,12 +5691,12 @@ input:focus {
     border: none !important;
   }
 
-  .prediction-bets-table-section .table> :not(:first-child) {
+  .prediction-bets-table-section .table > :not(:first-child) {
     border-top: 0px solid currentColor;
   }
 
   .prediction-bets-tabs-section .nav-pills .nav-link.active,
-  .prediction-bets-tabs-section .nav-pills .show>.nav-link {
+  .prediction-bets-tabs-section .nav-pills .show > .nav-link {
     color: #000 !important;
     background-color: #3cffd8;
   }
@@ -5419,9 +5848,11 @@ input:focus {
   }
 
   .prediction-page-middle-slider-inner {
-    background: radial-gradient(circle at 79.5% 88%,
-        rgb(17, 51, 103) 8%,
-        transparent 90%);
+    background: radial-gradient(
+      circle at 79.5% 88%,
+      rgb(17, 51, 103) 8%,
+      transparent 90%
+    );
     padding: 20px 40px;
     border-radius: 8px;
   }
@@ -5490,7 +5921,7 @@ input:focus {
   }
 
   .prediction-page-right-section .nav-pills .nav-link.active,
-  .prediction-page-right-section .nav-pills .show>.nav-link {
+  .prediction-page-right-section .nav-pills .show > .nav-link {
     color: #000 !important;
     background-color: #3cffd8;
   }
@@ -9859,8 +10290,7 @@ tbody tr:nth-child(odd) {
   background-color: rgb(34, 36, 40);
 }
 
-.dark-new 
-.form-check-input {
+.dark-new .form-check-input {
   filter: brightness(90%) !important;
 }
 
@@ -11879,9 +12309,9 @@ span.order-released {
 @media (max-width: 991px) {
   .position-fixed-api-doc {
     position: -webkit-sticky;
-  position: sticky;
-  top: 10vh;
-width: 50px;
+    position: sticky;
+    top: 10vh;
+    width: 50px;
   }
 
   .three-dots-nav-styling {
@@ -11942,17 +12372,16 @@ width: 50px;
     font-size: 18px;
   }
 }
-.bell-icon-dropdown-css .dropdown-toggle::after{
+.bell-icon-dropdown-css .dropdown-toggle::after {
   display: none;
 }
-#classy-navbar-mobile .bell-icon-dropdown-css .dropdown-menu{
+#classy-navbar-mobile .bell-icon-dropdown-css .dropdown-menu {
   min-width: 30rem !important;
   background-color: var(--background-color-2);
 }
 
-.bell-icon-notification-bg{
+.bell-icon-notification-bg {
   background-color: rgb(207, 207, 207) !important;
-  
 }
 
 .crypto-loan-input-field {
@@ -11964,12 +12393,12 @@ width: 50px;
   border-width: 1px;
   border-color: rgb(234, 236, 239);
   cursor: pointer;
-
 }
+
 /* bg-light-green-2 p-1 mx-2 */
 .crypto-loan-low-rate {
   background-color: rgb(14, 203, 129);
-  border-radius: 0.5em
+  border-radius: 0.5em;
 }
 /* .bell-icon-dropdown-css .dropdown-menu[data-bs-popper]{
   right: 0 !important;
@@ -11983,3 +12412,86 @@ width: 50px;
 
 /*=========================API-PAGE-SECTION-ENDS=======================================*/
 
+#tradingviewwidget-linechart-bg-image {
+  position: absolute;
+  top: 0px;
+  z-index: 9;
+}
+
+.container-timeline {
+  position: relative;
+  overflow: hidden;
+}
+
+.container-timeline:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  margin-left: -1px;
+  width: 2px;
+  height: 100%;
+  background: #ccd1d9;
+  z-index: 1;
+}
+
+.timeline-block {
+  width: -webkit-calc(50% + 8px);
+  width: -moz-calc(50% + 8px);
+  width: calc(50% + 8px);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  clear: both;
+}
+
+.timeline-block-right {
+  float: right;
+}
+
+.timeline-block-left {
+  float: left;
+  direction: rtl;
+}
+
+.marker {
+  width: 30px;
+  height: 30px;
+  /* border-radius: 50%; */
+  background: #b8b8b8;
+  z-index: 9999;
+  text-align: center;
+  position: relative;
+  left: 4px;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.marker.active {
+  width: 20px;
+  height: 20px;
+  background: #00dbae;
+  left: 0px;
+}
+.timeline-content {
+  width: 95%;
+  padding: 0 15px;
+}
+
+.timeline-block {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.timeline-block-right {
+  float: none;
+}
+
+.timeline-block-left {
+  float: none;
+  direction: ltr;
+}

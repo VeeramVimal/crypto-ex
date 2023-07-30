@@ -17,13 +17,13 @@ function getLanguageFromURL() {
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 const historys = {};
-let resolutionValue = "D";
+let resolutionValue = "1";
 let chartLength = -1;
 const config = {
   supported_resolutions: ["1", "5", "15", "30", "60", "D", "W", "M"],
 };
 const defaultProps = {
-  interval: "D",
+  interval: "1",
   datafeedUrl: "https://demo_feed.tradingview.com",
   libraryPath: "/static/charting_library/",
   chartsStorageUrl: "https://saveload.tradingview.com",
@@ -40,10 +40,9 @@ const defaultProps = {
   studiesOverrides: {
     "volume.volume.color.0": "#0ecb81",
     "volume.volume.color.1": "#f6465d",
-
     "ma.color": "#2a2e39",
     "moving average.ma.color": "#2a2e39",
-    "moving average.ma.linewidth": 22,
+    "moving average.ma.linewidth": 2,
     
   },
 };
@@ -51,17 +50,18 @@ export default class TVChartContainer extends React.PureComponent {
   tvWidget = null;
   constructor(props) {
     super(props);
+   // console.log("props --tttt--",props);
     this.ref = React.createRef();
     this.socketConnection = null;
     this._subscriptions = [];
     this.channelString = "";
     this.symbol = "";
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.loadChart();
   }
   componentWillReceiveProps(nextProps) {
-    // console.log("componentWillReceiveProps : ", {nextProps});
+    // console.log("componentWillReceiveProps : ", nextProps.interval);
   }
   async componentDidMount() {
     let socket = socketIOClient(Config.SOCKET_URL, {
@@ -84,13 +84,14 @@ export default class TVChartContainer extends React.PureComponent {
         console.log("TVC trade socket disconnected");
       });
     }
-    this.loadChart();
+    this.loadChart(this.props);
     // setTimeout(() => {
     //   // document.getElementsByClassName("iconArrow-2KhwsEwE").click();
     //   $(".iconArrow-2KhwsEwE").click();
     // }, 4000);
   }
-  loadChart() {
+  loadChart(props) {
+   // const interval = props.interval || defaultProps.interval;
     // console.log('loadChart : ');
     let dataFeed = {
       onReady: (cb) => {
@@ -110,7 +111,7 @@ export default class TVChartContainer extends React.PureComponent {
         var split_data = symbolName.split("/");
         if (split_data.length == 2) {
           var symbol_stub = {
-           // name: symbolName,
+          // name: symbolName,
            name: "BTC/USDT",
             description: `${split_data[0]}/${split_data[1]}`,
             type: "crypto",
@@ -118,7 +119,7 @@ export default class TVChartContainer extends React.PureComponent {
             timezone: "Etc/USDT",
             
             ticker: "BTC/USDT",
-            // ticker: symbolName,
+          //  ticker: symbolName,
             exchange: Config.SITENAME,
             minmov: 1,
             debug: true,
@@ -337,7 +338,7 @@ export default class TVChartContainer extends React.PureComponent {
     }
     const widgetOptions = {
       symbol:
-        typeof this.props.symbol == "string" ? this.props.symbol : "USDT/INR",
+        typeof this.props.symbol == "string" ? this.props.symbol : "BTC/USDT",
       // BEWARE: no trailing slash is expected in feed URL
       datafeed: dataFeed, //new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
       interval: defaultProps.interval,
@@ -347,7 +348,7 @@ export default class TVChartContainer extends React.PureComponent {
       theme: (userTheme == "light-new" || userTheme == "light") ? "light" : "dark",
       locale: getLanguageFromURL() || "en",
       disabled_features: [
-        "use_localstorage_for_settings",
+       // "use_localstorage_for_settings",
         "display_market_status",
         "header_symbol_search",
         "show_logo_on_all_charts",
@@ -360,18 +361,18 @@ export default class TVChartContainer extends React.PureComponent {
         "save_chart_prperties_to_local_storage",
         "volume_force_overlay",
         "header_indicators",
-        "header_widget",
+        //"header_widget",
         "create_volume_indicator_by_default",
-        "create_volume_indicator_by_default_once",
+       "create_volume_indicator_by_default_once",
         "context_menus",
       ],
       enabled_features: [
         "show_hide_button_in_legend",
-        "study_templates",
+        // "study_templates",
         "hide_left_toolbar_by_default",
         "move_logo_to_main_pane",
         "side_toolbar_in_fullscreen_mode",
-        "header_in_fullscreen_mode",
+       "header_in_fullscreen_mode",
       ],
       charts_storage_url: defaultProps.chartsStorageUrl,
       charts_storage_api_version: defaultProps.chartsStorageApiVersion,
@@ -394,7 +395,7 @@ export default class TVChartContainer extends React.PureComponent {
         "paneProperties.horzGridProperties.color": "transparent",
         "mainSeriesProperties.lineStyle.color": "#FFB018",
 
-        // "paneProperties.vertGridProperties.color": userTheme === "light-new" ? "#f0f5f5" : "1f2a3c",
+        //  "paneProperties.vertGridProperties.color": userTheme === "light-new" ? "#f0f5f5" : "1f2a3c",
         // "paneProperties.horzGridProperties.color": userTheme === "light-new" ? "#f0f5f5" : "1f2a3c",
 
         "mainSeriesProperties.candleStyle.wickUpColor": "#0ecb81",

@@ -48,16 +48,17 @@ export default function Maincopytrading(props) {
         }),
         onSubmit: async (values) => {
             try {
+                const payload = {
+                    name: values.user_name,
+                    email: values.user_email,
+                    avatar: traderAvatar,
+                    discription: values.user_intro ? values.user_intro : '',
+                    trader_id: myProfile && myProfile._id,
+                };
                 const params = {
                     url: `${Config.V1_API_URL}copyTrade/addLeadTrader`,
                     method: "POST",
-                    data: {
-                        name: values.user_name,
-                        email: values.user_email,
-                        avatar: traderAvatar,
-                        discription: values.user_intro ? values.user_intro : '',
-                        trader_id: myProfile._id,
-                    },
+                    data: payload
                 };
                 const response = await makeRequest(params);
                 if (response.status && response.message) {

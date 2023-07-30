@@ -5,7 +5,7 @@ import { GoChevronLeft } from "react-icons/go";
 import NavbarOne from "./siteTheme/NavbarOne";
 import Footer from "./siteTheme/Footer";
 import AllMarkets from "./separate/AllMarkets";
-import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import { Link, BrowserRouter as Router, useNavigate } from "react-router-dom";
 import { makeRequest } from "../core/services/v1/request";
 import { useContextData } from "../core/context/index";
 import Config from "../core/config/";
@@ -84,12 +84,13 @@ export default function CoinStatus(props) {
                       <th scope="col">Network</th>
                       <th scope="col">Deposit</th>
                       <th scope="col">Withdraw</th>
-                      {/* <th scope="col">TRADE</th> */}
+                      <th scope="col">Trade</th>
                     </tr>
                   </thead>
                   <tbody>
                     {currencies.length > 0 &&
                       currencies.map((currency, i) => {
+                        const tradeLink = (currency.status == 1 && currency.pairDet && currency.pairDet[0] && currency.pairDet[0].pair) ? currency.pairDet[0].pair : "";
                         return (
                           <tr>
                             <td className="cursor curPointer">
@@ -103,33 +104,35 @@ export default function CoinStatus(props) {
                             <td>
                               {" "}
                               {currency.depositEnable == 1 ? (
-                                <span style={{ color: "green" }}>Enabled</span>
+                                <span style={{ color: "green" }}><Link to={"/deposit/crypto/"+currency.currencySymbol}>Enabled</Link></span>
                               ) : (
                                 <span style={{ color: "red" }}>Disabled</span>
                               )}
                             </td>
                             <td>
                               {currency.withdrawEnable == 1 ? (
-                                <span style={{ color: "green" }}>Enabled</span>
+                                <span style={{ color: "green" }}><Link to={"/withdraw/crypto/"+currency.currencySymbol}>Enabled</Link></span>
                               ) : (
                                 <span style={{ color: "red" }}>Disabled</span>
                               )}
                             </td>
-                            {/* <td>
+                            <td>
                               <span className="tb-img">
-                                {currency.status == 1 ? (
-                                  <BiCheck
-                                    className="color-green"
-                                    style={{ fontSize: "20px" }}
-                                  />
+                                {tradeLink !== "" ? (
+                                  <span style={{ color: "green" }}><Link to={"/spot/"+currency.pairDet[0].pair}>Enabled</Link></span>
+                                  // <BiCheck
+                                  //   className="color-green"
+                                  //   style={{ fontSize: "20px" }}
+                                  // />
                                 ) : (
-                                  <BiX
-                                    className="color-red"
-                                    style={{ fontSize: "20px" }}
-                                  />
+                                  <span style={{ color: "red" }}>Disabled</span>
+                                  // <BiX
+                                  //   className="color-red"
+                                  //   style={{ fontSize: "20px" }}
+                                  // />
                                 )}
                               </span>{" "}
-                            </td> */}
+                            </td>
                           </tr>
                         );
                       })}

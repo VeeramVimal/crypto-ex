@@ -102,7 +102,7 @@ export default function TradingcompetitiondashboardLive(props) {
         const currencySymbol = splitpath[4];
         const setdata = { currencySymbol };
         const getcompetiton = await axios.post(
-            `${Config.V1_API_URL}tradecompetion/getcurrencycompdash`,
+            `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/getcurrencycompdash`,
             setdata
         );
         setcurrencyssymbol(getcompetiton.data.comp[0].prizetoken)
@@ -157,7 +157,7 @@ export default function TradingcompetitiondashboardLive(props) {
                 const tradepair = { currencypair }
               
                 const tradespair = await axios.post(
-                    `${Config.V1_API_URL}tradecompetion/gettotalvolumeemail`,
+                    `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolumeemail`,
                     tradepair
                 );
                 const arr1 = tradespair.data.winnerlist;
@@ -178,7 +178,7 @@ export default function TradingcompetitiondashboardLive(props) {
             }
         }
         const getcmsdata = async () => {
-            const getcms = await axios.get(`${Config.V1_API_URL}tradecompetion/getcmstandc`);
+            const getcms = await axios.get(`${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/getcmstandc`);
             setcmsdisclaimer(getcms.data[1].description)
             const splitpath = window.location.href.split("/");
             const currencySymbol = splitpath[4];

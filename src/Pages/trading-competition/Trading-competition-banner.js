@@ -31,8 +31,8 @@ export default function Tradingcompetitionbanner(props) {
   const [enddatetimer,setenddatetimer] = useState("");
 
   const gettotalvolume = async () => {
-    const gettotalvol = await axios.get(`${Config.V1_API_URL}tradecompetion/gettotalvolume`);
-    const getcompetiton = await axios.get(`${Config.V1_API_URL}tradecompetion/getcurrencycompetion`)
+    const gettotalvol = await axios.get(`${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolume`);
+    const getcompetiton = await axios.get(`${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/getcurrencycompetion`)
     const firstarr = gettotalvol.data;
     const secondarr = getcompetiton.data;
 
@@ -47,7 +47,7 @@ export default function Tradingcompetitionbanner(props) {
           const currencypair = secondarr[i].currency;
             const tradepair = { currencypair }
             const tradespair = await axios.post(
-              `${Config.V1_API_URL}tradecompetion/gettotalvolumeemail`,
+              `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolumeemail`,
               tradepair
             );
           if (currentUnixTime >= mytokenstartDate && currentUnixTime <= mytokenendDate) {
@@ -84,7 +84,7 @@ export default function Tradingcompetitionbanner(props) {
             const currencypair = secondarr[i].currency;
             const tradepair = { currencypair }
             const tradespair = await axios.post(
-              `${Config.V1_API_URL}tradecompetion/gettotalvolumeemail`,
+              `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolumeemail`,
               tradepair
             );
             const arr3 = tradespair.data.countarrs;
@@ -124,7 +124,7 @@ export default function Tradingcompetitionbanner(props) {
               const currencypair = secondarr[i].currency;
               const tradepair = { currencypair }
               const tradespair = await axios.post(
-                `${Config.V1_API_URL}tradecompetion/gettotalvolumeemail`,
+                `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolumeemail`,
                 tradepair
               );
               const arr3 = tradespair.data.countarrs;
@@ -211,7 +211,7 @@ export default function Tradingcompetitionbanner(props) {
   useEffect(() => {
     gettotalvolume();
     const getcmsdata = async () => {
-      const getcms = await axios.get(`${Config.V1_API_URL}tradecompetion/getcmstandc`);
+      const getcms = await axios.get(`${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/getcmstandc`);
       setcmsdes(getcms.data[0].description)
       setcmsbannertitle(getcms.data[2].title)
       setcmsbannerdescription(getcms.data[2].description)

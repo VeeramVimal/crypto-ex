@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import NavbarOne from "./NavbarOne";
-
 import NavbarOne from "../../Pages/siteTheme/NavbarOne";
 import Footer from "../../Pages/siteTheme/Footer";
-// import Footer from "./Footer";
-
-import { GoChevronLeft, GoDash } from "react-icons/go";
-import { FaCalendarAlt } from 'react-icons/fa';
 import { Modal, Button, Form, Badge } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,7 +11,7 @@ import { RxDoubleArrowRight } from "react-icons/rx";
 import { MdArrowDropDown } from "react-icons/md";
 import { makeRequest } from "../../core/services/v1/request";
 import { toast } from "../../core/lib/toastAlert";
-import Config from '../../core/config/index.js';
+import Config from "../../core/config"
 import $ from "jquery";
 import Pagination from 'react-responsive-pagination';
 import '../../pagination.css';
@@ -51,13 +45,12 @@ export const listColumnObject = (options, value) => {
     return columnValue
 }
 const LoanHistory = (props) => {
-    const { siteSettings, myProfile, setUserProfile } = useContextData();
+    const { myProfile } = useContextData();
     const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage] = useState(2);
     const [totalLoan, setTotalLoan] = useState(0);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [statusValue, setStatusValue] = useState("");
     const [loanHistory, setLoanHistory] = useState([]);
     const [repayShow, setRepayShow] = useState(false);
     const [repayData, setRepayData] = useState([]);
@@ -70,7 +63,6 @@ const LoanHistory = (props) => {
     // const [loanStatusData, setLoanStatusData] = useState([]);
     const [loan_status, setLoan_status] = useState("");
     const [searchOrder, setSearchOrder] = useState("");
-    const [searchHistoryDetails, setSearchHistoryDetails] = useState([]);
     const [loaderStatus, setLoaderStatus] = useState(false);
     const [repay_data, setRepay_data] = useState({
         repay_amount: "",
@@ -99,7 +91,7 @@ const LoanHistory = (props) => {
             };
             const params = {
                 method: "POST",
-                url: `${Config.V1_API_URL}crypto-loan/repaid/history`,
+                url: `${Config.CRYPTOLOAN_V1_API_URL}cryptoLoan/repaid/history`,
                 body: data
             };
             const response = await makeRequest(params);
@@ -118,7 +110,7 @@ const LoanHistory = (props) => {
     };
     useEffect(() => {
         // getLoanHistory(filterQuery);
-        getLoanHistory();
+     if(Config.CRYPTO_LOAN_STATUS == "Enable") getLoanHistory();
     }, [myProfile]);
 
     //** search filter functionality */
@@ -134,7 +126,6 @@ const LoanHistory = (props) => {
     //** select loan status filter functionalities */
     const handleStatusChange = async (event) => {
         setLoan_status(event.target.value);
-        // setStatusValue(e.target.value);
     };
 
     //**  pagination functionalities */
@@ -166,7 +157,7 @@ const LoanHistory = (props) => {
             };
             const params = {
                 method: "POST",
-                url: `${Config.V1_API_URL}crypto-loan/repaid/history`,
+                url: `${Config.CRYPTOLOAN_V1_API_URL}cryptoLoan/repaid/history`,
                 body: data,
             }
             const response = await makeRequest(params);
@@ -271,7 +262,9 @@ const LoanHistory = (props) => {
 
     //** validation checked using render method*/
     useEffect(() => {
-        if (repay_data.repay_amount) validationCheckErr();
+        if(Config.CRYPTO_LOAN_STATUS == "Enable"){
+            if (repay_data.repay_amount) validationCheckErr();
+        }
     }, [repay_data]);
 
     //** crypto-loan get single details in API integrate */
@@ -280,7 +273,7 @@ const LoanHistory = (props) => {
         if (loanData) {
             try {
                 const params = {
-                    url: `${Config.V1_API_URL}crypto-loan/${loanData._id}`,
+                    url: `${Config.CRYPTOLOAN_V1_API_URL}cryptoLoan/${loanData._id}`,
                     method: "GET"
                 }
                 const response = await makeRequest(params);
@@ -401,7 +394,7 @@ const LoanHistory = (props) => {
                 };
                 const params = {
                     method: "POST",
-                    url: `${Config.V1_API_URL}crypto-loan/repayment`,
+                    url: `${Config.CRYPTOLOAN_V1_API_URL}cryptoLoan/repayment`,
                     data: payload
                 };
                 const response = await makeRequest(params);

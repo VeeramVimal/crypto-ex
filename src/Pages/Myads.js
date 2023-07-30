@@ -185,13 +185,13 @@ export default function Myadspage(props) {
     setassetType(type);
   }
   async function deleteAds(data){
-    if (data && (data.orderAmount - data.usdtPrice) <= 0){
+    // if (data && (data.orderAmount - data.usdtPrice) <= 0){
       setdeleteformOpen(true);
       setdeleteRecords(data)
-    } else {
-      let type = "error";
-      toast({ type, message: "Trade quantity must be greather than zero" });
-    }
+    // } else {
+    //   let type = "error";
+    //   toast({ type, message: "Trade quantity must be greather than zero" });
+    // }
   }
   async function changeMode(Id){
     try {

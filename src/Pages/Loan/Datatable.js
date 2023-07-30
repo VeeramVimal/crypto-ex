@@ -25,7 +25,6 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import ReactTooltip from "react-tooltip";
 import axios from 'axios';
 import { makeRequest } from '../../core/services/v1/request.js';
-import Config from '../../core/config/index.js';
 import { useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useContextData } from '../../core/context/index.js';
@@ -33,7 +32,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from '../../core/lib/toastAlert.js';
 import moment from 'moment/moment.js';
 import { Bars } from 'react-loader-spinner';
-
+import Config from "../../core/config";
+import { calculateValues } from "./Loan.helpers.js";
 function createData(name, sevenDaysFixedRate, fourteenDaysFixedRate, thirtyDaysFixedRate, type, actions) {
   return {
     name,
@@ -206,9 +206,9 @@ EnhancedTableToolbar.propTypes = {
 
 //** stable terms data */
 const stableTerms = [
-  { value: 1, label: { head: "7 Days - Stable Rate", descripe: "Use spot wallet assets as collateral" }, days: 7, interestKey: "sevenDaysFixedInterest" },
-  { value: 2, label: { head: "14 Days - Stable Rate", descripe: "Use spot wallet assets as collateral" }, days: 14, interestKey: "fourteenDaysFixedInterest" },
-  { value: 3, label: { head: "30 Days - Stable Rate", descripe: "Use spot wallet assets as collateral" }, days: 30, interestKey: "thirtyDaysFixedInterest" }
+  { value: 1, label: { head: '7 Days', rateLabel: "Low Rate", color: "#008000", bgColor: "#0ECB81", descripe: "Use spot wallet assets as collateral" }, days: 7, interestKey: "sevenDaysFixedInterest" },
+  { value: 2, label: { head: '14 Days', rateLabel: "Medium Rate", color: "#FF8C00", bgColor: "#FF9933", descripe: "Use spot wallet assets as collateral" }, days: 14, interestKey: "fourteenDaysFixedInterest" },
+  { value: 3, label: { head: '30 Days', rateLabel: "High Rate", color: "#FF0000", bgColor: "#FF6666", descripe: "Use spot wallet assets as collateral" }, days: 30, interestKey: "thirtyDaysFixedInterest" }
 ]
 export default function EnhancedTable() {
   const navigate = useNavigate();
@@ -257,7 +257,13 @@ export default function EnhancedTable() {
 
   //** date state mng */
   const [termDetail, setTermDetail] = useState([]);
-  const [selectTerm, setSelectTerm] = useState("");
+  const [selectTerm, setSelectTerm] = useState({
+    days: "",
+    color: "",
+    rates: "",
+    bgColor: ""
+  });
+  const [selectRates, setSelectRates] = useState("");
   const [termExpireDate, setTermExpireDate] = useState("");
   const [borrowDate, setBorrowDate] = useState(""); //** borrow start date mng*/
   const [userId, setUserId] = useState(null);
@@ -282,7 +288,7 @@ export default function EnhancedTable() {
     try {
       const params = {
         method: 'GET',
-        url: `${Config.V1_API_URL}borrowMarket`
+        url: `${Config.CRYPTOLOAN_V1_API_URL}borrowMarket`
       };
       const response = await makeRequest(params);
       const { data } = response;
@@ -292,13 +298,15 @@ export default function EnhancedTable() {
     }
   };
   useEffect(() => {
-    getBorrowDetails()
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") getBorrowDetails()
   }, []);
 
   //** user Id fetch the render method */
   useEffect(() => {
-    if (myProfile && myProfile._id) {
-      setUserId(myProfile._id);
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") {
+      if (myProfile && myProfile._id) {
+        setUserId(myProfile._id);
+      }
     }
   }, [myProfile]);
 
@@ -311,7 +319,7 @@ export default function EnhancedTable() {
     }
     await axios({
       method: 'POST',
-      url: `${Config.V1_API_URL}borrowMarket/coin_spot`,
+      url: `${Config.CRYPTOLOAN_V1_API_URL}borrowMarket/coin_spot`,
       data: payload
     }).then((res) => {
       if (res.data) {
@@ -329,21 +337,31 @@ export default function EnhancedTable() {
   };
 
   useEffect(() => {
-    defaultCoin();
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") defaultCoin();
   }, [userId]);
 
   //** select term based interest */
   useEffect(() => {
-    setTermDetail(stableTerms[0]);
-    setSelectTerm(stableTerms[0]?.label.head);
-    let stream = Object.values(stableTerms[0]);
-    setTermValue(stream[3]);
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") {
+      setTermDetail(stableTerms[0]);
+      setSelectTerm({
+        days: stableTerms[0]?.label.head,
+        rates: stableTerms[0]?.label.rateLabel,
+        color: stableTerms[0]?.label.color,
+        bgColor: stableTerms[0]?.label.bgColor
+      });
+      setSelectRates()
+      let stream = Object.values(stableTerms[0]);
+      setTermValue(stream[3]);
+    }
   }, [stableTerms?.length]);
 
   useEffect(() => {
-    if (termValue) {
-      let matchValue = selectCollateral && selectCollateral.collateral && selectCollateral.collateral[termValue];
-      setInterestRate(matchValue);
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") {
+      if (termValue) {
+        let matchValue = selectCollateral && selectCollateral.collateral && selectCollateral.collateral[termValue];
+        setInterestRate(matchValue);
+      }
     }
   }, [selectCollateral]);
 
@@ -352,7 +370,7 @@ export default function EnhancedTable() {
   const getCollateralCoin = async () => {
     const params = {
       method: 'GET',
-      url: `${Config.V1_API_URL}borrowMarket/collateral_coins`
+      url: `${Config.CRYPTOLOAN_V1_API_URL}borrowMarket/collateral_coins`
     }
     const response = await makeRequest(params);
     const { data } = response;
@@ -361,7 +379,7 @@ export default function EnhancedTable() {
   };
 
   useEffect(() => {
-    getCollateralCoin();
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") getCollateralCoin();
   }, [collateralCoins?.length]);
   //** get the pair of coin amt in pairs model data fetch API integrate  */
   const getPairsDetails = async () => {
@@ -383,36 +401,42 @@ export default function EnhancedTable() {
   };
 
   useEffect(() => {
-    getPairsDetails()
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") getPairsDetails()
   }, [selectCollateral, borrowData]);
   //** user id to user to fetch the user wallet ammount */
   useEffect(() => {
-    var userId = "";
-    var currencyId = "";
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") {
+      var userId = "";
+      var currencyId = "";
 
-    if (myProfile) {
-      userId = myProfile._id;
-    }
-    if (selectCollateral && selectCollateral.userData) {
-      currencyId = selectCollateral.userData.currencyId;
-    };
-    axios({
-      method: "POST",
-      url: `${Config.V1_API_URL}borrowMarket/pairs`,
-      data: {
-        userId,
-        currencyId
+      if (myProfile) {
+        userId = myProfile._id;
       }
-    }).then((res) => {
-      setCollateralWalletAmt(res.data.data);
-    }).catch((err) => console.log(err));
+      if (selectCollateral && selectCollateral.userData) {
+        currencyId = selectCollateral.userData.currencyId;
+      };
+      axios({
+        method: "POST",
+        url: `${Config.CRYPTOLOAN_V1_API_URL}borrowMarket/pairs`,
+        data: {
+          userId,
+          currencyId
+        }
+      }).then((res) => {
+        setCollateralWalletAmt(res.data.data);
+      }).catch((err) => console.log(err));
+    }
   }, [myProfile, selectCollateral]);
 
 
   //** click terms based handle functions */
   const handleTerms = async (term) => {
     setTermDetail(term);
-    setSelectTerm(term?.label.head);
+    setSelectTerm({
+      days: term?.label.head,
+      bgColor: term?.label.bgColor,
+      rates: term?.label.rateLabel
+    });
     let stream = Object.values(term);
     setTermValue(stream[3]);
     let matchValue = selectCollateral && selectCollateral.collateral[stream[3]];
@@ -426,7 +450,7 @@ export default function EnhancedTable() {
 
   const blockInvalidChar = (event) => {
     return ['e', 'E', '+', '-'].includes(event.key) && event.preventDefault();
-  }
+  };
 
   //** collateral and borrow input field handle functions */
   const handleChangeLoan = async (event) => {
@@ -438,55 +462,75 @@ export default function EnhancedTable() {
     var marginPrice = "";
     if (selectCollateral) {
       if (event.target.name == "wantBorrow") {
-        let wantBorrowValue = event.target.value;
+        let wantBorrowValue = await calculateValues(event.target.value, "wantBorrow");
+        // let wantBorrowValue = event.target.value;
         //** estimate hour calc for borrow  */
         if (interestRate) {
           var estimateDays = termDetail && termDetail.days; //** selected the term based days fetch */
           interst = interestRate / 100; //** convert interest rate to percentage for ex: (3.2/100 = 0.032) */
-          estimateOneHr = (wantBorrowValue * interst) / (365 * 24); //** convert the estimate one hour interest */
+          let estimateOneHr = (wantBorrowValue * interst) / (365 * 24); //** convert the estimate one hour interest */
+          let b = estimateOneHr.toString();
+          if (estimateOneHr == "" || estimateOneHr < 0 || b.indexOf("e") > -1) {
+            estimateOneHr = 0;
+          }
           estimateInterest = estimateOneHr * 24 * estimateDays; //** convert the estimate interest rate per hour */
           setEstHourInterest(estimateOneHr);
         }
         if (wantBorrowValue) {
           // let collateralCalc = Math.abs(parseFloat(((event.target.value) / USD_value) + estimateInterest));
           // let collateralCalc = ((event.target.value) / USD_value) + estimateInterest;
-          let collateralCalc = event.target.value / USD_value; //** enter the borrow amt divide by currency pair on USDT value to convert the collateral USDT calculation */
+
+          // let collateralCalc = event.target.value / USD_value; //** enter the borrow amt divide by currency pair on USDT value to convert the collateral USDT calculation */
+          let collateralCalc = wantBorrowValue / USD_value; //** enter the borrow amt divide by currency pair on USDT value to convert the collateral USDT calculation */
+
           let divInterestAmt = (estimateInterest / USD_value) + collateralCalc; //** estimate interest divided by currency pair on USDT value to added the collateral USDT calculation get the interest value*/
           let holdCollateralAmt = ((100 * divInterestAmt) / (initLTV * 100));
           // setData({ collateral: divInterestAmt });
           setData({ collateral: holdCollateralAmt });
-          estimateTermInrst = ((event.target.value * interst) / 365) * estimateDays; //** estimate based on term interest rate calculation */
-
+          estimateTermInrst = ((wantBorrowValue * interst) / 365) * estimateDays; //** estimate based on term interest rate calculation */
+          let c = estimateTermInrst.toString();
+          if (estimateTermInrst == "" || estimateTermInrst < 0 || c.indexOf("e") > -1) estimateTermInrst = 0;
           setEstimatedIterest(estimateTermInrst);
-          repayAmount = Math.abs(parseInt(event.target.value) + parseFloat(estimateTermInrst)); //** show the repaid amount */
+          repayAmount = Math.abs(parseInt(wantBorrowValue) + parseFloat(estimateTermInrst)); //** show the repaid amount */
+          // let b = await calculateValues(repayAmount, "wantBorrow");
           setRepayAmt(repayAmount);
-          liquide = (event.target.value) / (holdCollateralAmt * (LTV_Amt.liquidationLtv / 100));
-          marginPrice = (event.target.value) / (holdCollateralAmt * (LTV_Amt.marginLtv / 100));
+          liquide = (wantBorrowValue) / (holdCollateralAmt * (LTV_Amt.liquidationLtv / 100));
+          marginPrice = (wantBorrowValue) / (holdCollateralAmt * (LTV_Amt.marginLtv / 100));
         } else {
           setData({ wantBorrow: "", collateral: "" });
           setInitialVal({ wantBorrowErr: "", collateralErr: "" });
+          setEstimatedIterest(0); setRepayAmt(0);
         }
         setData((prevState) => ({ ...prevState, ['wantBorrow']: wantBorrowValue }));
       } else if (event.target.name == "collateral") {
-        let collateralValue = event.target.value;
+        // let collateralValue = event.target.value;
+        let collateralValue = await calculateValues(event.target.value, "collateral");
         //** estimate hour calc for collateral */
         if (interestRate) {
-          var borrowCalc = event.target.value * USD_value; //** collateral amount multiply by currency pair on USDT value */
+          var borrowCalc = collateralValue * USD_value; //** collateral amount multiply by currency pair on USDT value */
           var estimateDays = termDetail && termDetail.days; //** selected the term based days fetch */
           interst = interestRate / 100; //** convert interest rate to percentage for ex: (65/100 = 0.65) */
           estimateOneHr = (borrowCalc * interst) / (365 * 24); //** convert the estimate one hour interest */
           estimateInterest = estimateOneHr * 24 * estimateDays; //** convert the estimate interest rate per hour */
+          let b = estimateOneHr.toString();
+          if (estimateOneHr == "" || estimateOneHr < 0 || b.indexOf("e") > -1) {
+            estimateOneHr = 0;
+          }
           setEstHourInterest(estimateOneHr);
         }
         if (collateralValue) {
-          let collateralMult = event.target.value * USD_value;
+          let collateralMult = collateralValue * USD_value;
           // let wantBorrowDiv = (((event.target.value * USD_value) * initLTV) / 100);
           // setData({ wantBorrow: ((event.target.value * USD_value) - estimateInterest) });
           // setData({ wantBorrow: (((collateralMult * 65) / 100)) });
           let borrowAmt = (((collateralMult * (initLTV * 100)) / 100));
+          let d = borrowAmt.toString();
+          if (isNaN(borrowAmt) || borrowAmt == "" || d.indexOf("e") > -1) borrowAmt = "";
           setData({ wantBorrow: borrowAmt });
 
-          estimateTermInrst = (((event.target.value * USD_value) * interst) / 365) * estimateDays;
+          estimateTermInrst = (((collateralValue * USD_value) * interst) / 365) * estimateDays;
+          let c = estimateTermInrst.toString();
+          if (estimateTermInrst == "" || estimateTermInrst < 0 || c.indexOf("e") > -1) estimateTermInrst = 0;
           setEstimatedIterest(estimateTermInrst);
 
           // repayAmount = Math.abs(parseInt(event.target.value * USD_value) + parseFloat(estimateTermInrst));
@@ -495,11 +539,12 @@ export default function EnhancedTable() {
           repayAmount = Math.abs(((collateralMult * (initLTV * 100)) / 100) + parseFloat(estimateTermInrst));
 
           setRepayAmt(repayAmount);
-          liquide = borrowAmt / (event.target.value * (LTV_Amt.liquidationLtv / 100));
-          marginPrice = borrowAmt / (event.target.value * (LTV_Amt.marginLtv / 100));
-        } else {
+          liquide = borrowAmt / (collateralValue * (LTV_Amt.liquidationLtv / 100));
+          marginPrice = borrowAmt / (collateralValue * (LTV_Amt.marginLtv / 100));
+        } else if (data.wantBorrow == "") {
           setData({ wantBorrow: "", collateral: "" });
           setInitialVal({ wantBorrowErr: "", collateralErr: "" });
+          setEstimatedIterest(0); setRepayAmt(0);
         };
         // setData((prevState) => ({ ...prevState, ['collateral']: collateralValue }));
         setData((prevState) => ({ ...prevState, ['collateral']: collateralValue }));
@@ -508,6 +553,86 @@ export default function EnhancedTable() {
     setLP(liquide);
     setMarginLTV(marginPrice);
   };
+
+    //** collateral and borrow input field handle functions */
+    // const handleChangeLoan = async (event) => {
+    //   // var USD_value = selectCollateral?.userData.USDvalue;
+    //   var USD_value = pairsData && pairsData.price;
+    //   var estimateOneHr = "", interst = '', estimateInterest = "";
+    //   var estimateTermInrst = "", repayAmount = "";
+    //   var liquide = "";
+    //   var marginPrice = "";
+    //   if (selectCollateral) {
+    //     if (event.target.name == "wantBorrow") {
+    //       let wantBorrowValue = event.target.value;
+    //       //** estimate hour calc for borrow  */
+    //       if (interestRate) {
+    //         var estimateDays = termDetail && termDetail.days; //** selected the term based days fetch */
+    //         interst = interestRate / 100; //** convert interest rate to percentage for ex: (3.2/100 = 0.032) */
+    //         estimateOneHr = (wantBorrowValue * interst) / (365 * 24); //** convert the estimate one hour interest */
+    //         estimateInterest = estimateOneHr * 24 * estimateDays; //** convert the estimate interest rate per hour */
+    //         setEstHourInterest(estimateOneHr);
+    //       }
+    //       if (wantBorrowValue) {
+    //         // let collateralCalc = event.target.value / USD_value; //** enter the borrow amt divide by currency pair on USDT value to convert the collateral USDT calculation */
+  
+    //         let collateralCalc = event.target.value / USD_value; //** enter the borrow amt divide by currency pair on USDT value to convert the collateral USDT calculation */
+  
+    //         let divInterestAmt = (estimateInterest / USD_value) + collateralCalc; //** estimate interest divided by currency pair on USDT value to added the collateral USDT calculation get the interest value*/
+    //         let holdCollateralAmt = ((100 * divInterestAmt) / (initLTV * 100));
+    //         // setData({ collateral: divInterestAmt });
+    //         setData({ collateral: holdCollateralAmt });
+    //         estimateTermInrst = ((event.target.value * interst) / 365) * estimateDays; //** estimate based on term interest rate calculation */
+  
+    //         setEstimatedIterest(estimateTermInrst);
+    //         repayAmount = Math.abs(parseInt(event.target.value) + parseFloat(estimateTermInrst)); //** show the repaid amount */
+    //         setRepayAmt(repayAmount);
+    //         liquide = (event.target.value) / (holdCollateralAmt * (LTV_Amt.liquidationLtv / 100));
+    //         marginPrice = (event.target.value) / (holdCollateralAmt * (LTV_Amt.marginLtv / 100));
+    //       } else {
+    //         setData({ wantBorrow: "", collateral: "" });
+    //         setInitialVal({ wantBorrowErr: "", collateralErr: "" });
+    //       }
+    //       setData((prevState) => ({ ...prevState, ['wantBorrow']: wantBorrowValue }));
+    //     } else if (event.target.name == "collateral") {
+    //       let collateralValue = event.target.value;
+    //       //** estimate hour calc for collateral */
+    //       if (interestRate) {
+    //         var borrowCalc = event.target.value * USD_value; //** collateral amount multiply by currency pair on USDT value */
+    //         var estimateDays = termDetail && termDetail.days; //** selected the term based days fetch */
+    //         interst = interestRate / 100; //** convert interest rate to percentage for ex: (65/100 = 0.65) */
+    //         estimateOneHr = (borrowCalc * interst) / (365 * 24); //** convert the estimate one hour interest */
+    //         estimateInterest = estimateOneHr * 24 * estimateDays; //** convert the estimate interest rate per hour */
+    //         setEstHourInterest(estimateOneHr);
+    //       }
+    //       if (collateralValue) {
+    //         let collateralMult = event.target.value * USD_value;
+    //         // let wantBorrowDiv = (((event.target.value * USD_value) * initLTV) / 100);
+    //         // setData({ wantBorrow: ((event.target.value * USD_value) - estimateInterest) });
+    //         // setData({ wantBorrow: (((collateralMult * 65) / 100)) });
+    //         let borrowAmt = (((collateralMult * (initLTV * 100)) / 100));
+    //         setData({ wantBorrow: borrowAmt });
+    //         estimateTermInrst = (((event.target.value * USD_value) * interst) / 365) * estimateDays;
+    //         setEstimatedIterest(estimateTermInrst);
+    //         // repayAmount = Math.abs(parseInt(event.target.value * USD_value) + parseFloat(estimateTermInrst));
+    //         // repayAmount = Math.abs(((event.target.value * USD_value) - estimateInterest) + parseFloat(estimateTermInrst));
+    //         // repayAmount = Math.abs(((collateralMult * 65) / 100) + parseFloat(estimateTermInrst));
+    //         repayAmount = Math.abs(((collateralMult * (initLTV * 100)) / 100) + parseFloat(estimateTermInrst));
+    //         let a = await calculateValues(repayAmount, "collateral");
+    //         setRepayAmt(repayAmount);
+    //         liquide = borrowAmt / (event.target.value * (LTV_Amt.liquidationLtv / 100));
+    //         marginPrice = borrowAmt / (event.target.value * (LTV_Amt.marginLtv / 100));
+    //       } else {
+    //         setData({ wantBorrow: "", collateral: "" });
+    //         setInitialVal({ wantBorrowErr: "", collateralErr: "" });
+    //       };
+    //       // setData((prevState) => ({ ...prevState, ['collateral']: collateralValue }));
+    //       setData((prevState) => ({ ...prevState, ['collateral']: collateralValue }));
+    //     };
+    //   }
+    //   setLP(liquide);
+    //   setMarginLTV(marginPrice);
+    // };
   //** validations func */
   const validationCheckErr = () => {
     var isValid = true;
@@ -553,7 +678,9 @@ export default function EnhancedTable() {
   }
   //** validation checked using render method*/
   useEffect(() => {
-    if (data.collateral || data.wantBorrow) validationCheckErr();
+    if (Config.CRYPTO_LOAN_STATUS == "Enable") {
+      if (data.collateral || data.wantBorrow) validationCheckErr();
+    }
   }, [data]);
 
   //** select the coin list in collateral and borrow coins to search func */
@@ -673,7 +800,7 @@ export default function EnhancedTable() {
     }
     axios({
       method: 'POST',
-      url: `${Config.V1_API_URL}borrowMarket/coin_spot`,
+      url: `${Config.CRYPTOLOAN_V1_API_URL}borrowMarket/coin_spot`,
       data: payload
     }).then((res) => {
       if (res.data) {
@@ -764,7 +891,7 @@ export default function EnhancedTable() {
       try {
         const params = {
           method: 'POST',
-          url: `${Config.V1_API_URL}crypto-loan/borrow/create`,
+          url: `${Config.CRYPTOLOAN_V1_API_URL}cryptoLoan/borrow/create`,
           data: payload
         };
         const response = await makeRequest(params);
@@ -971,9 +1098,12 @@ export default function EnhancedTable() {
                   <div className='crypto-loan-input-field' onClick={handleShow} >
                     <p className='mb-0'>
                       {/* { termDetail ? termDetail.label.head : stableTerms[0].label.head }  */}
-                      {`${selectTerm}`}
-                      <span className='crypto-loan-low-rate p-1 mx-2'>
+                      {`${selectTerm.days}`} -
+                      {/* <span className='crypto-loan-low-rate p-1 mx-1' style={{ backgroundColor: "rgb(14, 203, 129)", borderRadius: "0.5em"}}>
                         Low Rates
+                      </span> */}
+                      <span className='p-1 mx-1' style={{ backgroundColor: `${selectTerm.bgColor}`, borderRadius: "0.5em" }}>
+                        {`${selectTerm.rates}`}
                       </span>
                     </p>
                     <MdArrowDropDown onClick={handleShow} />
@@ -1214,7 +1344,14 @@ export default function EnhancedTable() {
                       <VscGraphLine className="loan-page-icon-image-table" />
                     </div>
                     <div className="mx-3">
-                      <p className='mb-2'>{term.label.head}</p>
+                      <>
+                        <p className='mb-2'>
+                          {term.label.head} -
+                          <span className='p-1' style={{ color: term.label.color }}>
+                            {term.label.rateLabel}
+                          </span>
+                        </p>
+                      </>
                       <p className='text-grey mb-0'>{term.label.descripe}
                       </p>
                     </div>

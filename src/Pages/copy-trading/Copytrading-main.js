@@ -28,46 +28,90 @@ import { makeRequest } from "../../core/services/v1/request";
 import { useContextData } from '../../core/context';
 import { toast } from "../../core/lib/toastAlert";
 import { useNavigate } from "react-router-dom";
+import { Bars } from "react-loader-spinner";
 
 export default function Maincopytrading(props) {
     const navigate = useNavigate();
-    const [traderDetails, setTraderDetails] = useState();
+    const [traderDetails, setTraderDetails] = useState([]);
+    const [loaderStatus, setLoaderStatus] = useState(false);
     const { myProfile } = useContextData();
-    const [userBalance, setUserBalance] = useState();
-
-    async function getAllLeadTraders() {
+    const [userBalance, setUserBalance] = useState([]);
+    const [userId, setUserId] = useState("");
+    // const [traderId, setTraderId] = useState("");
+    useEffect(() => {
+        if (myProfile && myProfile._id) setUserId(myProfile._id);
+    }, [myProfile]);
+    const getAllLeadTraders = async () => {
         try {
+            setLoaderStatus(false);
+            // let userID = "";
+            // if (myProfile && myProfile._id) userID = myProfile._id;
+            const payload = {
+                trader_status: 1,
+                userId: userId
+            }
             const params = {
                 url: `${Config.V1_API_URL}copyTrade/getAllLeadTrader`,
                 method: "POST",
-                data: { trader_status: 1, userId: myProfile._id },
+                data: payload,
             };
             const response = await makeRequest(params);
             if (response) {
-                setTraderDetails(response.data)
+                if (response.data && response.data?.length > 0) setTraderDetails(response.data); setLoaderStatus(true);
             }
-            else toast({ type: "error", message: 'Leader Not Found' });
+            else toast({ type: "error", message: 'Leader Not Found' }); setLoaderStatus(true);
+
         } catch (err) {
             console.log("lead-trader error", err);
         }
-    }
+    };
 
-    async function create_lead_trader() {
-        const params = {
-            url: `${Config.V1_API_URL}copyTrade/addLeadTrader`,
-            method: "POST",
-            data: {
-                name: 'isakki',
-                email: 'isakkimuthu@clarisco.com',
-                discription: 'hello i am a software developer',
-                trader_id: '6453550ca9a6dd29f823498c',
-            },
-        };
-        const response = await makeRequest(params);
-        if (response.status && response.Msg) {
-            console.log('hhhhhhhh')
-        } else console.log('ssssss')
+    useEffect(() => {
+        if (Config.COPY_TRADING_STATUS == "Enable") {
+            if(userId) getAllLeadTraders();
+        }
+    }, [userId]);
+    
+    const handleCopyTrade = async (data) => {
+        try {
+            const payload = {
+                traderEmail: data.email
+            }
+            const params = {
+                url: `${Config.V1_API_URL}copyTrade/traderDetail`,
+                method: 'POST',
+                data: payload
+            };
+            const response = await makeRequest(params);
+            if(response.status) {
+                if(response.data) {
+                    // setTraderId(response.data._id);
+                    navigate("/copy-trade-port?id=" + btoa(data.trader_id), { state: { traderId: response.data._id }})
+                }
+                
+            }
+            
+        } catch (error) {
+            toast({ type: "error", message: 'Leader Not Found' });
+        }
+        // () => navigate("/copy-trade-port?id=" + btoa(res.trader_id))
     }
+    // async function create_lead_trader() {
+    //     const params = {
+    //         url: `${Config.V1_API_URL}copyTrade/addLeadTrader`,
+    //         method: "POST",
+    //         data: {
+    //             name: 'isakki',
+    //             email: 'isakkimuthu@clarisco.com',
+    //             discription: 'hello i am a software developer',
+    //             trader_id: '6453550ca9a6dd29f823498c',
+    //         },
+    //     };
+    //     const response = await makeRequest(params);
+    //     if (response.status && response.Msg) {
+    //         console.log('hhhhhhhh')
+    //     } else console.log('ssssss')
+    // }
 
     async function getUserBalance() {
         const params = {
@@ -80,7 +124,7 @@ export default function Maincopytrading(props) {
             setUserBalance(response.data);
         } else console.log('bbbbbbbbb');
 
-    }
+    };
 
     async function copyTrader(data) {
 
@@ -135,13 +179,6 @@ export default function Maincopytrading(props) {
 
     }
 
-    useEffect(() => {
-        //getUserBalance();
-        getAllLeadTraders();
-        //create_lead_trader();
-    }, [myProfile]);
-
-    //console.log('traderDetailstraderDetails...',traderDetails)
     return (
         <div>
             <NavbarOne
@@ -257,68 +294,92 @@ export default function Maincopytrading(props) {
                                     </div>
                                 </div>
                                 <div className="container  px-0 pb-5">
+                                    {
+                                        !loaderStatus ? (
+                                            <div className="d-flex flex-row align-items-center px-4">
+                                                <div className="bars-loading-loader mx-auto">
+                                                    <Bars
+                                                        height="80"
+                                                        width="80"
+                                                        color="#4fa94d"
+                                                        ariaLabel="bars-loading"
+                                                        wrapperStyle={{}}
+                                                        wrapperclassName=""
+                                                        visible={true}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ) : (traderDetails?.length == 0) && ""
+                                    }
                                     <div className="row g-4 row-cols-lg-4 row-cols-1">
-                                        {traderDetails ?
+
+                                        {
+                                            traderDetails &&
+                                            traderDetails.length > 0 &&
                                             traderDetails.map((res) => {
-                                                return (<div className="col ">
-                                                    <div className="copytrading-card-css-styling">
-                                                        <div className="d-flex align-items-center">
-                                                            <div className="">
-                                                                <CgProfile className="trading-page-profile-icon-image me-3" />
-                                                            </div>
-                                                            <div className="">
-                                                                <p className="mb-0">{res.name}</p>
-                                                                {/* <p className="text-grey mb-0">{res.email}</p> */}
-                                                            </div>
-                                                        </div>
-                                                        <div className="d-flex mt-2 align-items-center">
+                                                return (
+                                                    <div className="col ">
+                                                        <div className="copytrading-card-css-styling">
                                                             <div className="d-flex align-items-center">
                                                                 <div className="">
-                                                                    <FaCommentDollar className="text-grey" />
-                                                                    <span className="mx-1 f-13 fw-500">USD-M</span>
+                                                                    <CgProfile className="trading-page-profile-icon-image me-3" />
+                                                                </div>
+                                                                <div className="">
+                                                                    <p className="mb-0">{res.name}</p>
+                                                                    {/* <p className="text-grey mb-0">{res.email}</p> */}
+                                                                </div>
+                                                            </div>
+                                                            <div className="d-flex mt-2 align-items-center">
+                                                                <div className="d-flex align-items-center">
+                                                                    <div className="">
+                                                                        <FaCommentDollar className="text-grey" />
+                                                                        <span className="mx-1 f-13 fw-500">USD-M</span>
+                                                                    </div>
+                                                                    <div className="mx-1">
+                                                                        <CgProfile className="text-grey" />
+                                                                        <span className="mx-1 f-13 fw-500">180/250</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="d-flex mt-3 justify-content-between align-items-center">
+                                                                <div className="">
+                                                                    <p className="mb-0 fc-g f-20">113.14%</p>
+                                                                    <p className="text-grey">30D ROI</p>
+                                                                </div>
+                                                                <div className="">
+                                                                    <p className="mb-0 fc-g f-20">21,272.51</p>
+                                                                    <p className="text-grey">30D PNL</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="d-flex mt-3 justify-content-between align-items-center">
+                                                                <div className="">
+                                                                    <p className="mb-0 f-20">38.14%</p>
+                                                                    <p className="text-grey">30D ROI</p>
+                                                                </div>
+                                                                <div className="">
+                                                                    <p className="mb-0 f-20">80.80%</p>
+                                                                    <p className="text-grey">30D PNL</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="d-flex mt-2 justify-content-between align-items-center">
+                                                                <div className="">
+                                                                    <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">AUM:</span>197,635.12 USD</p>
+                                                                    <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">Runtime:</span>65 days</p>
                                                                 </div>
                                                                 <div className="mx-1">
-                                                                    <CgProfile className="text-grey" />
-                                                                    <span className="mx-1 f-13 fw-500">180/250</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="d-flex mt-3 justify-content-between align-items-center">
-                                                            <div className="">
-                                                                <p className="mb-0 fc-g f-20">113.14%</p>
-                                                                <p className="text-grey">30D ROI</p>
-                                                            </div>
-                                                            <div className="">
-                                                                <p className="mb-0 fc-g f-20">21,272.51</p>
-                                                                <p className="text-grey">30D PNL</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="d-flex mt-3 justify-content-between align-items-center">
-                                                            <div className="">
-                                                                <p className="mb-0 f-20">38.14%</p>
-                                                                <p className="text-grey">30D ROI</p>
-                                                            </div>
-                                                            <div className="">
-                                                                <p className="mb-0 f-20">80.80%</p>
-                                                                <p className="text-grey">30D PNL</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="d-flex mt-2 justify-content-between align-items-center">
-                                                            <div className="">
-                                                                <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">AUM:</span>197,635.12 USD</p>
-                                                                <p className="mb-0 f-13 fw-500"><span className="me-2 text-grey">Runtime:</span>65 days</p>
-                                                            </div>
-                                                            <div className="mx-1">
 
-                                                                <button className='btn  banner-top-button-copy' onClick={() => navigate("/copy-trade-port?id=" + btoa(res.trader_id))}> {/* onClick={()=>copyTrader(res)} */}
-                                                                    Copy
-                                                                </button>
+                                                                    <button className='btn  banner-top-button-copy' 
+                                                                    onClick={ () => handleCopyTrade(res)}> 
+                                                                    {/* onClick={()=>copyTrader(res)} */}
+                                                                        Copy
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>)
+                                                )
                                             })
-                                            : ''}
+                                        }
 
 
                                         {/* <div className="col ">
@@ -385,7 +446,7 @@ export default function Maincopytrading(props) {
 
                                     </div>
                                 </div>
-                                <div className="d-flex justify-content-between">
+                                {/* <div className="d-flex justify-content-between">
                                     <div>
                                         <p className="deposit-text-1 mb-1">7-Day New Portfolios</p>
                                         <p className="text-grey">7-Day New Portfolios Ranked By 7D ROI</p>
@@ -1899,7 +1960,7 @@ export default function Maincopytrading(props) {
 
                                         </Swiper>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             {/* ===================================TAB-2================================================================== */}
 

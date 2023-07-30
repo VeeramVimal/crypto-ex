@@ -108,6 +108,10 @@ export default function Voucher() {
                     <td>{currencySymbolCode} {balance}</td>
                     <td>
                       {
+                        (elem.claim === 2 || new Date() > new Date(elem.expireDate))
+                        ?
+                        "Expired"
+                        :
                         elem.claim === 0
                         ?
                         <button
@@ -121,7 +125,7 @@ export default function Voucher() {
                           {(isloadingData && isloadingData.claimVoucher_API === elem._id) ? "Loading..." : "Claim"}
                         </button>
                         :
-                        "Claimed"
+                        elem.claim === 1 ? "Claimed" : "Expired"
                       }
                     </td>
                   </tr>

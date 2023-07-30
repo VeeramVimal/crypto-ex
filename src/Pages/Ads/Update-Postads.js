@@ -613,13 +613,15 @@ export default function UpdateMyadspage(props) {
       settotalAmount(placeValue);
       newTotAmt = placeValue;      
       const chkMaxAmt = placeValue*currentInrPrice;
-      if(maxAmount > chkMaxAmt || maxAmount === 0 || minAmount > maxAmount) {
-        setmaxAmount(chkMaxAmt);
-        chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
-      }
-      else {
-        chkFormValidation(newTotAmt, minAmount, maxAmount);
-      }
+      setmaxAmount(chkMaxAmt);
+      chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
+      // if(maxAmount > chkMaxAmt || maxAmount === 0 || minAmount > maxAmount) {
+      //   setmaxAmount(chkMaxAmt);
+      //   chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
+      // }
+      // else {
+      //   chkFormValidation(newTotAmt, minAmount, maxAmount);
+      // }
     }
     else if (placeType === "minLimit") {
       setminAmount(placeValue);

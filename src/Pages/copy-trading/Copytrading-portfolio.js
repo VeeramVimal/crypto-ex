@@ -24,6 +24,7 @@ import { useLocation } from "react-router-dom";
 export default function Copytradingportfolio(props) {
     const { myProfile } = useContextData();
     let query = useQuery();
+    const { state } = useLocation();
     const [markets, setmarkets] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [fixedamt, setFixedamt] = useState();
@@ -53,10 +54,14 @@ export default function Copytradingportfolio(props) {
 
     async function getUserBalance() {
         try {
+            const payload = {
+                userId: myProfile && myProfile._id, 
+                currency_id: '61330e0fedf7c88c84357055'
+            }
             const params = {
                 url: `${Config.V1_API_URL}copyTrade/getUserBalance`,
                 method: "POST",
-                data: { userId: myProfile._id, currency_id: '61330e0fedf7c88c84357055' },
+                data: payload,
             };
             const response = await makeRequest(params);
             if (response) {
@@ -93,18 +98,20 @@ export default function Copytradingportfolio(props) {
                 if (selected_user_uids_arr.length) {
                     selected_user_uids = selected_user_uids_arr.join(",")
                 }
+                const payload = {
+                    //cost_per_order:cost_per_order,
+                    copy_amt: fixedamt,
+                    //take_profit:take_profit,
+                    //stop_loss:stop_loss,
+                    trader_id: state && state.traderId,
+                    copy_user_id: myProfile && myProfile._id,
+                    selected_pairs: selected_user_uids
+                };
+                // console.log("payload=========", payload);
                 const params = {
                     url: `${Config.V1_API_URL}copyTrade/createCopyTraderRequest`,
                     method: "POST",
-                    data: {
-                        //cost_per_order:cost_per_order,
-                        copy_amt: fixedamt,
-                        //take_profit:take_profit,
-                        //stop_loss:stop_loss,
-                        trader_id: trader_id,
-                        copy_user_id: myProfile._id,
-                        selected_pairs: selected_user_uids
-                    },
+                    data: payload,
                 };
                 const response = await makeRequest(params);
                 if (response.status) {
@@ -173,7 +180,13 @@ export default function Copytradingportfolio(props) {
                                         <div className="col">
                                             <p className="mb-0 fc-g f-20">Select pair</p>
                                             <div class="dropdown">
-                                                <Select id="users_pairs" value={selectedUsers} isMulti={true} onChange={handleSelect} options={markets} className="basic-multi-select" ></Select>
+                                                <Select id="users_pairs"
+                                                    value={selectedUsers}
+                                                    isMulti={true}
+                                                    onChange={handleSelect}
+                                                    options={markets}
+                                                    className="basic-multi-select"
+                                                ></Select>
                                                 {/* <Select
                                                         defaultValue={[markets[2], markets[3]]}
                                                         value={selectedUsers}

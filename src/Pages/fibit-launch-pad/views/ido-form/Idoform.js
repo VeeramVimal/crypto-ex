@@ -1,16 +1,17 @@
 import React, { useState, useEffect, createContext } from "react";
 import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
-import axios from "axios";
-// import Swal from "sweetalert2";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../assets/styles/ido-style.css';
 import { toast } from '../../../../core/lib/toastAlert';
 import Config from '../../../../core/config/index';
 import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
+import { makeRequest } from "../../../../core/services/v1/request";
 import * as Yup from "yup";
+import $ from 'jquery';
+
 const BlockChain = [
     { value: 0, label: 'Ethereum', name: 'Eth', token: "ERC-20" },
     { value: 1, label: 'Binance Smart Chain', name: 'btn', token: "BEP-20" },
@@ -23,16 +24,27 @@ const BlockChain = [
 
 const Terms = [
     { value: 0, label: 'Public', name: 'public' },
-    { value: 1, label: 'Anon', name: 'anon' },
+    { value: 1, label: 'Anonymous', name: 'anonymous' },
     { value: 2, label: 'Mixed', name: 'mixed' },
 ];
-function Home() {
+const Options = [
+    { value: 0, label: "Yes", name: "yes" },
+    { value: 1, label: "No", name: "no" }
+]
+function Home(props) {
     const navigate = useNavigate();
     const userApplicationContext = createContext()
     const [userData, setUserData] = useState({
         blockChainSelected: "",
         userTermSelected: "",
     });
+    const [imagePreview, setPreviewImage] = useState('');
+    const [imageUrl, setImageUrl] = useState(null);
+    const [imageErr, setImageErr] = useState('');
+    const [loader, setLoader] = useState(false);
+    const [formValues, setFormValues] = useState();
+    const [showform, setShowform] = useState();
+
     const [validationErr, setValidationErr] = useState({
         userNameErr: "",
         emailErr: "",
@@ -47,23 +59,45 @@ function Home() {
         gitLinkErr: "",
         telegramGrpLinkErr: "",
         telegramUserNameErr: "",
-        twitterLinkErr: ""
+        twitterLinkErr: "", 
+        imageErr: ""
     });
 
-    //** chain and user team select functionality */ 
-    // const handleChainSelect = async (event) => {
-    //     let chain = await BlockChain.filter((ele) => ele.value == event.target.value);
-    //     setUserData((prevSelect) => ({ ...prevSelect, blockChainSelected: chain[0].name }))
-    // };
-    // const handleTeamSelect = async (event) => {
-    //     let term = await Terms.filter((val) => val.value == event.target.value);
-    //     setUserData((prevSelect) => ({ ...prevSelect, userTermSelected: term[0].name }))
-    // };
-
+    const imageUpload = async (values) => {
+        if(touched.image == true) {
+            touched.image = false;
+        }
+        let uploadFile = values
+        if(uploadFile) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewImage(reader.result)
+            };
+            reader.readAsDataURL(uploadFile);
+        }
+        const formData = new FormData();
+        let sizeFile = 1;
+        let fileToUpload = uploadFile;
+        let fileName = 'attachment';
+        let fileExtension = fileToUpload.name.split('?')[0].split('.').pop();
+        formData.append('images[]', fileToUpload, fileName + '.' + fileExtension);
+        const params = {
+            url: `${Config.V1_API_URL}admin/fileUpload?sizeFile=${sizeFile}&&type="attachment"`,
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+        setLoader(true);
+        const response = (await makeRequest(params));
+        setLoader(false);
+        setImageUrl(response.message[0].location);
+    }
     const { handleChange, handleSubmit, handleBlur, touched, errors, values } = useFormik({
         initialValues: {
-            userName: "",
             email: "",
+            userName: "",
             projectName: "",
             projectInfo: "",
             investors: "",
@@ -75,7 +109,7 @@ function Home() {
             telegramUserName: "",
             blockChainSelected: userData.blockChainSelected,
             userTermSelected: userData.userTermSelected,
-            twitterLink: ""
+            twitterLink: "",
         },
         //** form validation functions */
         validationSchema: Yup.object().shape({
@@ -96,13 +130,17 @@ function Home() {
         }),
         //** enter the value to set state functions */
         onChange: async (event) => {
+
         },
         //** submit functionality */
         onSubmit: async (values) => {
             try {
                 var chain = await BlockChain.filter((ele) => ele.value == Number(values.blockChainSelected));
                 var term = await Terms.filter((val) => val.value == Number(values.userTermSelected)); 
-                const data = {
+                if(imageUrl == null) {
+                    setImageErr("Image field in required");
+                }
+                const payload = {
                     userName: values.userName,
                     email: values.email,
                     projectName: values.projectName,
@@ -117,37 +155,37 @@ function Home() {
                     gitLink: values.gitLink,
                     telegramGrpLink: values.telegramGrpLink,
                     telegramUserName: values.telegramUserName,
-                    twitterLink: values.twitterLink
+                    twitterLink: values.twitterLink,
+                    image: imageUrl ? imageUrl : formValues && formValues.image
                 };
-                navigate("/idoformtoken", { state: { data: data } })
+                setImageUrl(payload.image);
+                navigate("/idoformtoken", { state: { data: payload } })
             } catch (error) {
                 toast({ type: "error", message: "Your form field is required!" });
             }
         }
     });
-    // const handleChange = async (event) => {
-    //     console.log("sdfghjk==========", event);
-    // }
+    useEffect(() => {
+        if (window.location.pathname === "/ido-form") {
+            $("#classy-navbar-mobile").css("background-color", "transparent");
+            $(".theme-mode-dropdown").hide();
+        }
+    }, []);
     return (
         <div className="Ido-App-lanchpad">
-            <Navbar />
+            <Navbar setTheme={props.setTheme} />
             <ToastContainer limit={1} />
-            <div className="hero-section-ido-launchpad-banner py-5">
+            <div className="hero-section-ido-launchpad-banner py-5 mt-5">
                 <div className="container">
                     <div className="row g-4 justify-content-around">
                         <div className="col-lg-8 application-form-ido-section">
                             <p className="ido-text-1 mb-2">Fibit Application Form</p>
                             <p className="ido-text-3 mb-4" style={{ textTransform: "capitalize" }}>
-                                Welcome! :) Please apply to launch on Fibit Pro so we can begin to review your project application.
+                                Welcome! Please apply to launch on Fibit Pro. so we can begin to review your project application.
                             </p>
-                            <form className="" onSubmit={(e) => {
-                                e.preventDefault();
-                                handleSubmit();
-                                return false;
-                            }}>
+                            <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); return false; }}>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputEmail1" className="form-label">Your Name</label> */}
-                                    <p className="ido-active-text-2 mb-1">Your Name</p>
+                                    <p className="ido-active-text-2 mb-1">Your Name <span className="text-danger">*</span></p>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -156,7 +194,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="userName"
-                                        value={values.userName || ""}
+                                        value={values.userName || formValues && formValues.userName || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.userName && errors.userName ? true : false}
@@ -170,8 +208,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Email address</label> */}
-                                    <p className="ido-active-text-2 mb-1">Email Address</p>
+                                    <p className="ido-active-text-2 mb-1">Email Address <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -182,7 +219,7 @@ function Home() {
                                         aria-describedby="emailHelp"
                                         name="email"
                                         placeholder="example@example.com"
-                                        value={values.email || ""}
+                                        value={values.email || formValues && formValues.email || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.email && errors.email ? true : false}
@@ -196,8 +233,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Project Name</label> */}
-                                    <p className="ido-active-text-2 mb-1">Project Name</p>
+                                    <p className="ido-active-text-2 mb-1">Project Name <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -207,7 +243,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="projectName"
-                                        value={values.projectName || ""}
+                                        value={values.projectName || formValues && formValues.projectName || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.projectName && errors.projectName ? true : false}
@@ -221,9 +257,8 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleFormControlTextarea1" className="form-label">Tell us more about your project, the more info you give us the more likely we will consider your application.</label> */}
                                     <p className="ido-active-text-2 mb-1">
-                                        Tell us more about your project, the more info you give us the more likely we will consider your application.
+                                        Tell us more about your project, the more info you give us the more likely we will consider your application. <span className="text-danger">*</span>
                                     </p>
 
                                     <textarea
@@ -235,7 +270,7 @@ function Home() {
                                         aria-describedby="emailHelp"
                                         name="projectInfo"
                                         rows="3"
-                                        value={values.projectInfo || ""}
+                                        value={values.projectInfo || formValues && formValues.projectInfo || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.projectInfo && errors.projectInfo ? true : false}
@@ -249,32 +284,9 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4" >
-                                    {/* <label for="exampleFormControlTextarea1" className="form-label">Blockchain</label> */}
-                                    <p className="ido-active-text-2 mb-1">Blockchain</p>
+                                    <p className="ido-active-text-2 mb-1">Blockchain <span className="text-danger">*</span></p>
 
                                     <div className="form-group">
-                                        {/* <select
-                                            className="form-control form-dropdown"
-                                            placeholder="Select"
-                                            name="blockChainSelected"
-                                            onChange={handleChainSelect}
-                                            option={BlockChain}
-                                        >
-                                            {
-                                                BlockChain.map((chain) => {
-                                                    return (
-                                                        <>
-                                                            <option className="form-select" value="" disabled selected hidden>Select option...</option>
-                                                            <option
-                                                                className="form-select"
-                                                                value={chain.value} >
-                                                                {chain.label}
-                                                            </option>
-                                                        </>
-                                                    )
-                                                })
-                                            }
-                                        </select> */}
                                         <select
                                             className="form-control form-dropdown"
                                             placeholder="Select"
@@ -287,10 +299,10 @@ function Home() {
                                                 BlockChain.map((chain) => {
                                                     return (
                                                         <>
-                                                            <option className="form-select" value="" disabled selected hidden>Select option...</option>
+                                                            <option className="form-select" value={formValues && formValues.chain} disabled selected hidden>Select option...</option>
                                                             <option
                                                                 className="form-select"
-                                                                value={chain.value} >
+                                                                value={chain.value} selected={formValues && formValues.blockChainSelect == chain.name ? true : false} >
                                                                 {chain.label}
                                                             </option>
                                                         </>
@@ -299,9 +311,6 @@ function Home() {
                                             }
                                         </select>
                                     </div>
-                                    {/* <div className="error">
-                                        {validationErr.blockChainSelectErr}
-                                    </div> */}
                                     {
                                         touched.blockChainSelected && errors.blockChainSelected && (
                                             <small className="invalid-email error password-text-33">
@@ -312,8 +321,7 @@ function Home() {
                                 </div>
 
                                 <div className="mb-4">
-                                    {/* <label for="exampleFormControlTextarea1" className="form-label">Is your team Public or Anon?</label> */}
-                                    <p className="ido-active-text-2 mb-1">Is your team Public or Anon?</p>
+                                    <p className="ido-active-text-2 mb-1">Is your team Public or Anonymous? <span className="text-danger">*</span></p>
 
                                     <div className="form-group">
                                         <select
@@ -328,10 +336,10 @@ function Home() {
                                                 Terms.map((term) => {
                                                     return (
                                                         <>
-                                                            <option className="form-select" value="" disabled selected hidden>Select option...</option>
+                                                            <option className="form-select" value={formValues && formValues.term} disabled selected hidden>Select option...</option>
                                                             <option
                                                                 className="form-select"
-                                                                value={term.value} >
+                                                                value={term.value} selected={formValues && formValues.userTeam == term.name ? true : false} >
                                                                 {term.label}
                                                             </option>
                                                         </>
@@ -340,10 +348,6 @@ function Home() {
                                             }
                                         </select>
                                     </div>
-
-                                    {/* <div className="error">
-                                        {validationErr.userTeamErr}
-                                    </div> */}
                                     {
                                         touched.userTermSelected && errors.userTermSelected && (
                                             <small className="invalid-email error password-text-33">
@@ -353,8 +357,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Advisors/Backers/Investors</label> */}
-                                    <p className="ido-active-text-2 mb-1">Advisors/Backers/Investors</p>
+                                    <p className="ido-active-text-2 mb-1">Advisors/Backers/Investors <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -364,7 +367,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="investors"
-                                        value={values.investors || ""}
+                                        value={values.investors || formValues && formValues.investors || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.investors && errors.investors ? true : false}
@@ -378,22 +381,30 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Your smart contract have been audited?</label> */}
-                                    <p className="ido-active-text-2 mb-1">Your smart contract have been audited?</p>
-
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="smartContractAudited"
-                                        autoComplete="off"
-                                        aria-label="Sizing example input"
-                                        aria-describedby="emailHelp"
+                                    <p className="ido-active-text-2 mb-1">Your smart contract have been audited? <span className="text-danger">*</span></p>
+                                    <select
+                                        className="form-control form-dropdown"
+                                        placeholder="Select"
                                         name="smartContractAudited"
-                                        value={values.smartContractAudited || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        invalid={touched.smartContractAudited && errors.smartContractAudited ? true : false}
-                                    />
+                                        option={Options}
+                                    >
+                                        {
+                                                Options.map((term) => {
+                                                    return (
+                                                        <>
+                                                            <option className="form-select" value={formValues && formValues.term} disabled selected hidden>Select option...</option>
+                                                            <option
+                                                                className="form-select"
+                                                                value={term.value} selected={formValues && formValues.smartContractAudited == term.value ? true : false} >
+                                                                {term.label}
+                                                            </option>
+                                                        </>
+                                                    )
+                                                })
+                                            }
+                                    </select>
                                     {
                                         touched.smartContractAudited && errors.smartContractAudited && (
                                             <small className="invalid-email error password-text-33">
@@ -403,8 +414,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Link to Whitepaper or Lite paper?</label> */}
-                                    <p className="ido-active-text-2 mb-1">Link to Whitepaper or Lite paper?</p>
+                                    <p className="ido-active-text-2 mb-1">Link to Whitepaper or Lite paper? <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -414,7 +424,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="paper_link"
-                                        value={values.paper_link || ""}
+                                        value={values.paper_link || formValues && formValues.paper_link || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.paper_link && errors.paper_link ? true : false}
@@ -428,8 +438,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Website Link (if any)?</label> */}
-                                    <p className="ido-active-text-2 mb-1">Website Link (if any)?</p>
+                                    <p className="ido-active-text-2 mb-1">Website Link (if any)? <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -439,7 +448,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="websiteLink"
-                                        value={values.websiteLink || ""}
+                                        value={values.websiteLink || formValues && formValues.websiteLink || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.websiteLink && errors.websiteLink ? true : false}
@@ -453,8 +462,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">GitHub Link?</label> */}
-                                    <p className="ido-active-text-2 mb-1">GitHub Link?</p>
+                                    <p className="ido-active-text-2 mb-1">GitHub Link? <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -464,7 +472,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="gitLink"
-                                        value={values.gitLink || ""}
+                                        value={values.gitLink || formValues && formValues.gitLink || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.gitLink && errors.gitLink ? true : false}
@@ -478,8 +486,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Twitter Link?</label> */}
-                                    <p className="ido-active-text-2 mb-1">Twitter Link?</p>
+                                    <p className="ido-active-text-2 mb-1">Twitter Link? <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -489,7 +496,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="twitterLink"
-                                        value={values.twitterLink || ""}
+                                        value={values.twitterLink || formValues && formValues.twitterLink || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.twitterLink && errors.twitterLink ? true : false}
@@ -503,8 +510,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Telegram Group Link?</label> */}
-                                    <p className="ido-active-text-2 mb-1">Telegram Group Link?</p>
+                                    <p className="ido-active-text-2 mb-1">Telegram Group Link? <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -514,7 +520,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="telegramGrpLink"
-                                        value={values.telegramGrpLink || ""}
+                                        value={values.telegramGrpLink || formValues && formValues.telegramGrpLink || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.telegramGrpLink && errors.telegramGrpLink ? true : false}
@@ -528,8 +534,7 @@ function Home() {
                                     }
                                 </div>
                                 <div className="mb-4">
-                                    {/* <label for="exampleInputPassword1" className="form-label">Your Telegram handle (@username)</label> */}
-                                    <p className="ido-active-text-2 mb-1">Your Telegram handle (@username)</p>
+                                    <p className="ido-active-text-2 mb-1">Your Telegram handle (@username) <span className="text-danger">*</span></p>
 
                                     <input
                                         type="text"
@@ -539,7 +544,7 @@ function Home() {
                                         aria-label="Sizing example input"
                                         aria-describedby="emailHelp"
                                         name="telegramUserName"
-                                        value={values.telegramUserName || ""}
+                                        value={values.telegramUserName || formValues && formValues.telegramUserName || ""}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         invalid={touched.telegramUserName && errors.telegramUserName ? true : false}
@@ -552,12 +557,39 @@ function Home() {
                                         )
                                     }
                                 </div>
+                                <div className="mb-4">
+                                    <p className="ido-active-text-2 mb-1">Image <span className="text-danger">*</span></p>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        id="image"
+                                        autoComplete="off"
+                                        aria-label="Sizing example input"
+                                        aria-describedby="emailHelp"
+                                        name="image"
+                                        onChange={(event) => imageUpload(event.currentTarget.files[0])}
+                                    />
+                                    {
+                                        loader == true ?
+                                            <div class="spinner-border" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                        :
+                                            ''
+                                    }
+                                    {
+                                        imageErr && (
+                                            <small className="invalid-email error password-text-33">
+                                                {imageErr}
+                                            </small>
+                                        )
+                                    }
+                                    {imageUrl && (
+                                        <img src={imageUrl} alt="Image Preview" style={{ maxWidth: '200px' }} />
+                                    )}
+                                </div>
                                 <div className="text-center">
-                                    {/* <a href="/idoformtoken" type="submit" className=""> */}
-                                    <button type="submit" className="btn ido-launchpad-button">
-                                        NEXT
-                                    </button>
-                                    {/* </a> */}
+                                    <button type="submit" className="btn ido-launchpad-button"> NEXT </button>
                                 </div>
                             </form>
                         </div>

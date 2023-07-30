@@ -14,7 +14,7 @@ import Config from "../../../core/config/";
 
 const STEP = 1;
 
-export default function Spot(props) {
+export default function FutureTrade(props) {
 
   let {
     range = [0]
@@ -287,7 +287,6 @@ export default function Spot(props) {
               </>
             }
 
-
             <p className="trade-text-6 mt-3">Amount ({props.fromCurrency})</p>
             <div className="input-group mb-3">
               <input
@@ -513,7 +512,9 @@ export default function Spot(props) {
                     </div>
                   </div>
                   <div className="ms-auto ">
-                    <span className="d-block trade-text-7">{props.orderData.orderValue} USDT</span>
+                    <span className="d-block trade-text-7">{props.orderData.orderValue ?
+                      props.decimalValue(props.orderData.orderValue, props.pairDetails.priceDecimal)
+                    : 0} USDT</span>
                   </div>
                 </div>
                 <div className="d-flex justify-content-between mt-2">
@@ -524,7 +525,9 @@ export default function Spot(props) {
                     </div>
                   </div>
                   <div className="ms-auto ">
-                    <span className="d-block trade-text-7">{props.orderData.orderCost} USDT</span>
+                    <span className="d-block trade-text-7">{props.orderData.orderCost ?
+                      props.decimalValue(props.orderData.orderCost, props.pairDetails.priceDecimal)
+                    : 0} USDT</span>
                   </div>
                 </div>
               </div>
@@ -551,7 +554,7 @@ export default function Spot(props) {
                       </div>
                     </div>
                     <div>
-                      <span className="d-block trade-text-7">{props.decimalValue(props.userTradeDetails.toBalance, props.pairDetails.toCurrency.siteDecimal)}</span>
+                      <span className="d-block trade-text-7">{props.decimalValue(props.userTradeDetails.toBalance, props.pairDetails.priceDecimal)}</span>
                       <span className="d-block text-spot text-end">{props.decimalValue((props.userTradeDetails.toBalance * props.pairDetails.toCurrency.USDvalue), 2)}$</span>
                     </div>
                   </div>

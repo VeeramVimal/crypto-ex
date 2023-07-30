@@ -404,10 +404,8 @@ export default function Spot(props) {
     else {
       toast({ type: "error", message: "Please enter valid values!" });
       return false;
-    }  
-
+    }
   }
-
 
   function makeid(length) {
     let result = '';
@@ -426,7 +424,7 @@ export default function Spot(props) {
     const getcopy_users = {
       url: `${Config.V1_API_URL}copyTrade/getAllCopyUsers`,
       method: "POST",
-      data: {trader_id:myProfile._id},
+      data: {trader_id: myProfile._id},
     };
     const copy_user_response = await makeRequest(getcopy_users);    
     if (copy_user_response.data) {
@@ -436,12 +434,14 @@ export default function Spot(props) {
           return ticker;
         }
       });      
-
+        const payload = {
+          leader_details: data,
+          copy_user_details: ticker_call_options
+        };
         const params = {
               url: `${Config.V1_API_URL}copyTrade/createOrder`,
               method: "POST",
-              data: { leader_details:data,
-              copy_user_details:ticker_call_options},
+              data: payload,
             };
             const response = await makeRequest(params);
             if (response.status && response.Msg) {
@@ -590,9 +590,12 @@ export default function Spot(props) {
       orderValue.price = mPrice;
     }
 
+    let userTradeDetails_fromBalance = userTradeDetails.fromBalance;
+    let userTradeDetails_toBalance = userTradeDetails.toBalance;
+
     if (
-      (userTradeDetails.toBalance > 0 && orderType == "buy") ||
-      (userTradeDetails.fromBalance > 0 && orderType == "sell")
+      (userTradeDetails_toBalance > 0 && orderType == "buy") ||
+      (userTradeDetails_fromBalance > 0 && orderType == "sell")
     ) {
       if (
         getPrice == "" ||
@@ -609,12 +612,12 @@ export default function Spot(props) {
         orderData.amount =
           orderType == "buy"
             ? roundValues(
-              (+userTradeDetails.toBalance * +percentage) /
+              (+userTradeDetails_toBalance * +percentage) /
               (+orderData.price * 100),
               pairDetails.fromCurrency.siteDecimal
             )
             : roundValues(
-              (+userTradeDetails.fromBalance * +percentage) / 100,
+              (+userTradeDetails_fromBalance * +percentage) / 100,
               pairDetails.fromCurrency.siteDecimal
             );
       }

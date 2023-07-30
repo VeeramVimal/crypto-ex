@@ -109,9 +109,16 @@ import Notification from "./Pages/notification"; //** notification import file l
 // import PostNewAddFinal from "./Pages/PostNewAddFinal";
 // import PostNewAddStart from "./Pages/PostNewAddStart";
 
-//** bear and bull predication gaming import location */
-import Predictiontrade from "./Pages/Prediction/Prediction-trade";
 import Predictionhome from "./Pages/Prediction/Prediction-home";
+import Predictiontrade from "./Pages/Prediction/Prediction-trade";
+import Simpleearn from "./Pages/simpleearn/simple-earn";
+import Accountearn from "./Pages/simpleearn/account-earn";
+import Simpleearnhistory from "./Pages/simpleearn/simple-earn-history";
+import IdoProject from "./Pages/fibit-launch-pad/views/ido-project";
+import IdoProjectInfo from "./Pages/fibit-launch-pad/views/Ido-project-info";
+
+/** optional-trading imported */
+import Eoption from "./Pages/optional-trading/eoption-home";
 
 function App() {
   const mode = localStorage.getItem("mode")
@@ -175,6 +182,31 @@ function App() {
     },
 
     // user
+    {
+      path: "/prediction",
+      authChk: "afterLoginOnly",
+      component: <Predictionhome setTheme={setTheme} theme={theme} />,
+    },
+    {
+      path: "/simple-earn",
+      authChk: "afterLoginOnly",
+      component: <Simpleearn setTheme={setTheme} theme={theme} />,
+    },
+    {
+      path: "/account-earn",
+      authChk: "afterLoginOnly",
+      component: <Accountearn setTheme={setTheme} theme={theme} />,
+    },
+    {
+      path: "/simple-earn-history",
+      authChk: "afterLoginOnly",
+      component: <Simpleearnhistory setTheme={setTheme} theme={theme} />,
+    },
+    {
+      path: "/prediction-trade",
+      authChk: "afterLoginOnly",
+      component: <Predictiontrade setTheme={setTheme} theme={theme} />,
+    },
     {
       path: "/my/wallet/history",
       authChk: "afterLoginOnly",
@@ -420,6 +452,8 @@ function App() {
     { path: '/active-ido', component: <ActiveIdo /> },
     { path: '/ido-form', component: <IdoForm /> },
     { path: '/idoformtoken', component: <IdoFormToken /> },
+    { path: '/ido-project', component: <IdoProject /> },
+    { path: '/ido-project-info', component: <IdoProjectInfo /> },
     //** fibit-launch-pad end*/
 
     // { path: '*', component: <Error404 setTheme = {setTheme} theme={theme} />},
@@ -429,6 +463,11 @@ function App() {
       path: "/prediction-trade",
       authChk: "afterLoginOnly",
       component: <Predictiontrade setTheme={setTheme} theme={theme} />,
+    },
+    {
+      path: "/eoption",
+      // authChk: "afterLoginOnly",
+      component: <Eoption setTheme={setTheme} theme={theme} />,
     },
   ];
 

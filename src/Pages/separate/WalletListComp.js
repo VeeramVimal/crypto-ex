@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import {
-  BrowserRouter as Router,
-  useNavigate
-} from "react-router-dom";
-import {
-  alpha, Box, Table, TableBody, TableCell,
-  TableContainer, TableHead, TablePagination,
-  TableRow, TableSortLabel, Toolbar, Typography,
-  Paper, Checkbox, IconButton, Tooltip
+  alpha,
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Toolbar,
+  Typography,
+  Paper,
+  Checkbox,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import { Delete, FilterList } from "@mui/icons-material";
 import { visuallyHidden } from "@mui/utils";
@@ -21,20 +30,25 @@ import { toast } from "../../core/lib/toastAlert";
 import Config from "../../core/config/";
 import { useContextData } from "../../core/context/index";
 
-import * as yup from 'yup';
-import { useFormik, Formik } from 'formik';
-import { showNumber } from '../../core/helper/date-format';
+import * as yup from "yup";
+import { useFormik, Formik } from "formik";
+import { showNumber } from "../../core/helper/date-format";
+
+const digitsOnly = (value) => /^\d+$/.test(value)
 
 const validationSchema = yup.object({
-  amount: yup
-    .number()
-    // .typeError('Only allowed 2 decimal')
-    .required('Amount is required')
-    // .test(
-    //   "maxDigitsAfterDecimal",
-    //   "Only allowed 2 decimal",
-    //   (number) => /^\d+(\.\d{1,2})?$/.test(number)
-    // ),
+  amount: yup.string()
+    .required("Amount is required")
+    .test('Digits only', 'Please enter a valid number.', digitsOnly)
+  // amount: yup
+  //   .number()
+  //   // .typeError('Only allowed 2 decimal')
+  //   .required("Amount is required"),
+  // // .test(
+  // //   "maxDigitsAfterDecimal",
+  // //   "Only allowed 2 decimal",
+  // //   (number) => /^\d+(\.\d{1,2})?$/.test(number)
+  // // ),
 });
 
 function descendingComparator(a, b, orderBy) {
@@ -77,7 +91,7 @@ function createData(name, balance, fat, carbs, protein) {
   };
 }
 
-const headCells = [
+let headCells = [
   {
     id: "Symbol",
     numeric: false,
@@ -96,37 +110,65 @@ const headCells = [
     disablePadding: false,
     label: "Main Wallet Balance",
   },
-  {
+];
+
+if (Config.CRYPTO_LOAN_STATUS == "Enable") {
+  headCells.push({
     id: "cryptoLoanAmount",
     numeric: true,
     disablePadding: false,
     label: "Crypto Loan Balance",
-  },
-  {
+  });
+}
+
+if (Config.BEAR_AND_BULL_STATUS == "Enable") {
+  headCells.push({
+    id: "GameWalletBalance",
+    numeric: true,
+    disablePadding: false,
+    label: "Game Wallet Balance",
+  });
+}
+
+if (Config.P2P_STATUS == "Enable") {
+  headCells.push({
     id: "P2PBalance",
     numeric: true,
     disablePadding: false,
     label: "P2P Balance",
-  },
-  {
+  });
+}
+
+if (Config.DERIVATIVES_STATUS == "Enable") {
+  headCells.push({
     id: "perpetualBalance",
     numeric: true,
     disablePadding: false,
     label: "USD-M Balance",
-  },
-  {
-    id: "USDPrice",
+  });
+}
+if(Config.SIMPLEEARN_STATUS == "Enable") {
+  headCells.push({
+    id: "simpleEarnAmount",
     numeric: true,
     disablePadding: false,
-    label: "USD Price",
-  },
-  {
-    id: "Action",
-    numeric: true,
-    disablePadding: false,
-    label: "Action",
-  },
-];
+    label: "Simple Earn Balance",
+  });
+  
+}
+headCells.push({
+  id: "USDPrice",
+  numeric: true,
+  disablePadding: false,
+  label: "USD Price",
+});
+
+headCells.push({
+  id: "Action",
+  numeric: true,
+  disablePadding: false,
+  label: "Action",
+});
 
 function EnhancedTableHead(props) {
   const {
@@ -169,11 +211,13 @@ function EnhancedTableHead(props) {
               active={props.orderBy === headCell.id}
               direction={props.orderBy === headCell.id ? props.order : "desc"}
               onClick={createSortHandler(headCell.id)}
-            > */}
-            {" "} &nbsp;{headCell.label}
+            > */}{" "}
+            &nbsp;{headCell.label}
             {props.orderBy === headCell.id ? (
               <Box component="span" sx={visuallyHidden}>
-                {props.order === "desc" ? "sorted descending" : "sorted ascending"}
+                {props.order === "desc"
+                  ? "sorted descending"
+                  : "sorted ascending"}
               </Box>
             ) : null}
             {/* </TableSortLabel> */}
@@ -252,7 +296,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 const data = {
-  labels: [1, 2, 3, 4, 5, 6],
+  labels: [1, 2, 3, 4, 5, 6, 7],
   datasets: [
     {
       label: "First dataset",
@@ -271,7 +315,6 @@ const data = {
 };
 
 export default function WalletListComp(props) {
-
   const { myProfile } = useContextData();
 
   const {
@@ -289,15 +332,16 @@ export default function WalletListComp(props) {
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [open, setOpen] = useState(false);
-  const [currency, setCurrency] = useState({});
-  const [fromAccount, setFromAccount] = useState('Main Wallet');
-  const [toAccount, setToAccount] = useState('P2P Wallet');
+  const [currency, setCurrency] = useState([]);
+  const [fromAccount, setFromAccount] = useState("Main Wallet");
+  const [toAccount, setToAccount] = useState("P2P Wallet");
   const [cryptoWallet, setCryptoWallet] = useState([]);
   const [cryptoWalletClone, setCryptoWalletClone] = useState([]);
   const [fiatWallet, setFiatWallet] = useState([]);
-  const [estimateINR, setestimateINR] = useState(0)
+  const [estimateINR, setestimateINR] = useState(0);
   const [isLoading, setisLoading] = useState(false);
   const [walletData, setWalletData] = useState([]);
+
   const handleClose = () => {
     setOpen(false);
     formik.values.amount = "";
@@ -312,17 +356,18 @@ export default function WalletListComp(props) {
 
   const transferFund = (data) => {
     setOpen(true);
-    setCurrency(data)
+    if (data) setCurrency(data);
   };
 
   const fromWallet = (e) => {
     setFromAccount(e.target.value);
-    setToAccount(e.target.value == 'Main Wallet' ? 'P2P Wallet' : 'Main Wallet');
-  }
+    setToAccount(
+      e.target.value == "Main Wallet" ? "P2P Wallet" : "Main Wallet"
+    );
+  };
   const toWallet = (e) => {
     setToAccount(e.target.value);
-    console.log(e.target.value);
-  }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -376,54 +421,60 @@ export default function WalletListComp(props) {
     if (resp && resp.status && resp.url) {
       navigate(resp.url);
     }
-  }
-  const decimalCount = num => {
+  };
+  const decimalCount = (num) => {
     // Convert to String
     const numStr = String(num);
     // String Contains Decimal
-    if (numStr.includes('.')) {
-      return numStr.split('.')[1].length;
-    };
+    if (numStr.includes(".")) {
+      return numStr.split(".")[1].length;
+    }
     // String Does Not Contain Decimal
     return 0;
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
-      amount: '',
-      toWallet: '',
+      amount: "",
+      toWallet: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      let balance = fromAccount == 'Main Wallet' ? currency.balance : fromAccount == 'Loan Wallet' ? currency.cryptoLoanAmount : currency.p2pAmount;
-      let amount = parseFloat(values.amount);
-      if (Number.isInteger(amount) === false) {
-        toast({ type: 'error', message: 'Decimal value not allowed!'});
-        return false;
-      }
+      let balance =
+        fromAccount == "Main Wallet"
+          ? currency.balance
+          : fromAccount == "USD-M Wallet"
+            ? currency.perpetualAmount
+            : fromAccount == "Loan Wallet"
+              ? currency.cryptoLoanAmount
+              : fromAccount == "Game Wallet"
+                ? currency.gamePredictionAmount
+                : fromAccount == "Simple Earn Wallet"
+                ? currency.simpleEarnAmount
+                : currency.p2pAmount;
+      let amount = values.amount;
       if (balance >= amount) {
         const body = {
           amount: amount,
           currencyId: currency.currencyId,
           fromAccount: fromAccount,
-          toAccount: toAccount
-        }
+          toAccount: toAccount,
+        };
         const params = {
           url: `${Config.V1_API_URL}wallet/submitTransfer`,
-          method: 'POST',
-          body
-        }
+          method: "POST",
+          body,
+        };
         setisLoading(true);
-        const response = (await makeRequest(params));
-        let type = 'error';
+        const response = await makeRequest(params);
+        let type = "error";
         setisLoading(false);
         if (response.status) {
-          type = 'success';
+          type = "success";
           handleClose();
           if (props.tabName === "wallet") {
             props.getWalletCurrency();
-          }
-          else if (props.tabName === "spot") {
+          } else if (props.tabName === "spot") {
             props.getSpotWalletCurrency();
           } else {
             props.getWalletCurrency();
@@ -431,7 +482,10 @@ export default function WalletListComp(props) {
         }
         toast({ type, message: response.message });
       } else {
-        toast({ type: 'error', message: 'Insufficient Balance On ' + fromAccount });
+        toast({
+          type: "error",
+          message: "Insufficient Balance On " + fromAccount,
+        });
       }
     },
   });
@@ -481,18 +535,10 @@ export default function WalletListComp(props) {
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with: rows.sort(getComparator(order, orderBy)).slice() */}
-              {stableSort(
-                walletData,
-                getComparator(props.order, props.orderBy)
-              )
-                .slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
+              {stableSort(walletData, getComparator(props.order, props.orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(
-                    row.currencyName
-                  );
+                  const isItemSelected = isSelected(row.currencyName);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   let tradePairName = "";
@@ -502,13 +548,17 @@ export default function WalletListComp(props) {
 
                   const curnType = row.curnType;
                   const withOutPairName = row.currencyName.toUpperCase();
-                  const withOutPairSym = row.currencySymbol.replace(/_/g, '').toUpperCase();
+                  const withOutPairSym = row.currencySymbol
+                    .replace(/_/g, "")
+                    .toUpperCase();
 
                   if (
-                    (props.searchWallet === "")
-                    || (props.searchWallet === undefined)
-                    || (props.searchWallet && withOutPairName.includes(props.searchWallet))
-                    || (props.searchWallet && withOutPairSym.includes(props.searchWallet))
+                    props.searchWallet === "" ||
+                    props.searchWallet === undefined ||
+                    (props.searchWallet &&
+                      withOutPairName.includes(props.searchWallet)) ||
+                    (props.searchWallet &&
+                      withOutPairSym.includes(props.searchWallet))
                   ) {
                     return (
                       <TableRow
@@ -528,32 +578,160 @@ export default function WalletListComp(props) {
                           scope="row"
                           padding="none"
                         >
-                          {" "}&nbsp;<img src={row.image} className='color-white pr-top smallSize' alt="wallet-currency" /> {" "}
+                          {" "}
+                          &nbsp;
+                          <img
+                            src={row.image}
+                            className="color-white pr-top smallSize"
+                            alt="wallet-currency"
+                          />{" "}
                           {row.currencySymbol}
                         </TableCell>
+                        <TableCell align="right">{row.currencyName}</TableCell>
                         <TableCell align="right">
-                          {row.currencyName}
+                          {balShow
+                            ? row.balance > 0
+                              ? decimalValueFunc(
+                                row.balance,
+                                row.siteDecimal,
+                                "removeZero"
+                              )
+                              : 0
+                            : "******"}
                         </TableCell>
-                        <TableCell align="right">
-                          {balShow ? (row.balance > 0 ? decimalValueFunc(row.balance, row.siteDecimal, "removeZero") : 0) : "******"}
-                        </TableCell>
-                        <TableCell align="right">
-                          {balShow ? (row.cryptoLoanAmount > 0 ? decimalValueFunc(row.cryptoLoanAmount, row.siteDecimal, "removeZero") : 0) : "******"}
-                        </TableCell>
-                        <TableCell align="right">
-                          {balShow ? (row.p2pAmount > 0 ? decimalValueFunc(row.p2pAmount, row.siteDecimal, "removeZero") : 0) : "******"}
-                        </TableCell>
-                        <TableCell align="right">
-                          {balShow ? (row.perpetualAmount > 0 ? decimalValueFunc(row.perpetualAmount, row.siteDecimal, "removeZero") : 0) : "******"}
-                        </TableCell>
+
+                        {Config.CRYPTO_LOAN_STATUS === "Enable" ?
+                          <TableCell align="right">
+                            {balShow
+                              ? row.cryptoLoanAmount > 0
+                                ? decimalValueFunc(
+                                  row.cryptoLoanAmount,
+                                  row.siteDecimal,
+                                  "removeZero"
+                                )
+                                : 0
+                              : "******"}
+                          </TableCell> : ""}
+                        {Config.BEAR_AND_BULL_STATUS === "Enable" ?
+                          <TableCell align="right">
+                            {balShow
+                              ? row.gamePredictionAmount > 0
+                                ? decimalValueFunc(
+                                  row.gamePredictionAmount,
+                                  row.siteDecimal,
+                                  "removeZero"
+                                )
+                                : 0
+                              : "******"}
+                          </TableCell> : ""}
+                        {Config.P2P_STATUS === "Enable" ?
+                          <TableCell align="right">
+                            {balShow
+                              ? row.p2pAmount > 0
+                                ? decimalValueFunc(
+                                  row.p2pAmount,
+                                  row.siteDecimal,
+                                  "removeZero"
+                                )
+                                : 0
+                              : "******"}
+                          </TableCell> : ""}
+                        {Config.DERIVATIVES_STATUS === "Enable" ?
+                          <TableCell align="right">
+                            {balShow
+                              ? row.perpetualAmount > 0
+                                ? decimalValueFunc(
+                                  row.perpetualAmount,
+                                  row.siteDecimal,
+                                  "removeZero"
+                                )
+                                : 0
+                              : "******"}
+                          </TableCell> : ""}
+                          {Config.SIMPLEEARN_STATUS == "Enable" ? (
+                            <TableCell align="right">
+                            {balShow
+                              ? row.simpleEarnAmount > 0
+                                ? decimalValueFunc(
+                                  row.simpleEarnAmount,
+                                  row.siteDecimal,
+                                  "removeZero"
+                                )
+                                : 0
+                              : "******"}
+                          </TableCell>
+                          ) : ""}
                         <TableCell align="right">
                           {row.USDvalue ? row.USDvalue.toFixed(4) : 0}
                         </TableCell>
                         <TableCell align="right">
-                          {(row.transferEnable > 0 || row.transferperpetualEnable > 0) && <button className="unset-unselected btnfont mb-2" onClick={() => transferFund(row)}>Transfer</button>}
-                          {row.depositEnable == true ? <button className="unset-unselected btnfont mb-2" onClick={() => clickNavigate_call({ type: "deposit", row, url: "/deposit/" + curnType.toLowerCase() + "/" + row.currencySymbol })} disabled={row.depositEnable ? false : true}>Deposit</button> : ""}
-                          {row.withdrawEnable == true ? <button className="unset-unselected btnfont mb-2" onClick={() => clickNavigate_call({ type: "withdraw", row, url: "/withdraw/" + curnType.toLowerCase() + "/" + row.currencySymbol })} disabled={row.withdrawEnable ? false : true}>Withdraw</button> : ""}
-                          {tradePairName ? <button className="unset-unselected btnfont mb-2" onClick={() => clickNavigate_call({ type: "trade", row, url: "/spot/" + tradePairName })}>Trade</button> : ""}
+                          {(row.transferEnable > 0 ||
+                            row.transferperpetualEnable > 0) && (
+                              <button
+                                className="unset-unselected btnfont mb-2"
+                                onClick={() => transferFund(row)}
+                              >
+                                Transfer
+                              </button>
+                            )}
+                          {row.depositEnable == true ? (
+                            <button
+                              className="unset-unselected btnfont mb-2"
+                              onClick={() =>
+                                clickNavigate_call({
+                                  type: "deposit",
+                                  row,
+                                  url:
+                                    "/deposit/" +
+                                    curnType.toLowerCase() +
+                                    "/" +
+                                    row.currencySymbol,
+                                })
+                              }
+                              disabled={row.depositEnable ? false : true}
+                            >
+                              Deposit
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {row.withdrawEnable == true ? (
+                            <button
+                              className="unset-unselected btnfont mb-2"
+                              onClick={() =>
+                                clickNavigate_call({
+                                  type: "withdraw",
+                                  row,
+                                  url:
+                                    "/withdraw/" +
+                                    curnType.toLowerCase() +
+                                    "/" +
+                                    row.currencySymbol,
+                                })
+                              }
+                              disabled={row.withdrawEnable ? false : true}
+                            >
+                              Withdraw
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {tradePairName ? (
+                            <button
+                              className="unset-unselected btnfont mb-2"
+                              onClick={() =>
+                                clickNavigate_call({
+                                  type: "trade",
+                                  row,
+                                  url: "/spot/" + tradePairName,
+                                })
+                              }
+                            >
+                              Trade
+                            </button>
+                          ) : (
+                            ""
+                          )}
                         </TableCell>
                       </TableRow>
                     );
@@ -562,8 +740,7 @@ export default function WalletListComp(props) {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height:
-                      (dense ? 31 : 53) * emptyRows,
+                    height: (dense ? 31 : 53) * emptyRows,
                   }}
                 >
                   <TableCell colSpan={7} />
@@ -596,9 +773,7 @@ export default function WalletListComp(props) {
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
-          onRowsPerPageChange={
-            handleChangeRowsPerPage
-          }
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
       <Modal show={open} onHide={() => setOpen(false)}>
@@ -612,28 +787,83 @@ export default function WalletListComp(props) {
                 <span className="phonenumber-change-text-2">
                   Internal Transfer are free on {Config.SITENAME}
                 </span>
-                <select className="f-control f-dropdown" placeholder="Select" value={fromAccount} onChange={fromWallet}>
+                <select
+                  className="f-control f-dropdown"
+                  placeholder="Select"
+                  value={fromAccount}
+                  onChange={fromWallet}
+                >
                   <option value="Main Wallet">Main Wallet</option>
                   <option value="P2P Wallet">P2P Wallet</option>
-                  <option value="USD-M Wallet">USD-M Wallet</option>
-                  <option value="Loan Wallet">Crypto Loan Wallet</option>
+                  {Config.DERIVATIVES_STATUS == "Enable" ? <option value="USD-M Wallet">USD-M Wallet</option> : ""}
+                  {Config.CRYPTO_LOAN_STATUS == "Enable" ? <option value="Loan Wallet">Crypto Loan Wallet</option> : ""}
+                  {Config.SIMPLEEARN_STATUS == "Enable" ? <option value="Simple Earn Wallet">Simple Earn Wallet</option> : ""}
+                  {Config.BEAR_AND_BULL_STATUS == "Enable" ? <option value="Game Wallet">Prediction Game Wallet</option> : ""}
+                  {/* <option value="Simple Earn Wallet">Simple Earn Wallet</option> */}
                 </select>
               </div>
               <div className="row mt-4">
-                <select className="f-control f-dropdown" placeholder="Select" value={toAccount} onChange={toWallet}>
-                  <option value={fromAccount == 'Main Wallet' ? 'P2P Wallet' : 'Main Wallet'}>{fromAccount == 'Main Wallet' ? 'P2P Wallet' : 'Main Wallet'}</option>
-                  {(fromAccount == 'Main Wallet') && <option value={fromAccount == 'Main Wallet' ? 'USD-M Wallet' : 'Main Wallet'}>{fromAccount == 'Main Wallet' ? 'USD-M Wallet' : 'Main Wallet'}</option>}
+                <select
+                  className="f-control f-dropdown"
+                  placeholder="Select"
+                  value={toAccount}
+                  onChange={toWallet}
+                >
+                  <option value={fromAccount == "Main Wallet" ? "P2P Wallet" : "Main Wallet"} >
+                    {fromAccount == "Main Wallet" ? "P2P Wallet" : "Main Wallet"}
+                  </option>
+                  {Config.DERIVATIVES_STATUS === "Enable" ?
+                    fromAccount == "Main Wallet" && (
+                      <option
+                        value={
+                          fromAccount == "Main Wallet"
+                            ? "USD-M Wallet"
+                            : "Main Wallet"
+                        }
+                      >
+                        {fromAccount == "Main Wallet"
+                          ? "USD-M Wallet"
+                          : "Main Wallet"}
+                      </option>
+                    ) : ""}
+                  {Config.SIMPLEEARN_STATUS === "Enable" ?
+                    fromAccount == "Main Wallet" && (
+                      <option
+                        value={
+                          fromAccount == "Main Wallet"
+                            ? "Simple Earn Wallet"
+                            : "Main Wallet"
+                        }
+                      >
+                        {fromAccount == "Main Wallet"
+                          ? "Simple Earn Wallet"
+                          : "Main Wallet"}
+                      </option>
+                    )
+                    : ""
+                  }
+                  {Config.BEAR_AND_BULL_STATUS == "Enable" ?
+                    fromAccount == "Main Wallet" && (
+                      <option value={fromAccount == "Main Wallet" ? "Game Wallet" : "Main Wallet"}>
+                        {fromAccount == "Main Wallet" ? "Prediction Game Wallet" : "Main Wallet"}
+                      </option>
+                    ) : ""}
                 </select>
+                {/* <select className="f-control f-dropdown" placeholder="Select" value={toAccount} onChange={toWallet}>
+                  <option value={fromAccount == 'Main Wallet' ? 'P2P Wallet' : 'Main Wallet'}>
+                    {fromAccount == 'Main Wallet' ? 'P2P Wallet' : 'Main Wallet'}
+                    </option>
+                  {(fromAccount == 'Main Wallet') && <option value={fromAccount == 'Main Wallet' ? 'USD-M Wallet' : 'Main Wallet'}>
+                    {fromAccount == 'Main Wallet' ? 'USD-M Wallet' : 'Main Wallet'}</option>}
+                  <option value={fromAccount == 'Main Wallet' ? 'Game Wallet' : 'Main Wallet'}>{fromAccount == 'Main Wallet' ? 'Game Wallet' : 'Main Wallet'}</option>
+                </select> */}
               </div>
               <div className="row mt-4">
-                <span className="phonenumber-change-text-2">
-                  Amount
-                </span>
-
+                <span className="phonenumber-change-text-2">Amount</span>
                 <input
                   type="text"
                   className="form-control"
-                  autoComplete='off'
+                  autoComplete="off"
                   label="Amount"
                   id="amount"
                   name="amount"
@@ -643,24 +873,38 @@ export default function WalletListComp(props) {
                   error={formik.touched.amount && Boolean(formik.errors.amount)}
                   helperText={formik.touched.amount && formik.errors.amount}
                 />
-
-                {formik.errors.amount ? <small className="invalid-amount error">{formik.errors.amount}</small> : null}
+                {formik.errors.amount ? (
+                  <small className="invalid-amount error">
+                    {formik.errors.amount}
+                  </small>
+                ) : null}
               </div>
             </div>
-            <div className='row mt-5'>
+            <div className="row mt-5">
               <span className="phonenumber-change-text-2">
-                {fromAccount} Balance: {
-                  fromAccount == 'Main Wallet' ?
-                    (currency.balance)?.toFixed(currency.siteDecimal) :
-                    fromAccount == 'Perpetual Wallet' ?
-                      (currency.perpetualAmount)?.toFixed(currency.siteDecimal) :
-                      fromAccount == 'Loan Wallet' ?
-                        (currency.cryptoLoanAmount)?.toFixed(currency.siteDecimal) :
-                        (currency.p2pAmount)?.toFixed(currency.siteDecimal)} {currency.currencySymbol}
+                {fromAccount} Balance:{" "}
+                {fromAccount == "Main Wallet"
+                  ? currency.balance?.toFixed(currency.siteDecimal)
+                  : fromAccount == "USD-M Wallet"
+                    ? currency.perpetualAmount?.toFixed(currency.siteDecimal)
+                    : fromAccount == "Loan Wallet"
+                      ? currency.cryptoLoanAmount?.toFixed(currency.siteDecimal)
+                      : fromAccount == "Simple Earn Wallet"
+                        ? currency.simpleEarnAmount?.toFixed(currency.siteDecimal)
+                        : fromAccount == "Game Wallet"
+                          ? currency.gamePredictionAmount?.toFixed(currency.siteDecimal)
+                          : currency.p2pAmount?.toFixed(currency.siteDecimal)}{" "}
+                {currency.currencySymbol}
               </span>
-              <div className='col'>
+              <div className="col">
                 <div className="d-grid">
-                  <button className="add-payment-method-confirm-button" type="submit" disabled={isLoading}>Transfer Amount</button>
+                  <button
+                    className="add-payment-method-confirm-button"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    Transfer Amount
+                  </button>
                 </div>
               </div>
             </div>
@@ -676,6 +920,6 @@ export default function WalletListComp(props) {
       }
       label="Dense padding"
     /> */}
-    </Box>);
-
+    </Box>
+  );
 }

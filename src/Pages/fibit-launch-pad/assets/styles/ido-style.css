@@ -94,8 +94,8 @@ a:hover {
 /* Font size css end */
 
 .Ido-Navbar .navbar-brand img {
-    height: 50px;
-    width: 160px;
+    height: 40px;
+    width: 150px;
 }
 
 .Ido-Navbar .nav-link {
@@ -106,6 +106,10 @@ a:hover {
 
 .Ido-Navbar .nav-link:hover {
     color: #fff;
+}
+
+.Ido-Navbar .nav-link:active {
+    color: black
 }
 
 .Ido-Navbar .nav-link:focus,
@@ -126,7 +130,11 @@ a:hover {
     position: relative;
 }
 
-.Ido-Navbar .navbar-nav a:after {
+.nav-link:active {
+    transition: width 0.3s ease 0s, left 0.3s ease 0s !important;
+}
+
+.Ido-Navbar .navbar-nav a::after {
     background: none repeat scroll 0 0 transparent;
     bottom: 0;
     content: "";
@@ -149,6 +157,14 @@ a:hover {
     --bs-progress-bar-bg: #ff04b4ce;
 
     background-color: #fff;
+}
+
+.progress-bar-ido {
+    right: 0px;
+    z-index: 1;
+    height: 23px;
+    margin-right: 20px;
+    background-color: #0d6efd;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -185,6 +201,7 @@ input::-webkit-inner-spin-button {
     width: 0.4em !important;
     height: 0.4em !important;
 }
+
 .Ido-App-lanchpad .modal-header {
     border-bottom: 1px solid #ececec67;
 }
@@ -385,7 +402,7 @@ input::-webkit-inner-spin-button {
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
-        color: #fff !important;
+        color: #fff;
         background-color: transparent;
         border: 0px solid #ced4da;
     }
@@ -537,8 +554,8 @@ input::-webkit-inner-spin-button {
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
-        color: #fff;
-        background-color: #0000;
+        color: #FFF !important;
+        background-color: transparent !important;
         background-clip: padding-box;
         border: 1px solid #daaf08;
         border-left: 0px;
@@ -591,7 +608,7 @@ input::-webkit-inner-spin-button {
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
-        color: #212529;
+        color: #fff !important;
         background: linear-gradient(160deg, #27187b, #16014e);
         background-clip: padding-box;
         border: 1px solid #ced4da;
@@ -1066,8 +1083,8 @@ input::-webkit-inner-spin-button {
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
-        color: #fff;
-        background-color: #0000;
+        color: #FFF !important;
+        background-color: transparent !important;
         background-clip: padding-box;
         border: 1px solid #daaf08;
         border-left: 0px;
@@ -1266,4 +1283,8 @@ input::-webkit-inner-spin-button {
         font-size: 4.5rem;
         top: 70px;
     }
+}
+
+.fibit-launchpad-active-link {
+    border-bottom: 2px solid #FFF;
 }

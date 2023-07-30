@@ -3,7 +3,7 @@ import NavbarOne from "../Pages/siteTheme/NavbarOne";
 import Footer from "../Pages/siteTheme/Footer";
 import payload from "../assets/ApiJson/Payload"
 import success from "../assets/ApiJson/Success"
-
+import Config from "../core/config/index";
 
 import $ from "jquery";
 
@@ -855,10 +855,11 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/register">
+                                                    
+                                                    <a href={`${Config.V1_API_URL}user/register`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/register
+                                                            {`${Config.V1_API_URL}user/register`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -908,10 +909,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/register">
+                                                    <a href={`${Config.V1_API_URL}user/register`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/register
+                                                            {`${Config.V1_API_URL}user/register`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -960,11 +961,11 @@ export default function Apipage(props) {
                                             <h3>OTP</h3>
                                             <ul className="">
                                                 <li>
-                                                    <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/forgotPassword">
+                                                    <h5>URL</h5> 
+                                                    <a href={`${Config.V1_API_URL}user/forgotPassword`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/forgotPassword
+                                                            {`${Config.V1_API_URL}user/forgotPassword`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1013,11 +1014,11 @@ export default function Apipage(props) {
                                             <h3>Forgot Password</h3>
                                             <ul className="">
                                                 <li>
-                                                    <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/user/forgotPasswordChk">
+                                                    <h5>URL</h5>{`${Config.V1_API_URL}user/forgotPasswordChk`}
+                                                    <a href={`${Config.V1_API_URL}user/forgotPasswordChk`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/user/forgotPasswordChk
+                                                            {`${Config.V1_API_URL}user/forgotPasswordChk`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1066,10 +1067,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/user/resetPassword">
+                                                    <a href={`${Config.V1_API_URL}user/resetPassword`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/user/resetPassword
+                                                            {`${Config.V1_API_URL}user/resetPassword`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1120,10 +1121,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/getMyProfile">
+                                                    <a href={`${Config.V1_API_URL}user/getMyProfile`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/getMyProfile
+                                                            {`${Config.V1_API_URL}user/getMyProfile`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1167,10 +1168,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/common/siteSettings">
+                                                    <a href={`${Config.V1_API_URL}common/siteSettings`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/common/siteSettings
+                                                            {`${Config.V1_API_URL}common/siteSettings`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1214,10 +1215,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/wallet/getWalletCurrency">
+                                                    <a href={`${Config.V1_API_URL}wallet/getWalletCurrency`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/wallet/getWalletCurrency
+                                                            {`${Config.V1_API_URL}wallet/getWalletCurrency`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1262,10 +1263,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/wallet/getSpotHoldings">
+                                                    <a href={`${Config.V1_API_URL}wallet/getSpotHoldings`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/wallet/getSpotHoldings
+                                                            {`${Config.V1_API_URL}wallet/getSpotHoldings`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1309,10 +1310,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/submitTransfer">
+                                                    <a href={`${Config.V1_API_URL}wallet/submitTransfer`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/submitTransfer
+                                                            {`${Config.V1_API_URL}wallet/submitTransfer`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1364,10 +1365,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/updateTFA">
+                                                    <a href={`${Config.V1_API_URL}user/updateTFA`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/updateTFA
+                                                                {`${Config.V1_API_URL}user/updateTFA`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1418,10 +1419,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/otp/getCode">
+                                                    <a href={`${Config.V2_API_URL}otp/getCode`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/otp/getCode
+                                                            {`${Config.V2_API_URL}otp/getCode`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1473,10 +1474,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/otp/getCode">
+                                                    <a href={`${Config.V2_API_URL}otp/getCode`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/otp/getCode
+                                                            {`${Config.V2_API_URL}otp/getCode`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1528,10 +1529,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/otp/getCode">
+                                                    <a href={`${Config.V2_API_URL}otp/getCode`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/otp/getCode
+                                                            {`${Config.V2_API_URL}otp/getCode`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1583,10 +1584,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/user/changeVerificationDetail">
+                                                    <a href={`${Config.V2_API_URL}user/changeVerificationDetail`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/user/changeVerificationDetail
+                                                            {`${Config.V2_API_URL}user/changeVerificationDetail`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1638,10 +1639,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/otp/getCode">
+                                                    <a href={`${Config.V2_API_URL}otp/getCode`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/otp/getCode
+                                                            {`${Config.V2_API_URL}otp/getCode`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1692,10 +1693,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/otp/getCode">
+                                                    <a href={`${Config.V2_API_URL}otp/getCode`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/otp/getCode
+                                                            {`${Config.V2_API_URL}otp/getCode`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1747,10 +1748,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/otp/getCode">
+                                                    <a href={`${Config.V2_API_URL}otp/getCode`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/otp/getCode
+                                                            {`${Config.V2_API_URL}otp/getCode`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1802,10 +1803,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/user/changeVerificationDetail">
+                                                    <a href={`${Config.V2_API_URL}user/changeVerificationDetail`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/user/changeVerificationDetail
+                                                            {`${Config.V2_API_URL}user/changeVerificationDetail`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1857,10 +1858,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/changePassword">
+                                                    <a href={`${Config.V1_API_URL}user/changePassword`}>
                                                         <p className="">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/changePassword
+                                                            {`${Config.V1_API_URL}user/changePassword`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1912,10 +1913,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/user/loginHistory">
+                                                    <a href={`${Config.V2_API_URL}user/loginHistory`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/user/loginHistory
+                                                            {`${Config.V2_API_URL}user/loginHistory`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -1967,10 +1968,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/kyc/offline/verify/pan">
+                                                    <a href={`${Config.V2_API_URL}kyc/offline/verify/pan`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/kyc/offline/verify/pan
+                                                            {`${Config.V2_API_URL}kyc/offline/verify/pan`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2021,10 +2022,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/kyc/offline/verify/aadhaar?type=aadhaarVerify">
+                                                    <a href={`${Config.V2_API_URL}kyc/offline/verify/aadhaar?type=aadhaarVerify`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/kyc/offline/verify/aadhaar?type=aadhaarVerify
+                                                            {`${Config.V2_API_URL}kyc/offline/verify/aadhaar?type=aadhaarVerify`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2074,11 +2075,11 @@ export default function Apipage(props) {
                                             <h3>Selfie (Offline)</h3>
                                             <ul className="">
                                                 <li>
-                                                    <h5>URL</h5>
-                                                    <a href="  https://fibitexchange-api.clarisco.com/api/v2/kyc/offline/verify/selfie?type=selfieVerify">
+                                                    <h5>URL</h5> 
+                                                    <a href={`${Config.V2_API_URL}kyc/offline/verify/selfie?type=selfieVerify`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/kyc/offline/verify/selfie?type=selfieVerify
+                                                            {`${Config.V2_API_URL}kyc/offline/verify/selfie?type=selfieVerify`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2129,10 +2130,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/pan">
+                                                    <a href={`${Config.V2_API_URL}kyc/online/verify/pan`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/pan
+                                                            {`${Config.V2_API_URL}kyc/online/verify/pan`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2183,10 +2184,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/aadhaar">
+                                                    <a href={`${Config.V2_API_URL}kyc/online/verify/aadhaar`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/aadhaar
+                                                            {`${Config.V2_API_URL}kyc/online/verify/aadhaar`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2237,10 +2238,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/aadhaar">
+                                                    <a href={`${Config.V2_API_URL}kyc/online/verify/aadhaar`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/aadhaar
+                                                            {`${Config.V2_API_URL}kyc/online/verify/aadhaar`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2291,10 +2292,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/selfie?type=selfieSubmit">
+                                                    <a href={`${Config.V2_API_URL}kyc/online/verify/selfie?type=selfieSubmit`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/kyc/online/verify/selfie?type=selfieSubmit
+                                                            {`${Config.V2_API_URL}kyc/online/verify/selfie?type=selfieSubmit`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2346,10 +2347,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/updateMyBank">
+                                                    <a href={`${Config.V1_API_URL}user/updateMyBank`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/updateMyBank
+                                                            {`${Config.V1_API_URL}user/updateMyBank`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2401,10 +2402,10 @@ export default function Apipage(props) {
                                             <ul className="Referral">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/user/getReferralData?userType=user">
+                                                    <a href={`${Config.V1_API_URL}user/getReferralData?userType=user`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/user/getReferralData?userType=user
+                                                            {`${Config.V1_API_URL}user/getReferralData?userType=user`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2449,10 +2450,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/voucher/get">
+                                                    <a href={`${Config.V2_API_URL}voucher/get`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/voucher/get
+                                                            {`${Config.V2_API_URL}voucher/get`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2496,10 +2497,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/voucher/claim">
+                                                    <a href={`${Config.V2_API_URL}voucher/claim`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/voucher/claim
+                                                            {`${Config.V2_API_URL}voucher/claim`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2550,10 +2551,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/trade/profit/list">
+                                                    <a href={`${Config.V2_API_URL}trade/profit/list`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/trade/profit/list
+                                                            {`${Config.V2_API_URL}trade/profit/list`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2596,10 +2597,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/trade/profit/list">
+                                                    <a href={`${Config.V2_API_URL}trade/profit/list`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/trade/profit/list
+                                                            {`${Config.V2_API_URL}trade/profit/list`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2650,10 +2651,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/createAddress">
+                                                    <a href={`${Config.V1_API_URL}wallet/createAddress`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/createAddress
+                                                            {`${Config.V1_API_URL}wallet/createAddress`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2705,10 +2706,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/getParticularCurrency">
+                                                    <a href={`${Config.V1_API_URL}wallet/getParticularCurrency`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/getParticularCurrency
+                                                            {`${Config.V1_API_URL}wallet/getParticularCurrency`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2759,10 +2760,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/getHistory">
+                                                    <a href={`${Config.V1_API_URL}wallet/getHistory`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/getHistory
+                                                            {`${Config.V1_API_URL}wallet/getHistory`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2813,10 +2814,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22">
+                                                    <a href={`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22
+                                                            {`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2867,10 +2868,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/depositFiat">
+                                                    <a href={`${Config.V1_API_URL}wallet/depositFiat`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/depositFiat
+                                                            {`${Config.V1_API_URL}wallet/depositFiat`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2921,10 +2922,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/admin/getBankDetails">
+                                                    <a href={`${Config.V1_API_URL}admin/getBankDetails`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/admin/getBankDetails
+                                                            {`${Config.V1_API_URL}admin/getBankDetails`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -2968,10 +2969,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/getHistory">
+                                                    <a href={`${Config.V1_API_URL}wallet/getHistory`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/getHistory
+                                                            {`${Config.V1_API_URL}wallet/getHistory`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3024,10 +3025,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/getCurrencyBalance">
+                                                    <a href={`${Config.V1_API_URL}wallet/getCurrencyBalance`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/getCurrencyBalance
+                                                            {`${Config.V1_API_URL}wallet/getCurrencyBalance`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3079,10 +3080,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/submitWithdraw">
+                                                    <a href={`${Config.V1_API_URL}wallet/submitWithdraw`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/submitWithdraw
+                                                            {`${Config.V1_API_URL}wallet/submitWithdraw`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3134,10 +3135,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/getHistory">
+                                                    <a href={`${Config.V1_API_URL}wallet/getHistory`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/getHistory
+                                                            {`${Config.V1_API_URL}wallet/getHistory`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3189,10 +3190,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/submitWithdraw">
+                                                    <a href={`${Config.V1_API_URL}wallet/submitWithdraw`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/submitWithdraw
+                                                            {`${Config.V1_API_URL}wallet/submitWithdraw`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3244,10 +3245,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/submitWithdraw">
+                                                    <a href={`${Config.V1_API_URL}wallet/submitWithdraw`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/submitWithdraw
+                                                            {`${Config.V1_API_URL}wallet/submitWithdraw`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3299,10 +3300,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/customer/getBankPayments">
+                                                    <a href={`${Config.V2_API_URL}customer/getBankPayments`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/customer/getBankPayments
+                                                            {`${Config.V2_API_URL}customer/getBankPayments`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3345,11 +3346,11 @@ export default function Apipage(props) {
                                             <h3>Currency Balance</h3>
                                             <ul className="">
                                                 <li>
-                                                    <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/getCurrencyBalance">
+                                                    <h5>URL</h5>{`${Config.V1_API_URL}wallet/getCurrencyBalance`}
+                                                    <a href={`${Config.V1_API_URL}wallet/getCurrencyBalance`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/getCurrencyBalance
+                                                            {`${Config.V1_API_URL}wallet/getCurrencyBalance`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3401,11 +3402,11 @@ export default function Apipage(props) {
                                             <h3>Coin Status</h3>
                                             <ul className="">
                                                 <li>
-                                                    <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/wallet/getCurrency">
+                                                    <h5>URL</h5>{`${Config.V1_API_URL}wallet/getCurrency`}
+                                                    <a href={`${Config.V1_API_URL}wallet/getCurrency`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/wallet/getCurrency
+                                                            {`${Config.V1_API_URL}wallet/getCurrency`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3449,11 +3450,11 @@ export default function Apipage(props) {
                                             <h3>Particular pair list</h3>
                                             <ul className="">
                                                 <li>
-                                                    <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/trade/checkPair">
+                                                    <h5>URL</h5>{`${Config.V1_API_URL}trade/checkPair`}
+                                                    <a href={`${Config.V1_API_URL}trade/checkPair`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/trade/checkPair
+                                                            {`${Config.V1_API_URL}trade/checkPair`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3504,11 +3505,11 @@ export default function Apipage(props) {
                                             <h3>Markets Pair  List</h3>
                                             <ul className="">
                                                 <li>
-                                                    <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/trade/getMarketsTab">
+                                                    <h5>URL</h5>{`${Config.V1_API_URL}trade/getMarketsTab`}
+                                                    <a href={`${Config.V1_API_URL}trade/getMarketsTab`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/trade/getMarketsTab
+                                                            {`${Config.V1_API_URL}trade/getMarketsTab`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3550,10 +3551,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/trade/getMarkets">
+                                                    <a href={`${Config.V1_API_URL}trade/getMarkets`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/trade/getMarkets
+                                                            {`${Config.V1_API_URL}trade/getMarkets`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3595,10 +3596,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/trade/getOrderDetail">
+                                                    <a href={`${Config.V2_API_URL}trade/getOrderDetail`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/trade/getOrderDetail
+                                                            {`${Config.V2_API_URL}trade/getOrderDetail`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3649,10 +3650,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v2/trade/profit/list">
+                                                    <a href={`${Config.V2_API_URL}trade/profit/list`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v2/trade/profit/list
+                                                            {`${Config.V2_API_URL}trade/profit/list`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3703,10 +3704,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/trade/market_data/candles">
+                                                    <a href={`${Config.V1_API_URL}trade/market_data/candles`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/trade/market_data/candles
+                                                            {`${Config.V1_API_URL}trade/market_data/candles`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3758,10 +3759,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/trade/getHomeMarkets">
+                                                    <a href={`${Config.V1_API_URL}trade/getHomeMarkets`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/trade/getHomeMarkets
+                                                            {`${Config.V1_API_URL}trade/getHomeMarkets`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3806,10 +3807,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS">
+                                                    <a href={`${Config.V1_API_URL}cms/getCMS`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS
+                                                            {`${Config.V1_API_URL}cms/getCMS`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3861,10 +3862,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/faq/getfaq">
+                                                    <a href={`${Config.V1_API_URL}faq/getfaq`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/faq/getfaq
+                                                            {`${Config.V1_API_URL}faq/getfaq`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3916,10 +3917,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS">
+                                                    <a href={`${Config.V1_API_URL}cms/getCMS`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS
+                                                            {`${Config.V1_API_URL}cms/getCMS`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -3971,10 +3972,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS">
+                                                    <a href={`${Config.V1_API_URL}cms/getCMS`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS
+                                                            {`${Config.V1_API_URL}cms/getCMS`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4026,10 +4027,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS">
+                                                    <a href={`${Config.V1_API_URL}cms/getCMS`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS
+                                                            {`${Config.V1_API_URL}cms/getCMS`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4080,10 +4081,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS">
+                                                    <a href={`${Config.V1_API_URL}cms/getCMS`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS
+                                                            {`${Config.V1_API_URL}cms/getCMS`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4134,10 +4135,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/addPayment">
+                                                    <a href={`${Config.V1_API_URL}p2p/addPayment`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/addPayment
+                                                            {`${Config.V1_API_URL}p2p/addPayment`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4189,10 +4190,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22">
+                                                    <a href={`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22
+                                                            {`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4236,10 +4237,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/addPayment">
+                                                    <a href={`${Config.V1_API_URL}p2p/addPayment`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/addPayment
+                                                            {`${Config.V1_API_URL}p2p/addPayment`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4284,10 +4285,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getallPairs">
+                                                    <a href={`${Config.V1_API_URL}p2p/getallPairs`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getallPairs
+                                                            {`${Config.V1_API_URL}p2p/getallPairs`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4330,10 +4331,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getpriceRange">
+                                                    <a href={`${Config.V1_API_URL}p2p/getpriceRange`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getpriceRange
+                                                            {`${Config.V1_API_URL}p2p/getpriceRange`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4384,10 +4385,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/admin/p2p/getP2PSettings">
+                                                    <a href={`${Config.V1_API_URL}p2p/getP2PSettings`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/admin/p2p/getP2PSettings
+                                                            {`${Config.V1_API_URL}p2p/getP2PSettings`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4430,10 +4431,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getBalance">
+                                                    <a href={`${Config.V1_API_URL}p2p/getBalance`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getBalance
+                                                            {`${Config.V1_API_URL}p2p/getBalance`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4484,10 +4485,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getbuyerPaymentMethods">
+                                                    <a href={`${Config.V1_API_URL}p2p/getbuyerPaymentMethods`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getbuyerPaymentMethods
+                                                            {`${Config.V1_API_URL}p2p/getbuyerPaymentMethods`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4530,10 +4531,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2pPair">
+                                                    <a href={`${Config.V1_API_URL}p2p/getp2pPair`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2pPair
+                                                            {`${Config.V1_API_URL}p2p/getp2pPair`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4584,10 +4585,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getCurrentpair">
+                                                    <a href={`${Config.V1_API_URL}p2p/getCurrentpair`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getCurrentpair
+                                                            {`${Config.V1_API_URL}p2p/getCurrentpair`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4638,10 +4639,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getallPayments">
+                                                    <a href={`${Config.V1_API_URL}p2p/getallPayments`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getallPayments
+                                                            {`${Config.V1_API_URL}p2p/getallPayments`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4684,10 +4685,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getadsP2PPayment">
+                                                    <a href={`${Config.V1_API_URL}p2p/getadsP2PPayment`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getadsP2PPayment
+                                                            {`${Config.V1_API_URL}p2p/getadsP2PPayment`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4730,10 +4731,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/submitVerification">
+                                                    <a href={`${Config.V1_API_URL}p2p/submitVerification`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/submitVerification
+                                                            {`${Config.V1_API_URL}p2p/submitVerification`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4785,10 +4786,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getallMyads">
+                                                    <a href={`${Config.V1_API_URL}p2p/getallMyads`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getallMyads
+                                                            {`${Config.V1_API_URL}p2p/getallMyads`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4839,10 +4840,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getMyads ">
+                                                    <a href={`${Config.V1_API_URL}p2p/getMyads`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getMyads
+                                                            {`${Config.V1_API_URL}p2p/getMyads`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4893,10 +4894,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getPayment">
+                                                    <a href={`${Config.V1_API_URL}p2p/getPayment`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getPayment
+                                                            {`${Config.V1_API_URL}p2p/getPayment`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4939,10 +4940,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2puserAllOrders">
+                                                    <a href={`${Config.V1_API_URL}p2p/getp2puserAllOrders`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2puserAllOrders
+                                                            {`${Config.V1_API_URL}p2p/getp2puserAllOrders`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -4994,10 +4995,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2puserAllOrders">
+                                                    <a href={`${Config.V1_API_URL}p2p/getp2puserAllOrders`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2puserAllOrders
+                                                            {`${Config.V1_API_URL}p2p/getp2puserAllOrders`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5049,10 +5050,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getallOrders">
+                                                    <a href={`${Config.V1_API_URL}p2p/getallOrders`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getallOrders
+                                                            {`${Config.V1_API_URL}p2p/getallOrders`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5103,10 +5104,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS">
+                                                    <a href={`${Config.V1_API_URL}cms/getCMS`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/cms/getCMS
+                                                            {`${Config.V1_API_URL}cms/getCMS`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5157,10 +5158,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/faq/getfaq">
+                                                    <a href={`${Config.V1_API_URL}faq/getfaq`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/faq/getfaq
+                                                            {`${Config.V1_API_URL}faq/getfaq`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5211,10 +5212,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/submitOrder">
+                                                    <a href={`${Config.V1_API_URL}p2p/submitOrder`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/submitOrder
+                                                            {`${Config.V1_API_URL}p2p/submitOrder`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5265,10 +5266,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2puserOrders">
+                                                    <a href={`${Config.V1_API_URL}p2p/getp2puserOrders`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getp2puserOrders
+                                                            {`${Config.V1_API_URL}p2p/getp2puserOrders`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5319,10 +5320,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getmyOrderDetails">
+                                                    <a href={`${Config.V1_API_URL}p2p/getmyOrderDetails`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getmyOrderDetails
+                                                            {`${Config.V1_API_URL}p2p/getmyOrderDetails`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5373,10 +5374,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getappealHistory">
+                                                    <a href={`${Config.V1_API_URL}p2p/getappealHistory`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getappealHistory
+                                                            {`${Config.V1_API_URL}p2p/getappealHistory`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5427,10 +5428,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/submitOrder">
+                                                    <a href={`${Config.V1_API_URL}p2p/submitOrder`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/submitOrder
+                                                            {`${Config.V1_API_URL}p2p/submitOrder`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5481,10 +5482,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/submitOrder">
+                                                    <a href={`${Config.V1_API_URL}p2p/submitOrder`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/submitOrder
+                                                            {`${Config.V1_API_URL}p2p/submitOrder`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5535,10 +5536,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/cancelOrder">
+                                                    <a href={`${Config.V1_API_URL}p2p/cancelOrder`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/cancelOrder
+                                                            {`${Config.V1_API_URL}p2p/cancelOrder`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5589,10 +5590,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22">
+                                                    <a href={`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22
+                                                            {`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5643,10 +5644,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/createAppeal">
+                                                    <a href={`${Config.V1_API_URL}p2p/createAppeal`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/createAppeal
+                                                            {`${Config.V1_API_URL}p2p/createAppeal`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5697,10 +5698,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getappealHistory">
+                                                    <a href={`${Config.V1_API_URL}p2p/getappealHistory`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getappealHistory
+                                                            {`${Config.V1_API_URL}p2p/getappealHistory`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5752,10 +5753,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22">
+                                                    <a href={`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/admin/fileUpload?sizeFile=1&&type=%22attachment%22
+                                                            {`${Config.V1_API_URL}admin/fileUpload?sizeFile=1&&type=%22attachment%22`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5806,10 +5807,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/createAppeal">
+                                                    <a href={`${Config.V1_API_URL}p2p/createAppeal`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/createAppeal
+                                                            {`${Config.V1_API_URL}p2p/createAppeal`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5860,10 +5861,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/cancelAppeal">
+                                                    <a href={`${Config.V1_API_URL}p2p/cancelAppeal`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/cancelAppeal
+                                                            {`${Config.V1_API_URL}p2p/cancelAppeal`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5914,10 +5915,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/helpcenterAppeal">
+                                                    <a href={`${Config.V1_API_URL}p2p/helpcenterAppeal`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/helpcenterAppeal
+                                                            {`${Config.V1_API_URL}p2p/helpcenterAppeal`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -5969,10 +5970,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getmyOrderDetails">
+                                                    <a href={`${Config.V1_API_URL}p2p/getmyOrderDetails`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getmyOrderDetails
+                                                            {`${Config.V1_API_URL}p2p/getmyOrderDetails`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6023,10 +6024,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getfeedbackDetails">
+                                                    <a href={`${Config.V1_API_URL}p2p/getfeedbackDetails`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getfeedbackDetails
+                                                            {`${Config.V1_API_URL}p2p/getfeedbackDetails`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6077,10 +6078,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getblockUsers">
+                                                    <a href={`${Config.V1_API_URL}p2p/getblockUsers`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getblockUsers
+                                                            {`${Config.V1_API_URL}p2p/getblockUsers`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6089,10 +6090,10 @@ export default function Apipage(props) {
                                                     <h5>METHOD</h5>
 
                                                     <p className="">
-                                                        <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getblockUsers">
+                                                        <a href={`${Config.V1_API_URL}p2p/getblockUsers`}>
                                                             <p className=" ">
                                                                 <span className="bg-grey p-1 ">
-                                                                    https://fibitexchange-api.clarisco.com/api/v1/p2p/getblockUsers
+                                                                {`${Config.V1_API_URL}p2p/getblockUsers`}
                                                                 </span>
                                                             </p>
                                                         </a>
@@ -6137,10 +6138,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/submitReport">
+                                                    <a href={`${Config.V1_API_URL}p2p/submitReport`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/submitReport
+                                                            {`${Config.V1_API_URL}p2p/submitReport`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6191,10 +6192,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/getPayment">
+                                                    <a href={`${Config.V1_API_URL}p2p/getPayment`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/getPayment
+                                                            {`${Config.V1_API_URL}p2p/getPayment`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6245,10 +6246,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/enableDisablP2PPayment">
+                                                    <a href={`${Config.V1_API_URL}p2p/enableDisablP2PPayment`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/enableDisablP2PPayment
+                                                            {`${Config.V1_API_URL}p2p/enableDisablP2PPayment`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6300,10 +6301,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/advertiserDet">
+                                                    <a href={`${Config.V1_API_URL}p2p/advertiserDet`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/advertiserDet
+                                                            {`${Config.V1_API_URL}p2p/advertiserDet`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6355,10 +6356,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/p2p/advertiserOrderDet">
+                                                    <a href={`${Config.V1_API_URL}p2p/advertiserOrderDet`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/p2p/advertiserOrderDet
+                                                            {`${Config.V1_API_URL}p2p/advertiserOrderDet`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6397,10 +6398,8 @@ export default function Apipage(props) {
                                                     </pre>
                                                 </span>
                                             </p>
-
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div id="item-41-1" className="">
@@ -6412,10 +6411,10 @@ export default function Apipage(props) {
                                             <ul className="">
                                                 <li>
                                                     <h5>URL</h5>
-                                                    <a href="https://fibitexchange-api.clarisco.com/api/v1/trade/getMarkets">
+                                                    <a href={`${Config.V1_API_URL}trade/getMarkets`}>
                                                         <p className=" ">
                                                             <span className="bg-grey p-1 ">
-                                                                https://fibitexchange-api.clarisco.com/api/v1/trade/getMarkets
+                                                            {`${Config.V1_API_URL}trade/getMarkets`}
                                                             </span>
                                                         </p>
                                                     </a>
@@ -6446,8 +6445,6 @@ export default function Apipage(props) {
                                                     </pre>
                                                 </span>
                                             </p>
-
-
                                         </div>
                                     </div>
 

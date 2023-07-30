@@ -2,7 +2,7 @@ import moment from "moment";
 
 export const dateAddFormat = (date, data = {}) => {
   try {
-    var result = moment(date).add(data.addCount, data.addType).format("MMM D, Y,hh:mm:ss");
+    var result = moment(date).add(data.addCount, data.addType).format("D MMM YY | hh:mm:ss a");
     return result;
   } catch (e) {}
 }

@@ -21,6 +21,7 @@
     "jquery": "^3.6.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "multiselect-react-dropdown": "^2.0.25",
     "otp-input-react": "^0.3.0",
     "pdfjs-dist": "^3.4.120",
     "phone": "^3.1.30",

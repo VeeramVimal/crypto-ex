@@ -1,98 +1,151 @@
 const {
+    // API start
     REACT_APP_API_URL = "http://localhost:3004/webapi/",
     REACT_APP_BACKEND_URL = "http://localhost:3004/",
     REACT_APP_SOCKET_URL = "http://localhost:3004/",
+    REACT_APP_CAPTCHA_STATUS = "Disable",
+    REACT_APP_BANK_PAYMENT_EDIT = "Disable",
+    REACT_APP_UPI_PAYMENT_EDIT = "Disable",
+    REACT_APP_TRADE_STATUS = "Disable",
+    REACT_APP_P2P_STATUS = "Disable",
+    REACT_APP_COMPETITION_STATUS = "Disable",
+    REACT_APP_NOTIFICATION_STATUS = "Disable",
+    REACT_APP_APIDOC_STATUS = "Disable",
+    // API end
+    // USDM_API start
+    REACT_APP_USDM_API_URL = "http://localhost:3005/webapi/",
+    REACT_APP_USDM_BACKEND_URL = "http://localhost:3005/",
+    REACT_APP_USDM_SOCKET_URL = "http://localhost:3005/",
+    REACT_APP_DERIVATIVES_STATUS = "Disable",
+    // USDM_API end
     //** Bear & Bull URL start */
     REACT_APP_BEAR_AND_BULL_API_URL = "http://localhost:3006/webapi/",
     REACT_APP_BEAR_AND_BULL_BACKEND_URL = "http://localhost:3006/",
     REACT_APP_BEAR_AND_BULL_SOCKET_URL = "http://localhost:3006/",
     REACT_APP_BEAR_AND_BULL_STATUS = "Disable",
     //** Bear & Bull URL end */
-
+    //** Launch-pad URL start*/
+    REACT_APP_LAUNCHPAD_API_URL = "http://localhost:3007/webapi/",
+    REACT_APP_LAUNCHPAD_BACKEND_URL = "http://localhost:3007/",
+    REACT_APP_IDO_LAUNCHPAD_STATUS = "Disable",
+    //** Launch-pad URL end*/
+    //** Crypto-loan URL */
+    REACT_APP_CRYPTOLOAN_API_URL = "http://localhost:3009/webapi/",
+    REACT_APP_CRYPTOLOAN_BACKEND_URL = "http://localhost:3009/",
+    REACT_APP_CRYPTO_LOAN_STATUS = "Disable",
+    //** Bear & Bull URL end */
     //** Copy trading URL start */
     REACT_APP_COPY_TRADING_URL = "http://localhost:3007/webapi/",
     REACT_APP_COPY_TRADING_BACKEND_URL = "http://localhost:3007/",
     REACT_APP_COPY_TRADING_SOCKET_URL = "http://localhost:3007/",
     REACT_APP_COPY_TRADING_STATUS = "Disable",
     //** Copy trading URL end */
-
-    REACT_APP_USDM_API_URL = "http://localhost:3005/webapi/",
-    REACT_APP_USDM_BACKEND_URL = "http://localhost:3005/",
-    REACT_APP_USDM_SOCKET_URL = "http://localhost:3005/",
+    //** simpleearn url START**//
+    REACT_APP_SIMPLEEARN_URL = "http://localhost:4000/webapi/",
+    REACT_APP_SIMPLEEARN_BACKEND_URL = "http://localhost:4000/",
+    REACT_APP_SIMPLEEARN_STATUS = "Disable",
+    //** simpleearn url END**//
+    //** Trading competition url START**//
+    REACT_APP_TRADINGCOMPETITION_URL = "http://localhost:3008/webapi/",
+    REACT_APP_TRADINGCOMPETITION_BACKEND_URL = "http://localhost:3008/",
+    REACT_APP_TRADINGCOMPETITION_STATUS = "Disable",
+    //** Trading competition  url END**//
+    //** Optional trading URL start*/
+    REACT_APP_OPTIONAL_TRADING_API_URL = "http://localhost:4001/webapi/",
+    REACT_APP_OPTIONAL_TRADING_BACKEND_URL = "http://localhost:4001/",
+    REACT_APP_OPTIONAL_TRADING_SOCKET_URL = "http://localhost:4001/",
+    REACT_APP_OPTIONAL_TRADING_STATUS = "Enable",
+    //** Optional trading URL end*/
+    // Site detail start
     REACT_APP_FRONTEND_URL = "http://localhost:3000",
     REACT_APP_FRONEND_URL_PRINT = "exchange.test.com",
     REACT_APP_SITENAME = "Fibit",
     REACT_APP_THEME_NAME = "siteTheme",
-    REACT_APP_TRADE_STATUS = "Disable",
-    REACT_APP_DERIVATIVES_STATUS = "Disable",
-    REACT_APP_COMPETITION_STATUS = "Disable",
-    REACT_APP_CRYPTO_LOAN_STATUS = "Disable",
-    REACT_APP_P2P_STATUS = "Disable",
+    // Site detail end
+    // Status start
     REACT_APP_NFT_STATUS = "Disable",
     REACT_APP_STAKING_STATUS = "Disable",
-    REACT_APP_CAPTCHA_STATUS = "Disable",
-    REACT_APP_BANK_PAYMENT_EDIT = "Disable",
-    REACT_APP_UPI_PAYMENT_EDIT = "Disable",
-    REACT_APP_APIDOC_STATUS = "Disable",
-    REACT_APP_NOTIFICATION_STATUS = "Disable",
-    REACT_APP_IDO_LAUNCHPAD_STATUS = "Disable",
+    // Status end
 } = process.env;
 
 const KEY = {
+    // API start
     V1_API_URL: REACT_APP_API_URL + "v1/",
     V2_API_URL: REACT_APP_API_URL + "v2/",
     BACKEND_URL: REACT_APP_BACKEND_URL,
     SOCKET_URL: REACT_APP_SOCKET_URL,
+    CAPTCHA_STATUS: REACT_APP_CAPTCHA_STATUS,
+    PAYMENT_BANK_EDIT: REACT_APP_BANK_PAYMENT_EDIT,
+    PAYMENT_UPI_EDIT: REACT_APP_UPI_PAYMENT_EDIT,
+    TRADE_STATUS: REACT_APP_TRADE_STATUS,
+    P2P_STATUS: REACT_APP_P2P_STATUS,
+    COMPETITION_STATUS: REACT_APP_COMPETITION_STATUS,
+    NOTIFICATION_STATUS: REACT_APP_NOTIFICATION_STATUS,
+    APIDOC_STATUS: REACT_APP_APIDOC_STATUS,
+    // API end
+    // USDM start
+    USDM_V1_API_URL: REACT_APP_USDM_API_URL + "v1/",
+    USDM_V2_API_URL: REACT_APP_USDM_API_URL + "v2/",
+    USDM_BACKEND_URL: REACT_APP_USDM_BACKEND_URL,
+    USDM_SOCKET_URL: REACT_APP_USDM_SOCKET_URL,
+    DERIVATIVES_STATUS: REACT_APP_DERIVATIVES_STATUS,
+    // USDM end
     //** Bear & Bull keys start */
     BEAR_AND_BULL_V1_API_URL: REACT_APP_BEAR_AND_BULL_API_URL + 'v1/',
     BEAR_AND_BULL_BACKEND_URL: REACT_APP_BEAR_AND_BULL_BACKEND_URL,
     BEAR_AND_BULL_SOCKET_URL: REACT_APP_BEAR_AND_BULL_SOCKET_URL,
     BEAR_AND_BULL_STATUS: REACT_APP_BEAR_AND_BULL_STATUS,
     //** Bear & Bull keys end */
-
+    //** Launch-pad keys */
+    LAUNCHPAD_V1_API_URL: REACT_APP_LAUNCHPAD_API_URL + "v1/",
+    LAUNCHPAD_V2_API_URL: REACT_APP_LAUNCHPAD_API_URL + "v2/",
+    LAUNCHPAD_STATUS: REACT_APP_IDO_LAUNCHPAD_STATUS,
+    //** Crypto-loan keys start */
+    CRYPTOLOAN_V1_API_URL: REACT_APP_CRYPTOLOAN_API_URL + "v1/",
+    CRYPTOLOAN_BACKEND_URL: REACT_APP_CRYPTOLOAN_BACKEND_URL,
+    CRYPTO_LOAN_STATUS: REACT_APP_CRYPTO_LOAN_STATUS,
+    //** Crypto-loan keys end */
     //** Copy trading URL start */
     COPY_TRADING_V1_API_URL: REACT_APP_COPY_TRADING_URL + "v1/",
     COPY_TRADING_BACKEND_URL: REACT_APP_COPY_TRADING_BACKEND_URL,
     COPY_TRADING_SOCKET_URL: REACT_APP_COPY_TRADING_SOCKET_URL,
     COPY_TRADING_STATUS: REACT_APP_COPY_TRADING_STATUS,
     //** Copy trading URL end */
-
-    USDM_V1_API_URL: REACT_APP_USDM_API_URL + "v1/",
-    USDM_V2_API_URL: REACT_APP_USDM_API_URL + "v2/",
-    USDM_BACKEND_URL: REACT_APP_USDM_BACKEND_URL,
-    USDM_SOCKET_URL: REACT_APP_USDM_SOCKET_URL,
+    //simpleearn start//
+    SIMPLEEARN_V1_API_URL: REACT_APP_SIMPLEEARN_URL + "v1/",
+    SIMPLEEARN_STATUS: REACT_APP_SIMPLEEARN_STATUS,
+    //simpleerarn end//
+    //Tradingcompetition start//
+    TRADINGCOMPETITION_V1_URL: REACT_APP_TRADINGCOMPETITION_URL + "v1/",
+    TRADINGCOMPETITION_STATUS: REACT_APP_TRADINGCOMPETITION_STATUS,
+    //Tradingcompetition end//
+    //** Optional trading start*/
+    OPTIONAL_TRADING_V1_API_URL: REACT_APP_OPTIONAL_TRADING_API_URL + "v1/",
+    OPTIONAL_TRADING_BACKEND_URL: REACT_APP_OPTIONAL_TRADING_BACKEND_URL,
+    OPTIONAL_TRADING_SOCKET_URL: REACT_APP_OPTIONAL_TRADING_SOCKET_URL,
+    OPTIONAL_TRADING_STATUS: REACT_APP_OPTIONAL_TRADING_STATUS,
+    // Site detail start
     FRONEND_URL: REACT_APP_FRONTEND_URL,
     FRONEND_URL_PRINT: REACT_APP_FRONEND_URL_PRINT,
     SITENAME: REACT_APP_SITENAME,
-    TRADE_STATUS: REACT_APP_TRADE_STATUS,
-    DERIVATIVES_STATUS: REACT_APP_DERIVATIVES_STATUS,
-    COMPETITION_STATUS: REACT_APP_COMPETITION_STATUS,
-    CRYPTO_LOAN_STATUS: REACT_APP_CRYPTO_LOAN_STATUS,
-    P2P_STATUS: REACT_APP_P2P_STATUS,
+    // Site detail end
+    // Status start
     NFT_STATUS: REACT_APP_NFT_STATUS,
     STAKING_STATUS: REACT_APP_STAKING_STATUS,
-    CAPTCHA_STATUS: REACT_APP_CAPTCHA_STATUS,
+    // Status end
     THEME_NAME: REACT_APP_THEME_NAME,
-    PAYMENT_BANK_EDIT: REACT_APP_BANK_PAYMENT_EDIT,
-    PAYMENT_UPI_EDIT: REACT_APP_UPI_PAYMENT_EDIT,
-    APIDOC_STATUS: REACT_APP_APIDOC_STATUS,
-    NOTIFICATION_STATUS: REACT_APP_NOTIFICATION_STATUS,
-    LAUNCHPAD_STATUS: REACT_APP_IDO_LAUNCHPAD_STATUS,
     whitepaper: "Whitepaper",
-
     TFA: {
         downLoadLink: {
             googleApp: "https://apps.apple.com/us/app/google-authenticator/id388497605",
             playstoreApp: "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en_IN&gl=US&pli=1"
         }
     },
-
     appLinks: {
         googlePlay: "https://play.google.com/store/apps/details?id=com.fibitpro.fibitapp",
         appStore: "https://apps.apple.com/us/app/fibit-pro/id1603620552"
         // appStore: "https://apps.apple.com/tt/app/fibit-pro/id1603620552"
     },
-
     google: {
         recaptcha: {
             TEST_SITE_KEY: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
@@ -102,18 +155,15 @@ const KEY = {
             SITE_KEY: "6LduBL0lAAAAAPS5l10Q4Ds6Kk13gyFlgBLiPRnD",
         }
     },
-
     coinListing: "https://docs.google.com/forms/d/e/1FAIpQLSd5SoG9HchTyDoVUx5rJsJ1d5tBwXPKVhSGMOCWlNbFEEPwgA/viewform",
     timer: {
         resendOtp: 120
     },
-
     nftLink: "https://fibitnft.com",
     stakingLink: "https://staking.fibitpro.com",
     // competitionLink: "/comingsoon",
     competitionLink: "/trading-competition",
     FanTknSymbol: "FBT",
-
     depositFiatStatus: "Disable"
 };
 

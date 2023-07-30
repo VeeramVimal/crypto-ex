@@ -115,3 +115,19 @@ h1.ads_price {
     height: 35px;
     width: 35px;
 }
+.order-cancelled-buy {
+    color: rgb(255, 255, 255);
+    background-color: rgb(14, 203, 129);
+    border-radius: 0.5em;
+    font-size: 11px;
+    padding: 4px 8px;
+    margin: 0px 8px 0px 0px;
+}
+.order-cancelled-sell {
+    color: rgb(255, 255, 255);
+    background-color: #e12424 !important;
+    border-radius: 0.5em;
+    font-size: 11px;
+    padding: 4px 8px;
+    margin: 0px 8px 0px 0px;
+}

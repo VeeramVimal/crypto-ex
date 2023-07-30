@@ -1,30 +1,33 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { FaInstagram, FaTwitter, FaLinkedin, FaFacebookSquare, FaTelegramPlane, FaYoutube } from 'react-icons/fa';
 // import "../../../assets/ido-style.css";
+import { useContextData } from '../../../core/context/index';
 import "../assets/styles/ido-style.css";
 function Navbar() {
+    const { siteSettings } = useContextData();
+    const [currentYear, setCurrentYear] = useState();
+    useEffect(() => {
+        const year = new Date().getFullYear();
+        setCurrentYear(year);
+    }, [])
     return (
         <div className="App Ido-footer">
-            {/* <div className="text-center">
-                <img src={skel} className="floating-hand-image-2" alt="skel" />
-                <img src={skel} className="floating-hand-image-3" alt="skel" />
-            </div> */}
-
             <div className="footer-section-bottom">
                 <div className="ninth-section-banner pb-5 pt-3">
                     <div className="container">
                         <p className="ido-text-2 mb-5 text-center">
                             FIND US ON SOCIAL MEDIA
                         </p>
-                        {/* <div className="text-center gap-3 d-flex justify-content-center footer-social-icons">
-                            <a><img src={twitter} alt="twitter" /></a>
-                            <a><img src={github} alt="github" /></a>
-                            <a><img src={facebook} alt="facebook" /></a>
-                            <a><img src={linkedin} alt="linkedin" /></a>
-                        </div> */}
-
+                        <div className="footer-social-icons pt-3">
+                            {siteSettings&&siteSettings.instagramLink && <a target="_blank" href={siteSettings.instagramLink}><FaInstagram /></a>}
+                            {siteSettings&&siteSettings.twitterLink && <a target="_blank" href={siteSettings.twitterLink}><FaTwitter /></a>}
+                            {siteSettings&&siteSettings.linkedinLink && <a target="_blank" href={siteSettings.linkedinLink}><FaLinkedin /></a>}
+                            {siteSettings&&siteSettings.facebookLink && <a target="_blank" href={siteSettings.facebookLink}><FaFacebookSquare /></a>}
+                            {siteSettings&&siteSettings.telegramLink && <a target="_blank" href={siteSettings.telegramLink}><FaTelegramPlane /></a>}
+                            {siteSettings&&siteSettings.youtubeLink && <a target="_blank" href={siteSettings.youtubeLink}><FaYoutube /></a>}
+                        </div>
                     </div>
                 </div>
-
                 <div className="tenth-section-banner py-5">
                     <div className="container">
                         <div className="row text-center">
@@ -39,7 +42,7 @@ function Navbar() {
                                     <a>Privacy policy</a>
                                 </div>
                                 <div className="footer-link-section mt-4">
-                                    <a>© 2021 Copyright: Fibit Pro</a>
+                                    <a>© {currentYear} Copyright: Fibit Pro</a>
                                 </div>
                             </div>
                         </div>

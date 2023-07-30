@@ -1,5 +1,6 @@
 import React from 'react';
-const TVChartContainer = React.lazy(() => import("./TVChartContainer"));
+import TVChartContainer from './TVChartContainer';
+// const TVChartContainer = React.lazy(() => import("./TVChartContainer"));
 
 const TradingView = (props) => {
   return (

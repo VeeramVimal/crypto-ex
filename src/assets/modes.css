@@ -420,8 +420,6 @@
     background-color: #000 !important;
   } */
 
-
-
 .form-control {
   background-color: var(--background-color-1) !important;
   color: var(--color-1) !important;
@@ -444,7 +442,7 @@
 
 .dark-new.thememodal {
   background-color: transparent !important;
-  color: #FFF !important;
+  color: #fff !important;
 }
 
 .light-new.thememodal {
@@ -460,28 +458,30 @@
   pointer-events: auto;
   background-color: #000;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, .2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
 }
 
 .dark-new .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-  border: 1px solid rgb(255, 255, 255) !important
+  border: 1px solid rgb(255, 255, 255) !important;
 }
 
 .css-1ualgfl-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
-  border: 1px solid rgb(0, 0, 0) !important
+  border: 1px solid rgb(0, 0, 0) !important;
 }
 
-.css-1ualgfl-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border: 1px solid rgb(255, 255, 255) !important
+.css-1ualgfl-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border: 1px solid rgb(255, 255, 255) !important;
 }
 
-.dark-new .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-  color: #FFF !important;
+.dark-new
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  color: #fff !important;
 }
 .dark-new .css-vqmohf-MuiButtonBase-root-MuiRadio-root {
-  color: #FFF !important;
+  color: #fff !important;
 }
 
 .register-section-top .PhoneInput {
@@ -496,7 +496,7 @@
 }
 
 .dark-new .shadow-lg {
-  box-shadow: 0 1rem 3rem #00dbaf1f!important;
+  box-shadow: 0 1rem 3rem #00dbaf1f !important;
 }
 .accordion-item {
   border: 1px solid var(--border-color-1);
@@ -504,10 +504,10 @@
 .dark-new .modal-content {
   background-color: rgb(0, 0, 0);
 }
-.datepicker-css-styling{
+.datepicker-css-styling {
   color: var(--color-1) !important;
 }
-.form-select{
+.form-select {
   background-color: var(--background-color-1) !important;
   color: var(--color-1) !important;
 }
@@ -522,8 +522,6 @@
   padding-left: 15px !important;
   background-color: var(--background-color-1) !important;
 }
-
-
 
 input {
   color: var(--color-1) !important;
@@ -622,77 +620,244 @@ table thead {
   color: var(--color-1) !important;
 }
 
+.form-select {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
 
-.form-select{
-    background-color: var(--background-color-1) !important;
-    color: var(--color-1) !important;
-  }
+.overflow-x-scroll-arrow-section-2 {
+  position: relative;
+  z-index: 999;
+}
 
+.horizon-prev {
+  position: absolute;
+  left: 5px;
+  top: 35px;
+  z-index: 999;
+}
 
-  .overflow-x-scroll-arrow-section-2 {
-    position: relative;
-    z-index: 999;
-  }
-  
-  .horizon-prev {
-    position: absolute;
-    left: 5px;
-    top: 35px;
-    z-index: 999;
-  }
-  
-  .horizon-next {
-    position: absolute;
-    right: 5px;
-    top: 35px;
-    z-index: 999;
-  }
-  .horizon-next, .horizon-prev {
-    background-color: rgba(128, 128, 128, 0.747);
-    border: none;
-    outline: none;
-    cursor: pointer;
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.644) !important;
-    line-height: 20px;
-    font-size: 12px;
-  }
-  .deposit-select-coin-section {
-    background-color: var(--background-color-1);
-  }
-  .markets-search-group-section .input-group-text {
-    background-color: var(--background-color-1) !important;
-    color: var(--color-1) !important;
+.horizon-next {
+  position: absolute;
+  right: 5px;
+  top: 35px;
+  z-index: 999;
+}
+.horizon-next,
+.horizon-prev {
+  background-color: rgba(128, 128, 128, 0.747);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.644) !important;
+  line-height: 20px;
+  font-size: 12px;
+}
+.deposit-select-coin-section {
+  background-color: var(--background-color-1);
+}
+.markets-search-group-section .input-group-text {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
 }
 .page-item.disabled .page-link {
   background-color: var(--background-color-1) !important;
 }
 .page-link {
   background-color: var(--background-color-1) !important;
-
 }
 
-.rdt_TableHeadRow{
-  background-color: #CCC !important;
+.rdt_TableHeadRow {
+  background-color: #ccc !important;
   color: #000 !important;
 }
-.rdt_TableRow{
+.rdt_TableRow {
   background-color: var(--background-color-1) !important;
   color: var(--color-1) !important;
 }
-.rdt_Pagination{
+.rdt_Pagination {
   background-color: var(--background-color-1) !important;
   color: var(--color-1) !important;
 }
-.trading-competition-inner-box{
+.trading-competition-inner-box {
   background-color: var(--background-color-3) !important;
-
 }
-.trading-card-box-design{
+.trading-card-box-design {
   background-color: var(--background-color-3) !important;
 }
 
 .crypto-loan-input-field {
   background-color: var(--background-color-3) !important;
 
+}
+.prediction-overrall-border{
+  border: 1px solid var(--border-color-1) !important;
+}
+/* .prediction-page-left-section {
+  background-color: var(--background-color-1) !important;
+}
+.prediction-page-right-section {
+  background-color: var(--background-color-1) !important;
+}
+.prediction-page-features-section {
+  background-color: var(--background-color-4) !important;
+}
+.prediction-page-features-section-2 {
+  background-color: var(--background-color-4) !important;
+}
+.prediction-chat-section {
+  background-color: var(--background-color-4) !important;
+}
+.prediction-features-list:hover {
+  background-color: var(--background-color-4) !important;
+}
+.prediction-page-right-section .form-control {
+  border: 1px solid var(--border-color-2) !important;
+}
+.prediction-page-right-section .input-group-text {
+  border: 1px solid var(--border-color-2) !important;
+  color: var(--color-1) !important;
+}
+.prediction-caro-icon-2 {
+  background-color: var(--background-color-4) !important;
+  color: var(--color-1) !important;
+}
+.prediction-page-middle-section .swiper-card {
+  background-color: var(--background-color-4) !important;
+  color: var(--color-1) !important;
+}
+.prediction-swiper-card-button {
+  background-color: #8f8f8f2d !important;
+  color: var(--color-1) !important;
+}
+.dark-new .prediction-bets-table-section tr {
+  background-color: var(--background-color-4) !important;
+  border-bottom: 3px solid #07080a !important;
+}
+.light-new .prediction-bets-table-section tr {
+  background-color: var(--background-color-4) !important;
+  border-bottom: 3px solid #ffffff !important;
+}
+.prediction-trade-left-section {
+  background-color: var(--background-color-1) !important;
+}
+.prediction-trade-tick-button {
+  background-color: var(--background-color-4) !important;
+}
+.prediction-trade-tick-button {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+.prediction-trade-right-2 {
+  background-color: var(--background-color-1) !important;
+}
+.prediction-manual-updown-tabs .nav-link {
+  background-color: var(--background-color-4) !important;
+}
+.prediction-trade-updown-input {
+  background-color: var(--background-color-4) !important;
+}
+.prediction-updown-button {
+  background-color: var(--background-color-1) !important;
+} */
+.simpleearn-top-value-section {
+  background-color: var(--background-color-1) !important;
+}
+.simpleearn-top-filter-section .input-group-text-1 {
+  color: var(--color-1) !important;
+}
+.simpleearn-top-filter-section .input-group-text-2 {
+  color: var(--color-1) !important;
+}
+.optionContainer {
+  background-color: var(--background-color-1) !important;
+  color: var(--color-1) !important;
+}
+.simpleearn-table-tabs-duration .nav-link {
+  padding: 4px 8px;
+  background-color: var(--background-color-1) !important;
+  border: 1px solid transparent;
+}
+.subscription-amount-group-2{
+  color: var(--color-1) !important;
+}
+.simpleearn-auto-Subscribe{
+  padding: 16px 10px;
+  background-color: var(--background-color-1) !important;
+}
+.accountearn-top-value-section{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: var(--background-color-1) !important;
+}
+.accountearn-all-assest{
+  background-color: var(--background-color-1) !important;
+}
+.accountearn-staking-table-tabs-section .nav-pills .nav-link.active,
+.accountearn-staking-table-tabs-section .nav-pills .show>.nav-link {
+  background-color: var(--border-color-2) !important;
+}
+.accountearn-all-assest{
+  background-color: var(--border-color-2) !important;
+}
+.accountearn-redeem-1{
+  padding: 10px;
+  font-size: 13px;
+  background-color: var(--border-color-2) !important;
+  border: none;
+}
+.accountearn-redeem-2{
+  padding: 10px;
+  font-size: 13px;
+  opacity: 0.5;
+  background-color: var(--border-color-2) !important;
+  border: none;
+}
+.simpleearn-history-filter-2{
+  background-color: var(--border-color-2) !important;
+  font-size: 14px;
+}
+
+.eoption-left-tabs-1 .nav-link {
+  background-color: var(--background-color-3);
+}
+.eoption-left-tabs-3 th {
+  background-color: var(--background-color-1) !important;
+}
+.eiption-table-row-dropdown{
+  background-color: var(--background-color-3) !important;
+}
+.eiption-table-dropdown-menu{
+  border: 1px solid var(--border-color-2) !important;
+}
+.eoption-left-tabs-5 thead th{
+  background-color: var(--background-color-3) !important;
+  border-bottom: 1px solid var(--border-color-2) !important;
+}
+.eoption-left-tabs-4 thead th{
+  background-color: var(--background-color-3) !important;
+  border-bottom: 1px solid var(--border-color-2) !important;
+}
+.eoption-left-tabs-4 tbody td{
+  border-bottom: 1px solid var(--border-color-2) !important;
+  padding: 0.6rem 0.3rem !important;
+}
+.eoption-left-tabs-3 thead th{
+  border-bottom: 1px solid var(--border-color-2) !important;
+}
+.eoption-left-tabs-3 tbody td{
+  border-bottom: 1px solid var(--border-color-2) !important;
+}
+.eoption-left-side-section {
+  border-right: 5px solid var(--border-color-2);
+}
+.eoption-left-tabs-2 {
+  border-bottom: 1px solid var(--border-color-2);
+}
+.eoption-left-tabs-1 {
+  border-bottom: 1px solid var(--border-color-2);
+}
+.eoption-left-tabs-5 thead th {
+  border-bottom: 1px solid var(--border-color-2) !important;
 }

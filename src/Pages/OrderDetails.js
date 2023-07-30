@@ -179,7 +179,7 @@ export default function OrderDetails(props) {
   useEffect(() => {
     if (socketConnection != null) {
       socketConnection.on('chattingResponse', function (data) {
-        if (data.orderNo == orderId) {
+        if (data.orderNo === orderId) {
           let chatHistory = chattingHistory;
           chatHistory.push(data.chattingHistory);
           setchattingHistory(chatHistory => [...chatHistory, data.chattingHistory]);
@@ -232,10 +232,10 @@ export default function OrderDetails(props) {
               item.orderDetails.map(async (data) => {
                 if (data.feedbackDet.length > 0) {
                   data.feedbackDet.map((row) => {
-                    if (row.fromUserId != myProfile._id) {
+                    if (row.fromUserId !== myProfile._id) {
                       setbuyerFeedbackData(row);
                       setbuyerFeedback(true);
-                    } else if (row.fromUserId == myProfile._id) {
+                    } else if (row.fromUserId === myProfile._id) {
                       setsellerFeedbackData(row);
                       setsellerFeedback(true);
                     }
@@ -244,7 +244,7 @@ export default function OrderDetails(props) {
                   setbuyerFeedback(false);
                   setsellerFeedback(false);
                 }
-                if (data?.userId == myProfile._id) {
+                if (data?.userId === myProfile._id) {
                   ownerId = data?.ownerId;
                 } else {
                   ownerId = data?.userId;
@@ -260,13 +260,13 @@ export default function OrderDetails(props) {
             item.orderDetails.length > 0 && item.orderDetails[0].ownerPaymentDet &&
               item.orderDetails[0].ownerPaymentDet.length > 0 &&
               item.orderDetails[0].ownerPaymentDet.map((row, i) => {
-                if (response.data[0].orderDetails[0].verifyStep == 1) {
+                if (response.data[0].orderDetails[0].verifyStep === 1) {
                   if (i == 0) {
                     setselectedPaymentData(row);
                     setpaymentChecked(true);
                   }
                 } else {
-                  if (response.data[0].orderDetails[0].paymentId == row._id) {
+                  if (response.data[0].orderDetails[0].paymentId === row._id) {
                     setselectedPaymentData(row);
                     setpaymentChecked(true);
                   }
@@ -343,8 +343,8 @@ export default function OrderDetails(props) {
         setfeedBackDetails(response?.data);
         let text = "";
         response?.data.length > 0 && response?.data.map((item) => {
-          if (item?.fromUserId == myProfile?._id) {
-            if (item.feedBackStatus == 1) {
+          if (item?.fromUserId === myProfile?._id) {
+            if (item.feedBackStatus === 1) {
               text = "positive";
             } else {
               text = "negative";
@@ -365,7 +365,7 @@ export default function OrderDetails(props) {
     try {
       setconfirmformOpen(true);
       let paymentId = "";
-      if ((p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].orderType == "sell")) {
+      if ((p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].orderType === "sell")) {
         paymentId = p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentId;
       } else {
         paymentId = selectedPaymentData._id
@@ -404,7 +404,7 @@ export default function OrderDetails(props) {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setisLoading1(true);
-      if (values.myfile1 == "") {
+      if (values.myfile1 === "") {
         const data = {
           orderNo: orderId,
           userId: myProfile?._id,
@@ -532,13 +532,8 @@ export default function OrderDetails(props) {
   async function appealForm() {
     setappealformOpen(true)
   }
-  async function handleClose() {
-    setpaymentformOpen(false);
-    setcancelformOpen(false);
-    setconfirmformOpen(false);
-  }
   const handleStatusChange = (event) => {
-    if (acceptStatus == false) {
+    if (acceptStatus === false) {
       setacceptStatus(true);
     } else {
       setacceptStatus(false);
@@ -551,10 +546,10 @@ export default function OrderDetails(props) {
     try {
       let uploadFile = chatattachment;
       setchatisLoading(true);
-      if (chattingMsg == "" && uploadFile == "") {
+      if (chattingMsg === "" && uploadFile === "") {
         return false;
       }
-      if (uploadFile == "") {
+      if (uploadFile === "") {
         setenableChat(true);
         const data = {
           orderNo: orderId,
@@ -617,40 +612,9 @@ export default function OrderDetails(props) {
       console.log('coming-here2', err)
     }
   }
-  const handleFileUpload = (event) => {
-    if (event.target.name == 'myfile1') {
-      const file = event.currentTarget.files[0];
-      if (file != "") {
-        const url = URL.createObjectURL(file);
-        formik.values.myfile1 = file;
-        formik.errors.myfile1 = "";
-        setattachment(file);
-        setchangefile(url);
-        setenableChat(false);
-      } else {
-        formik.errors.myfile1 = "";
-        setattachment("");
-        setenableChat(true);
-      }
-    } else {
-      const file = event.currentTarget.files[0];
-      if (file != "") {
-        const url = URL.createObjectURL(file);
-        formik.values.myfile1 = file;
-        formik.errors.myfile1 = "";
-        setchangefile(url);
-        setenableChat(false);
-        setattachment(file);
-      } else {
-        setattachment("");
-        formik.errors.myfile1 = "";
-        setenableChat(true);
-      }
-    }
-  };
   function handleChatChange(event) {
     const value = event.target.value;
-    if (value != "") {
+    if (value !== "") {
       setChatting(event.target.value);
       setenableChat(false);
     } else {
@@ -664,7 +628,7 @@ export default function OrderDetails(props) {
     }
   }
   async function feedbackChange() {
-    if (feedbackStatus == true) {
+    if (feedbackStatus === true) {
       setfeedbackStatus(false);
     } else {
       setfeedbackStatus(true);
@@ -676,14 +640,14 @@ export default function OrderDetails(props) {
       let userId = (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.userId);
       let ownerId = (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.ownerId);
       let toUserId = "";
-      if (feedbackDetails?.toUserId == undefined) {
-        if (ownerId == myProfile?._id) {
+      if (feedbackDetails?.toUserId === undefined) {
+        if (ownerId === myProfile?._id) {
           toUserId = userId;
         } else {
           toUserId = ownerId;
         }
       } else {
-        if ((feedbackDetails?.toUserId) == (myProfile && myProfile?._id)) {
+        if ((feedbackDetails?.toUserId) === (myProfile && myProfile?._id)) {
           toUserId = feedbackDetails?.fromUserId;
         } else {
           toUserId = feedbackDetails?.toUserId;
@@ -711,10 +675,6 @@ export default function OrderDetails(props) {
       getmyFeedback();
       getp2pOrders();
     } catch (err) { }
-  }
-  async function handleLoadClose() {
-    setisLoading(false);
-    setdefaultChatOpen(true);
   }
   async function copyToCode(textToCopy, type) {
     try {
@@ -809,7 +769,7 @@ export default function OrderDetails(props) {
   const renderer = ({ hours, minutes, seconds, completed }) => {
     let hoursData = hours > 0 ? ((hours > 9 ? hours : "0" + hours) + ":") : '';
     let date = hoursData + (minutes > 9 ? minutes : "0" + minutes) + ":" + (seconds > 9 ? seconds : "0" + seconds);
-    if (completed != false && hours == 0 && minutes == 0 && seconds == 0) {
+    if (completed !== false && hours === 0 && minutes === 0 && seconds === 0) {
       setendtimeStatus(true);
     } else {
       setendtimeStatus(false);
@@ -823,7 +783,7 @@ export default function OrderDetails(props) {
   const renderer1 = ({ hours, minutes, seconds, completed }) => {
     let hoursData = hours > 0 ? ((hours > 9 ? hours : "0" + hours) + ":") : '';
     let date = hoursData + (minutes > 9 ? minutes : "0" + minutes) + ":" + (seconds > 9 ? seconds : "0" + seconds);
-    if (completed != false && hours == 0 && minutes == 0 && seconds == 0) {
+    if (completed !== false && hours === 0 && minutes === 0 && seconds === 0) {
       setpaymentendtimeStatus(true);
     } else {
       setpaymentendtimeStatus(false);
@@ -844,29 +804,29 @@ export default function OrderDetails(props) {
         {isLoggedIn &&
           <P2PHeader />
         }
-        {loaderStatus == false &&
+        {loaderStatus === false &&
           <div className="d-flex justify-content-center height-css mt-5 pt-5">
             <center>
               <Bars height="80" width="80" color="#4fa94d" ariaLabel="bars-loading" wrapperStyle={{}} wrapperclassName="" visible={true} />
             </center>
           </div>
         }
-        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.ownerId == (myProfile && myProfile?._id))
+        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.ownerId === (myProfile && myProfile?._id))
           ||
-          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.userId == (myProfile && myProfile?._id)) ?
+          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.userId === (myProfile && myProfile?._id)) ?
           <div className="deposit-hero-section min-vh-100">
             <div className="container">
               {loaderStatus &&
                 <div className="row ">
                   <div className="col-lg-8">
-                    {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) != 2 &&
+                    {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) !== 2 &&
                       <span className="deposit-text-1">
-                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId == myProfile?._id) ?
+                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId === myProfile?._id) ?
                           "Buy " + (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].fromCurrencyDet && p2pOrdersList[0]?.fromCurrencyDet?.currencySymbol) + " From "
                           :
                           "Sell " + (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].fromCurrencyDet && p2pOrdersList[0]?.fromCurrencyDet?.currencySymbol) + " To "
                         }
-                        {(p2pOrdersList && p2pOrdersList[0] && (p2pOrdersList[0].ownerId != myProfile?._id ?
+                        {(p2pOrdersList && p2pOrdersList[0] && (p2pOrdersList[0].ownerId !== myProfile?._id ?
                           p2pOrdersList[0].ownerName : p2pOrdersList[0].username
                         ))
                         }
@@ -874,19 +834,31 @@ export default function OrderDetails(props) {
                     }
                     <div className="row align-items-center ">
                       <div className="col-lg-6 mt-4">
-                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) == 1 &&
+                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) === 1 &&
                           <p>Order Matched Successfully, Please Check Your Wallet</p>
                         }
-                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) == 2 &&
+                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) === 2 &&
                           <>
-                            <h4>Order Cancelled</h4>
+                            <h4>
+                              {
+                                (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].orderType) === "buy" ?
+                                <span className="fs-12 fc-g p-1 order-cancelled-buy mt-4">
+                                  BUY
+                                </span>
+                                :
+                                <span className="fs-12 fc-g p-1 order-cancelled-sell mt-4">
+                                  SELL
+                                </span>
+                              } 
+                              Order Cancelled
+                            </h4>
                             <p>You have Cancelled the order.</p>
                           </>
                         }
-                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) == 3 &&
+                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) === 3 &&
                           <>
                             <p>The Order is Created, Please wait for system confirmation
-                              {verifyStep == 1 && endtimeStatus == false &&
+                              {verifyStep === 1 && endtimeStatus === false &&
                                 <>
                                   <button className="btn-next btn ms-3">
                                     <Countdown date={endtime} renderer={renderer} className="endtime" />
@@ -926,14 +898,14 @@ export default function OrderDetails(props) {
                           </div>
                         </div>
                       </div>
-                      {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) == 1 &&
+                      {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) === 1 &&
                         <span className="d-block my-2 order-released">
                           Order released{" "}
                         </span>
                       }
 
                       <div className="col-lg-12 mt-4 border-top pt-3 border-bottom border-dark pb-3">
-                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.status) == 2 &&
+                        {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.status) === 2 &&
                           <>
                             <div>
                               <span className="deposit-text-1">Payment Method :</span><br />
@@ -941,15 +913,15 @@ export default function OrderDetails(props) {
                             </div>
                           </>
                         }
-                        {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.orderType == "sell") &&
-                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 2) &&
-                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 1)
+                        {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.orderType === "sell") &&
+                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 2) &&
+                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 1)
                           ?
                           <><br />
                             <span className="col-lg-6 text-lg-end">
                               <b>{(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0]?.paymentDet.methods && p2pPaymentList[0].paymentDet.methods?.paymenttype)}</b>
                             </span>
-                            {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0]?.paymentDet.methods && p2pPaymentList[0].paymentDet.methods?.paymenttype == "UPI") &&
+                            {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0]?.paymentDet.methods && p2pPaymentList[0].paymentDet.methods?.paymenttype === "UPI") &&
                               <>
                                 <span className="d-block my-2">
                                   <b>Name : </b>{(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0].paymentDet.methods && p2pPaymentList[0].paymentDet.methods.holderName)}
@@ -961,7 +933,7 @@ export default function OrderDetails(props) {
                                 </span>
                               </>
                             }
-                            {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0]?.paymentDet.methods && p2pPaymentList[0].paymentDet.methods?.paymenttype == "Paytm") &&
+                            {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0]?.paymentDet.methods && p2pPaymentList[0].paymentDet.methods?.paymenttype === "Paytm") &&
                               <>
                                 <span className="d-block my-2">
                                   <b>Name : </b>{(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0].paymentDet.methods && p2pPaymentList[0].paymentDet.methods.holderName)}
@@ -973,9 +945,9 @@ export default function OrderDetails(props) {
                                 </span>
                               </>
                             }
-                            {((p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.paymentDet && p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype == "Bank")
+                            {((p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.paymentDet && p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype === "Bank")
                               ||
-                              (p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.paymentDet && p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype == "IMPS")) &&
+                              (p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.paymentDet && p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype === "IMPS")) &&
                               <>
                                 <span className="d-block my-2">
                                   <b>Name : </b>{(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].paymentDet && p2pPaymentList[0].paymentDet.methods && p2pPaymentList[0].paymentDet.methods.holderName)}
@@ -1003,23 +975,14 @@ export default function OrderDetails(props) {
                                   </span> */}
                               </>
                             }
-                            <div className="row">
-                              <center>
-                                <div className="col-12">
-                                  <div className="alert alert-warning text-start" role="alert">
-                                    <small>Notes: Make sure you will receive the Funds in the above Bank beneficiary name only.</small>
-                                  </div>
-                                </div>
-                              </center>
-                            </div>
                           </>
                           :
-                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 2) &&
-                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 1) &&
+                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 2) &&
+                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 1) &&
                           <>
                             <div className="row">
                               <div className="col-lg-2  border-end border-dark">
-                                {p2pOrdersList && p2pOrdersList[0].verifyStep == 1 &&
+                                {p2pOrdersList && p2pOrdersList[0].verifyStep === 1 &&
                                   <span className="d-block my-2">
                                     {p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].ownerPaymentDet && p2pOrdersList[0].ownerPaymentDet.length > 0 &&
                                       p2pOrdersList[0].ownerPaymentDet.map((data) => {
@@ -1029,7 +992,7 @@ export default function OrderDetails(props) {
                                               type="radio" name="priceType"
                                               onClick={() => selectPayment(data)}
                                               value={data.paymenttype}
-                                              checked={selectedPaymentData._id == data._id ? paymentChecked : false}
+                                              checked={selectedPaymentData._id === data._id ? paymentChecked : false}
                                             />
                                             <label className="form-check-label" for="flexRadioDefault122">
                                               {data.paymenttype}
@@ -1040,7 +1003,7 @@ export default function OrderDetails(props) {
                                     }
                                   </span>
                                 }
-                                {p2pOrdersList && p2pOrdersList[0].verifyStep == 2 &&
+                                {p2pOrdersList && p2pOrdersList[0].verifyStep === 2 &&
                                   <span className="d-block my-2">
                                     <div className="form-check">
                                       <label className="form-check-label" for="flexRadioDefault122">
@@ -1051,16 +1014,16 @@ export default function OrderDetails(props) {
                                 }
                               </div>
                               <div className="col-lg-4">
-                                {p2pOrdersList && p2pOrdersList[0]?.verifyStep != 1 && 
+                                {p2pOrdersList && p2pOrdersList[0]?.verifyStep !== 1 && 
                                   <>
                                     <span className="deposit-text-1">
                                       Payment Details:
                                     </span><br />
                                   </>
                                 }
-                                {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].status) != 2 &&
+                                {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0].status) !== 2 &&
                                   <>
-                                    {(selectedPaymentData && selectedPaymentData.paymenttype == "UPI") &&
+                                    {(selectedPaymentData && selectedPaymentData.paymenttype === "UPI") &&
                                       <>
                                         <span className="deposit-text-1">
                                           {selectedPaymentData && selectedPaymentData.paymenttype}
@@ -1075,7 +1038,7 @@ export default function OrderDetails(props) {
                                         </span>
                                       </>
                                     }
-                                    {(selectedPaymentData && selectedPaymentData.paymenttype == "Paytm") &&
+                                    {(selectedPaymentData && selectedPaymentData.paymenttype === "Paytm") &&
                                       <>
                                         <span className="deposit-text-1">
                                           {selectedPaymentData && selectedPaymentData.paymenttype}
@@ -1090,9 +1053,9 @@ export default function OrderDetails(props) {
                                         </span>
                                       </>
                                     }
-                                    {((selectedPaymentData && selectedPaymentData.paymenttype == "Bank")
+                                    {((selectedPaymentData && selectedPaymentData.paymenttype === "Bank")
                                       ||
-                                      (selectedPaymentData && selectedPaymentData.paymenttype == "IMPS")) &&
+                                      (selectedPaymentData && selectedPaymentData.paymenttype === "IMPS")) &&
                                       <>
                                         <span className="deposit-text-1">
                                           {selectedPaymentData && selectedPaymentData.paymenttype}
@@ -1113,17 +1076,35 @@ export default function OrderDetails(props) {
                                     }
                                   </>
                                 }
-                                <div className="row">
-                                  <center>
-                                    <div className="col-12">
-                                      <div className="alert alert-warning text-start" role="alert">
-                                        <small>Notes: Please Deposit the Funds in above Bank/UPI only.</small>
-                                      </div>
-                                    </div>
-                                  </center>
-                                </div>
+                                
                               </div>
                             </div>
+                          </>
+                        }
+                        {
+                          (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 2) &&
+                          <>
+                          {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId === myProfile?._id) ?
+                            <div className="row">
+                              <center>
+                                <div className="col-12">
+                                  <div className="alert alert-warning text-start" role="alert">
+                                    <small>Notes: Please Deposit the Funds in above Bank/UPI only.</small>
+                                  </div>
+                                </div>
+                              </center>
+                            </div>
+                          :
+                            <div className="row">
+                              <center>
+                                <div className="col-12">
+                                  <div className="alert alert-warning text-start" role="alert">
+                                    <small>Notes: Make sure you will receive the Funds in the above Bank beneficiary name only.</small>
+                                  </div>
+                                </div>
+                              </center>
+                            </div>
+                          }
                           </>
                         }
                       </div>
@@ -1131,38 +1112,38 @@ export default function OrderDetails(props) {
                       <div className="col-lg-12 mt-4">
                         <div className="d-flex">
                           {
-                            myProfile?._id == (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].sellerUserId) &&
-                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 2) &&
-                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 1) &&
-                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].verifyStep == 2) &&
+                            myProfile?._id === (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].sellerUserId) &&
+                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 2) &&
+                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 1) &&
+                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].verifyStep === 2) &&
                             <button className="btn-next btn my-3" type="button" onClick={() => setpaymentformOpen(true)}>
                               Payment received
                             </button>
                           }{" "}
-                          {verifyStep == 2 && (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 2) &&
+                          {verifyStep === 2 && (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 2) &&
                             <>
-                              {paymentendtimeStatus == true && (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) != 1 && appealHistory.length == 0 &&
+                              {paymentendtimeStatus === true && (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status) !== 1 && appealHistory.length == 0 &&
                                 <button className="btn-next btn my-3 ms-3" type="button" onClick={() => appealForm()}>
-                                  {p2pOrdersList[0].buyerUserId == myProfile?._id ? 'Not Received' : 'Transaction issue'},i want to appeal
+                                  {p2pOrdersList[0].buyerUserId === myProfile?._id ? 'Not Received' : 'Transaction issue'},i want to appeal
                                 </button>
                               }
-                              {paymentendtimeStatus == false &&
-                                <button className="btn-next btn my-3 ms-3" disabled={paymentendtimeStatus == true ? false : true} type="button">
-                                  {p2pOrdersList && p2pOrdersList[0].buyerUserId == myProfile?._id ? 'Not Received' : 'Transaction issue'}, Appeal after
+                              {paymentendtimeStatus === false &&
+                                <button className="btn-next btn my-3 ms-3" disabled={paymentendtimeStatus === true ? false : true} type="button">
+                                  {p2pOrdersList && p2pOrdersList[0].buyerUserId === myProfile?._id ? 'Not Received' : 'Transaction issue'}, Appeal after
                                   (<Countdown date={new Date(p2pOrdersList && p2pOrdersList[0].paymentEndDate)} renderer={renderer1} className="endtime" />)</button>
                               }
                             </>
                           }
-                          {verifyStep == 1 &&
-                            (myProfile?._id == (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId)) &&
-                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 2) &&
+                          {verifyStep === 1 &&
+                            (myProfile?._id === (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId)) &&
+                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 2) &&
                             <button className="btn-next btn my-3 ms-3" type="button" onClick={() => Transfer()}>
                               Transferred,notify seller
                             </button>
                           }
-                          {myProfile?._id == (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId) &&
-                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 2) &&
-                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status != 1) &&
+                          {myProfile?._id === (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId) &&
+                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 2) &&
+                            (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].status !== 1) &&
                             <button className="btn-next btn my-3 ms-3" type="button" onClick={() => setcancelformOpen(true)} disabled={isLoading}>
                               Cancel Order
                             </button>
@@ -1172,7 +1153,7 @@ export default function OrderDetails(props) {
                               Appeal History
                             </button>
                           }
-                          {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.status == 1) && myfeedbackStatus == false &&
+                          {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0]?.status === 1) && myfeedbackStatus === false &&
                             <>
                               <button className="btn btn-success btn-sm-css ms-3 mt-3" type="button" onClick={() => setfeedBackType("positive")}>
                                 <AiFillLike />Positive
@@ -1183,7 +1164,7 @@ export default function OrderDetails(props) {
                             </>
                           }
                         </div>
-                        {feedBackType != "" && myfeedbackStatus == false &&
+                        {feedBackType !== "" && myfeedbackStatus === false &&
                           <form>
                             <div className='row'>
                               <div className='col-12 mb-2 mt-2'>
@@ -1204,16 +1185,16 @@ export default function OrderDetails(props) {
                             </div>
                           </form>
                         }
-                        {sellerFeedbaackStatus && sellerFeedbaackData?.fromUserId == myProfile?._id &&
+                        {sellerFeedbaackStatus && sellerFeedbaackData?.fromUserId === myProfile?._id &&
                           <div className='row'>
                             <div className='col-6'>
                               <div className='color-white'>
                                 <h6 className='color-default f-14'>My FeedBack:</h6>
                                 {feedBack}  &nbsp; &nbsp;
-                                {feedBackType == "positive" &&
+                                {feedBackType === "positive" &&
                                   <AiFillLike className="color-green" />
                                 }     &nbsp;
-                                {feedBackType == "negative" &&
+                                {feedBackType === "negative" &&
                                   <AiFillDislike className="color-red" />
                                 } &nbsp;&nbsp;
                                 <br /><br />
@@ -1228,8 +1209,8 @@ export default function OrderDetails(props) {
                           <form>
                             <div className='row'>
                               <div className='col-12 mb-2 mt-2'>
-                                <Button className={feedBackType == "positive" ? "btn btn-success" : "b-rd-feedback b-positive mb-2 mt-2"} type="button" onClick={() => setfeedBackType("positive")}><AiFillLike className={feedBackType == "positive" ? "color-green" : "color-green"} />Positive</Button> &nbsp;
-                                <Button className={feedBackType == "negative" ? "btn btn-danger ms-3" : "b-rd-feedback b-negative mb-2 mt-2"} type="button" onClick={() => setfeedBackType('negative')}><AiFillDislike className={feedBackType == "negative" ? "color-red" : "color-red"} />Negative</Button> &nbsp;&nbsp;
+                                <Button className={feedBackType === "positive" ? "btn btn-success" : "b-rd-feedback b-positive mb-2 mt-2"} type="button" onClick={() => setfeedBackType("positive")}><AiFillLike className={feedBackType === "positive" ? "color-green" : "color-green"} />Positive</Button> &nbsp;
+                                <Button className={feedBackType === "negative" ? "btn btn-danger ms-3" : "b-rd-feedback b-negative mb-2 mt-2"} type="button" onClick={() => setfeedBackType('negative')}><AiFillDislike className={feedBackType === "negative" ? "color-red" : "color-red"} />Negative</Button> &nbsp;&nbsp;
                                 <br />
                                 <TextareaAutosize
                                   aria-label="empty textarea"
@@ -1248,17 +1229,17 @@ export default function OrderDetails(props) {
                             </div>
                           </form>
                         }
-                        {sellerFeedbaackStatus && sellerFeedbaackData?.fromUserId != myProfile?._id &&
+                        {sellerFeedbaackStatus && sellerFeedbaackData?.fromUserId !== myProfile?._id &&
                           <div className='row'>
-                            <h6 className='color-default f-14 mt-2'>{sellerFeedbaackData.fromUserId != (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].ownerId) ? "Feed Back" : "Counterparty Feed Back:"}</h6>
+                            <h6 className='color-default f-14 mt-2'>{sellerFeedbaackData.fromUserId !== (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].ownerId) ? "Feed Back" : "Counterparty Feed Back:"}</h6>
                             <div className='col-6'>
-                              {sellerFeedbaackData.feedBackStatus == 1 ?
+                              {sellerFeedbaackData.feedBackStatus === 1 ?
                                 <Button className="btn btn-success" disabled={true} type="button" onClick={() => setfeedBackType("positive")}><AiFillLike className="color-green" />Positive</Button>
                                 :
                                 <Button className="btn btn-danger ms-3" disabled={true} type="button" onClick={() => setfeedBackType('negative')}><AiFillDislike className="color-red" />Negative</Button>
                               }
                             </div>
-                            {sellerFeedbaackData.description != "" &&
+                            {sellerFeedbaackData.description !== "" &&
                               <div className='col-12 mt-3'>
                                 <TextareaAutosize
                                   aria-label="empty textarea"
@@ -1273,17 +1254,17 @@ export default function OrderDetails(props) {
                             }
                           </div>
                         }
-                        {buyerFeedbackStatus && (buyerFeedbaackData?.fromUserId != myProfile?._id) && (buyerFeedbaackData?._id != undefined) && (buyerFeedbaackData?._id != "undefined") &&
+                        {buyerFeedbackStatus && (buyerFeedbaackData?.fromUserId !== myProfile?._id) && (buyerFeedbaackData?._id !== undefined) && (buyerFeedbaackData?._id != "undefined") &&
                           <div className='row'>
-                            <h6 className='color-default f-14 mt-2'>{buyerFeedbaackData.fromUserId != (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].ownerId) ? "Feed Back" : "Counterparty Feed Back:"}</h6>
+                            <h6 className='color-default f-14 mt-2'>{buyerFeedbaackData.fromUserId !== (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].ownerId) ? "Feed Back" : "Counterparty Feed Back:"}</h6>
                             <div className='col-6'>
-                              {buyerFeedbaackData.feedBackStatus == 1 ?
+                              {buyerFeedbaackData.feedBackStatus === 1 ?
                                 <Button className="btn btn-success btn-sm" disabled={true} type="button" onClick={() => setfeedBackType("positive")}><AiFillLike className="color-green" />Positive</Button>
                                 :
                                 <Button className="btn btn-danger ms-3" disabled={true} type="button" onClick={() => setfeedBackType('negative')}><AiFillDislike className="color-red" />Negative</Button>
                               }
                             </div>
-                            {buyerFeedbaackData.description != "" &&
+                            {buyerFeedbaackData.description !== "" &&
                               <div className='col-12 mt-3'>
                                 <TextareaAutosize
                                   aria-label="empty textarea"
@@ -1337,7 +1318,7 @@ export default function OrderDetails(props) {
             </div>
           </div>
           :
-          loaderStatus == true &&
+          loaderStatus === true &&
           <center>
             <div className="container">
               <div className="row">
@@ -1361,11 +1342,11 @@ export default function OrderDetails(props) {
           <p className='color-white'>
             Please confirm that you have successfully transferred the money to seller through the following payment method before clicking on the "Transferred ,notify seller" button</p>
           <div className="modal-body">
-            {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.orderType == "sell") ?
+            {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.orderType === "sell") ?
               <>
                 {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.paymentDet &&
                   p2pPaymentList[0]?.paymentDet?.methods &&
-                  (p2pPaymentList[0]?.paymentDet?.methods?.paymenttype == "Bank" || p2pPaymentList[0]?.paymentDet?.methods?.paymenttype == "IMPS")) &&
+                  (p2pPaymentList[0]?.paymentDet?.methods?.paymenttype === "Bank" || p2pPaymentList[0]?.paymentDet?.methods?.paymenttype === "IMPS")) &&
                   <div className='bg-gray p-2'>
                     <div className='d-flex my-3 justify-content-between'>
                       {/* <div>{item.paymenttype}</div> */}
@@ -1380,7 +1361,7 @@ export default function OrderDetails(props) {
                   </div>
                 }
                 {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.paymentDet &&
-                  p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype == 'UPI') &&
+                  p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype === 'UPI') &&
                   <div className='bg-gray mt-2 p-2'>
                     <div className='d-flex my-3 justify-content-between'>
                       {/* <div>{item.paymenttype}</div> */}
@@ -1391,7 +1372,7 @@ export default function OrderDetails(props) {
                   </div>
                 }
                 {(p2pPaymentList && p2pPaymentList[0] && p2pPaymentList[0]?.paymentDet &&
-                  p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype == 'Paytm') &&
+                  p2pPaymentList[0]?.paymentDet?.methods && p2pPaymentList[0]?.paymentDet?.methods?.paymenttype === 'Paytm') &&
                   <div className='bg-gray mt-2 p-2'>
                     <div className='d-flex my-3 justify-content-between'>
                       {/* <div>{item.paymenttype}</div> */}
@@ -1404,7 +1385,7 @@ export default function OrderDetails(props) {
               </>
               :
               <>
-                {((selectedPaymentData && selectedPaymentData.paymenttype == "Bank") || (selectedPaymentData && selectedPaymentData.paymenttype == "IMPS")) &&
+                {((selectedPaymentData && selectedPaymentData.paymenttype === "Bank") || (selectedPaymentData && selectedPaymentData.paymenttype === "IMPS")) &&
                   <div className='bg-gray p-2'>
                     <div className='d-flex my-3 justify-content-between'>
                       <h4>{selectedPaymentData && selectedPaymentData.paymenttype}</h4>
@@ -1417,7 +1398,7 @@ export default function OrderDetails(props) {
                     {/* <p><b>Account opening branch :</b> {(selectedPaymentData && selectedPaymentData.branch)}</p> */}
                   </div>
                 }
-                {(selectedPaymentData && selectedPaymentData.paymenttype == 'UPI') &&
+                {(selectedPaymentData && selectedPaymentData.paymenttype === 'UPI') &&
                   <div className='bg-gray mt-2 p-2'>
                     <div className='d-flex my-3 justify-content-between'>
                       <h4>{selectedPaymentData && selectedPaymentData.paymenttype}</h4>
@@ -1426,7 +1407,7 @@ export default function OrderDetails(props) {
                     <p><b>UPI ID :</b> {(selectedPaymentData && selectedPaymentData.upiId)}</p>
                   </div>
                 }
-                {(selectedPaymentData && selectedPaymentData.paymenttype == 'Paytm') &&
+                {(selectedPaymentData && selectedPaymentData.paymenttype === 'Paytm') &&
                   <div className='bg-gray mt-2 p-2'>
                     <div className='d-flex my-3 justify-content-between'>
                       <h4>{selectedPaymentData && selectedPaymentData.paymenttype}</h4>
@@ -1460,7 +1441,7 @@ export default function OrderDetails(props) {
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => confirmformClose()}>Cancel</button>
-            <button className="add-payment-method-confirm-button px-3" type="button" disabled={acceptStatus == true ? false : true} onClick={() => confirmPayment()}>Confirm Payment</button>
+            <button className="add-payment-method-confirm-button px-3" type="button" disabled={acceptStatus === true ? false : true} onClick={() => confirmPayment()}>Confirm Payment</button>
             {/* <button type="button" className="btn btn-next">Refresh</button> */}
           </div>
         </Modal.Body>
@@ -1559,7 +1540,7 @@ export default function OrderDetails(props) {
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => setcancelformOpen(false)}>Cancel</button>
-            <button className="add-payment-method-confirm-button" type="button" disabled={cancelReason != "" ? false : true} onClick={() => cancelOrder()}>Confirm</button>
+            <button className="add-payment-method-confirm-button" type="button" disabled={cancelReason !== "" ? false : true} onClick={() => cancelOrder()}>Confirm</button>
             {/* <button type="button" className="btn btn-next">Refresh</button> */}
           </div>
         </Modal.Body>
@@ -1573,7 +1554,7 @@ export default function OrderDetails(props) {
           <form onSubmit={formik.handleSubmit}>
             <div className=" justify-content-center align-items-center ">
               <div>
-                {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId) == (myProfile?._id) ?
+                {(p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].buyerUserId) === (myProfile?._id) ?
                   <>
                     <span className="phonenumber-change-text-2">
                       Please Select Reason(Mandatory)

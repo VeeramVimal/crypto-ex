@@ -24,10 +24,10 @@ export default function Tradingcompetitioncompletion(props) {
   useEffect(() => {
     const gettotalvolume = async () => {
       const gettotalvol = await axios.get(
-        `${Config.V1_API_URL}tradecompetion/gettotalvolume`
+        `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolume`
       );
       const getcompetiton = await axios.get(
-        `${Config.V1_API_URL}tradecompetion/getcurrencycompetion`
+        `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/getcurrencycompetion`
       );
       const firstarr = gettotalvol.data;
       const secondarr = getcompetiton.data;
@@ -46,7 +46,7 @@ export default function Tradingcompetitioncompletion(props) {
           const currencypair = secondarr[i].currency;
           const tradepair = { currencypair };
           const tradespair = await axios.post(
-            `${Config.V1_API_URL}tradecompetion/gettotalvolumeemail`,
+            `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/gettotalvolumeemail`,
             tradepair
           );
           const arr3 = tradespair.data.countarrs;
@@ -95,7 +95,7 @@ export default function Tradingcompetitioncompletion(props) {
     };
     const getcmsdata = async () => {
       const getcms = await axios.get(
-        `${Config.V1_API_URL}tradecompetion/getcmstandc`
+        `${Config.TRADINGCOMPETITION_V1_URL}tradecompetion/getcmstandc`
       );
       setcmsbannertitle(getcms.data[2].title);
       setcmsbannerdescription(getcms.data[2].description);

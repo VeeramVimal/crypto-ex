@@ -63,7 +63,7 @@ export default function PostNewAdd(props) {
   const defaultPassData = {
     registeredStatus: false,
     holdingStatus: false,
-    checkedKyc: false,
+    checkedKyc: true,
     registeredDays: 0,
     holdingBTC: 0,
     remarks: "",
@@ -670,9 +670,9 @@ export default function PostNewAdd(props) {
       }
     }
 
-    if (errMsg === "" && tradeFiatAmount < Number(minAmount)) {
-      errMsg = "Min limit should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1]);
-    }
+    // if (errMsg === "" && tradeFiatAmount < Number(minAmount)) {
+    //   errMsg = "Min limit should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1]);
+    // }
 
     if (errMsg) {
       toast({ type: errorType, message: errMsg });
@@ -680,9 +680,6 @@ export default function PostNewAdd(props) {
     }
 
     const price_validation_errors_cpy = await chkFormValidation(totalAmount, minAmount, maxAmount);
-
-    console.log({price_validation_errors_cpy})
-
     if(price_validation_errors_cpy.total_err !== "" || price_validation_errors_cpy.minAmt_err !== "" || price_validation_errors_cpy.maxAmt_err !== "") {
       return false;
     }
@@ -719,6 +716,7 @@ export default function PostNewAdd(props) {
         floatingPrice: floatingVal,
         country: selectedCountry == "All Regions" ? countryList : selectedCountry,
         orderType,
+        checkedKyc : defaultPassData.checkedKyc
       }
       setpassData(data)
     } else {
@@ -759,7 +757,16 @@ export default function PostNewAdd(props) {
   async function allAvaiBal() {
     const availableBal = userWallet?.p2pAmount;
     settotalAmount(availableBal);
-    chkFormValidation(availableBal, minAmount, maxAmount);
+
+    let newTotAmt = availableBal;
+    const chkMaxAmt = newTotAmt*currentInrPrice;
+    if(maxAmount > chkMaxAmt || maxAmount === 0 || minAmount > maxAmount) {
+      setmaxAmount(chkMaxAmt);
+      chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
+    }
+    else {
+      chkFormValidation(newTotAmt, minAmount, maxAmount);
+    }
   }
 
   const calculateorderLimit = (placeValue, placeType) => {
@@ -769,13 +776,15 @@ export default function PostNewAdd(props) {
       settotalAmount(placeValue);
       newTotAmt = placeValue;      
       const chkMaxAmt = placeValue*currentInrPrice;
-      if(maxAmount > chkMaxAmt || maxAmount === 0 || minAmount > maxAmount) {
-        setmaxAmount(chkMaxAmt);
-        chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
-      }
-      else {
-        chkFormValidation(newTotAmt, minAmount, maxAmount);
-      }
+      setmaxAmount(chkMaxAmt);
+      chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
+      // if(maxAmount > chkMaxAmt || maxAmount === 0 || minAmount > maxAmount) {
+      //   setmaxAmount(chkMaxAmt);
+      //   chkFormValidation(newTotAmt, minAmount, chkMaxAmt);
+      // }
+      // else {
+      //   chkFormValidation(newTotAmt, minAmount, maxAmount);
+      // }
     }
     else if (placeType === "minLimit") {
       setminAmount(placeValue);
@@ -803,11 +812,20 @@ export default function PostNewAdd(props) {
     chkMinAmt = chkMinAmt ? parseFloat(chkMinAmt).toFixed(2) : 0;
     chkMaxAmt = chkMaxAmt ? parseFloat(chkMaxAmt).toFixed(2) : 0;
 
-    console.log({tradeFiatAmount, currentInrPrice, chkTotAmt, chkMinAmt, chkMaxAmt, maxTrade: pairDetails?.maxTrade});
+    // console.log({tradeFiatAmount, currentInrPrice, chkTotAmt, chkMinAmt, chkMaxAmt, maxTrade: pairDetails?.maxTrade});
 
     let price_validation_errors_cpy = Object.assign({}, price_validation_errors);
 
-    if (availableBal < Number(chkTotAmt) && orderType === 'sell') {
+    if (pairDetails?.minTotalAmount > Number(chkTotAmt)) {
+      price_validation_errors_cpy.total_err = "The total amount should not be less than " + pairDetails.minTotalAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[0]);;
+    }
+    else if (pairDetails?.maxTotalAmount < Number(chkTotAmt)) {
+      price_validation_errors_cpy.total_err = "The total amount should not be greater than " + pairDetails.maxTotalAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[0]);;
+    }
+    else if (tradeFiatAmount < Number(minAmount)) {
+      price_validation_errors_cpy.total_err = "Total amount should not be less than " + minAmount +" "+ (pairDetails?.pair?.split(/[_]+/)[1]);
+    }
+    else if (availableBal < Number(chkTotAmt) && orderType === 'sell') {
       price_validation_errors_cpy.total_err = "The total amount should not exceed the available balance";
     }
     else {
@@ -835,7 +853,6 @@ export default function PostNewAdd(props) {
       price_validation_errors_cpy.maxAmt_err = "";
     }
 
-    console.log({price_validation_errors_cpy});
     setprice_validation_errors(price_validation_errors_cpy);
     return price_validation_errors_cpy;
 
@@ -1146,7 +1163,7 @@ export default function PostNewAdd(props) {
                                               "maxLimit"
                                             )
                                           }
-                                          />
+                                        />
 
                                         {/* {(Number(values.total) > 0) ?
                                           <input
@@ -1344,6 +1361,7 @@ export default function PostNewAdd(props) {
                               id="checkedKyc"
                               name="checkedKyc"
                               onChange={handleinputChange}
+                              checked
                             />
                             <label className="form-check-label" for="flexCheckDefault">
                               Complete KYC

@@ -11,7 +11,7 @@ export async function getSiteSettings() {
 }
 export async function getP2PSettings() {
   const params = { 
-    url: `${Config.V1_API_URL}admin/p2p/getP2PSettings`,
+    url: `${Config.V1_API_URL}p2p/getP2PSettings`,
     method: 'GET',
   }
   return (await makeRequest(params));

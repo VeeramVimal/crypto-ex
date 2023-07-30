@@ -133,9 +133,9 @@ const Footer = () => {
                                         {siteSettings.youtubeLink && <a href={"mailto:" + siteSettings.supportEmail}>{siteSettings.supportEmail}</a>}
                                     </div>
                                     {Config.APIDOC_STATUS == "Enable" ?
-                                        <div className="list-group footer-typo footer-typo-mb">
-                                            <a href="/apipage">API</a>
-                                        </div> : ""}
+                                    <div className="list-group footer-typo footer-typo-mb">
+                                        <Link to={'/apipage'}>API</Link>
+                                    </div> : ""}
                                 </div>
                             </>}
                     </div>
@@ -155,12 +155,7 @@ const Footer = () => {
                         {siteSettings &&
                         <div className="fs-14 text-center">
                             {siteSettings?.copyRights}
-                        </div>
-                        }
-
-                        {/* <div className="fs-14 text-center">
-                            <a href='#' target="_blank">Developed By </a>
-                        </div> */}
+                        </div>}
                     </div>
                 </div>
             </div>

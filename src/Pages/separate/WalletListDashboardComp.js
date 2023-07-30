@@ -71,7 +71,7 @@ function createData(name, balance, fat, carbs, protein) {
   };
 }
 
-const headCells = [
+let headCells = [
   {
     id: "Symbol",
     numeric: false,
@@ -95,14 +95,17 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: "P2P Balance",
-  },
-  {
+  }
+];
+
+if(Config.DERIVATIVES_STATUS == "Enable") {
+  headCells.push({
     id: "perpetualAmount",
     numeric: true,
     disablePadding: false,
     label: "USD-M Balance",
-  }
-];
+  });
+}
 
 function EnhancedTableHead(props) {
   const {
@@ -362,7 +365,6 @@ export default function WalletListComp(props) {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      setisLoading(true);
       let balance = fromAccount == 'Main Wallet' ? currency.balance : currency.p2pAmount;
       if (balance >= values.amount) {
         const body = {
@@ -376,9 +378,10 @@ export default function WalletListComp(props) {
           method: 'POST',
           body
         }
+        setisLoading(true);
         const response = (await makeRequest(params));
-        let type = 'error';
         setisLoading(false);
+        let type = 'error';
         if (response.status) {
           type = 'success';
           handleClose();
@@ -478,9 +481,10 @@ export default function WalletListComp(props) {
                         <TableCell align="right">
                           {balShow ? (row.p2pAmount > 0 ? decimalValueFunc(row.p2pAmount, row.siteDecimal, "removeZero") : 0) : "******"}
                         </TableCell>
+                        {Config.DERIVATIVES_STATUS == "Enable" ?
                         <TableCell align="right">
                           {balShow ? (row.perpetualAmount > 0 ? decimalValueFunc(row.perpetualAmount, row.siteDecimal, "removeZero") : 0) : "******"}
-                        </TableCell>
+                        </TableCell>:""}
                       </TableRow>
                     );
                   }

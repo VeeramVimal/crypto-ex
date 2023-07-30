@@ -75,6 +75,7 @@ export default function AppealHistory(props) {
   const [p2pOrdersList, setp2pOrdersList] = useState([]);
   const [p2pPaymentList, setp2pPaymentList] = useState([]);
   const [appealHistory, setappealHistory] = useState([]);
+  const [appealHistoryList, setappealHistoryList] = useState({});
   const [chattingHistory, setchattingHistory] = useState([]);
 	const [endtime, setEndtime] = useState(new Date());
 	const [verifyStep, setverifyStep] = useState(0);
@@ -317,6 +318,7 @@ export default function AppealHistory(props) {
         setappealHistory(response.data);
         response.data.length > 0 && response.data.map((item)=>{
           setappealstatus(item.status);
+          setappealHistoryList(item.appealHistory)
           if (item.userId == myProfile._id) {
             setappealisLogin(true);
           }
@@ -421,7 +423,6 @@ export default function AppealHistory(props) {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log("values:",values)
       setisLoading1(true);
       if (values.myfile1== "") {
         const data = {
@@ -496,43 +497,51 @@ export default function AppealHistory(props) {
         }
     },
   });
-  async function selectPayment(data){
-    console.log("selected_radio",data)
-    setselectedPaymentData(data);
-  }
-  const formik1 = useFormik({
-    initialValues: {
-      OTPCode   : '',
-  },
-  validationSchema: otpvalidationSchema,
-  onSubmit: async (values) => {
-    const data  = { orderNo: orderId, userId: myProfile?._id, OTPCode: values.OTPCode}
-    const params = { 
-      url: `${Config.V1_API_URL}p2p/submitOrder`,
-      method: 'POST',
-      body: data
-    }
-    const response = (await makeRequest(params));
-    let type = 'error';
+  // const formik1 = useFormik({
+  //   initialValues: {
+  //     OTPCode   : '',
+  // },
+  // validationSchema: otpvalidationSchema,
+  // onSubmit: async (values) => {
+  //   const data  = { orderNo: orderId, userId: myProfile?._id, OTPCode: values.OTPCode}
+  //   const params = { 
+  //     url: `${Config.V1_API_URL}p2p/submitOrder`,
+  //     method: 'POST',
+  //     body: data
+  //   }
+  //   const response = (await makeRequest(params));
+  //   let type = 'error';
+  //     if (response.status) {
+  //       type  = 'success';
+  //       setpaymentformOpen(false);
+  //       getp2pOrders();
+  //       socketConnection.emit('createp2pOrder', response?.data);
+  //     }
+  //     toast({ type, message: response.message });
+  // }
+  // });
+  async function confirmOrderRelease() {
+    try{
+      const data = { orderNo: orderId }
+      const params = {
+        url: `${Config.V1_API_URL}p2p/orderReleased`,
+        method: 'POST',
+        body: data
+      }
+      setisLoading(true);
+      const response = (await makeRequest(params));
+      setisLoading(false);
+      let type = 'error';
       if (response.status) {
-        type  = 'success';
+        type = 'success';
         setpaymentformOpen(false);
         getp2pOrders();
         socketConnection.emit('createp2pOrder', response?.data);
       }
       toast({ type, message: response.message });
-  }
-  });
-  async function Transfer(){
-    setconfirmformOpen(true);
-  }
-  async function appealForm(){
-    setappealformOpen(true)
-  }
-  async function handleClose() {
-    setpaymentformOpen(false);
-    setcancelformOpen(false);
-    setconfirmformOpen(false);
+    } catch (err) {
+      console.log("err",err)
+    }
   }
   const  handleStatusChange = (event) => {
     if (acceptStatus == false) {
@@ -541,9 +550,6 @@ export default function AppealHistory(props) {
       setacceptStatus(false);
     }
   } 
-  const handlefeedChange = (event) =>{
-    setfeedBack(event.target.value);
-  }
   async function submitMessage() {
     try {
       let uploadFile = chatFile;
@@ -622,55 +628,6 @@ export default function AppealHistory(props) {
       submitMessage('');
     }
   }  
-  async function feedbackChange() {
-    if(feedbackStatus == true) {
-      setfeedbackStatus(false);
-    } else {
-      setfeedbackStatus(true);
-    }
-  }
-  async function FeedBack(feedBackType) {
-    try {
-      setisLoading(true);
-      let userId = (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].userId);
-      let ownerId = (p2pOrdersList && p2pOrdersList[0] && p2pOrdersList[0].ownerId);
-      let toUserId = "";
-      if (feedbackDetails?.toUserId == undefined) {
-        if (ownerId == myProfile?._id) {
-          toUserId  = userId;
-        } else {
-          toUserId  = ownerId;
-        }
-      } else {
-        if ((feedbackDetails?.toUserId) == (myProfile && myProfile?._id)) {
-          toUserId  = feedbackDetails?.fromUserId;
-        } else {
-          toUserId  = feedbackDetails?.toUserId;
-        }
-      }
-      const data = {
-        orderNo : orderId, 
-        toUserId  : toUserId,
-        type    : feedBackType,
-        description : feedBack
-      }
-      const params = { 
-        url: `${Config.V1_API_URL}p2p/createFeedback`,
-        method: 'POST',
-        body: data
-      }
-      const response = (await makeRequest(params));
-      let type = 'error';
-      if (response.status) {
-        type = 'success'
-      }
-      toast({ type, message: response.message });
-      setisLoading(false);
-      setfeedbackStatus(false);
-      getmyFeedback();
-      getp2pOrders();
-    } catch (err) {}
-  }
   async function CancelAppeal() {
     try {
       const params = { 
@@ -687,10 +644,6 @@ export default function AppealHistory(props) {
         getAppealHistory();
         toast({ type, message: result.message });
     } catch (err) {}
-  }
-  async function handleLoadClose() {
-    setisLoading(false);
-    setdefaultChatOpen(true);
   }
   async function cancelOrder() {
     try {
@@ -781,6 +734,22 @@ export default function AppealHistory(props) {
       }
     },
   });
+  function getUser(userId,userType) {
+    let user = "";
+    if (appealHistory && appealHistory.length > 0) {
+      if (appealHistory[0].appealUsersDet && appealHistory[0].appealUsersDet.length > 0){
+        appealHistory[0].appealUsersDet.map(async (item)=>{
+            if (item._id === userId) {
+              user = (item.email !== "" ? item.email : item.username);
+            } 
+            if (userType === "admin") {
+              user = "Admin Support";
+            } 
+        })
+      }
+      return user;
+    }
+  }
   return (
     <div>
       <NavbarOne
@@ -849,49 +818,82 @@ export default function AppealHistory(props) {
                               </div>
                           </div>
                       }
-                      <div className="text-end">
-                        <p><a   href="javascript:void(0)" onClick={()=>sethelpcenterformOpen(true)} className="text-decoration-none text-primary">Appeal Help center</a></p>
-                      </div>
-                      { appealHistory.length > 0 && appealHistory.slice().reverse().map((data)=>{
+                      {     
+                      appealstatus === 1 && 
+                        <div className="text-end">
+                          <p><a   href="javascript:void(0)" onClick={()=>sethelpcenterformOpen(true)} className="text-decoration-none text-primary">Appeal Help center</a></p>
+                        </div>
+                      }
+                      { (appealHistory && appealHistory[0]) && 
+                        <div className="card p-2 shadow">
+                          <span className="d-block my-2">
+                            <b>Reason</b>
+                          </span>
+                          <span className="d-block my-2">
+                            { (appealHistory && appealHistory[0] && appealHistory[0].reason) }
+                          </span> 
+                        </div>
+                      }
+                      {
+                        appealHistoryList.length > 0 && appealHistoryList.slice().reverse().map((item)=>{
                           return (
-                            data.appealHistory.length > 0 && data.appealHistory.slice().reverse().map((item)=>{
-                              return (
-                                <div className="col-lg-12 mt-4 border-top pt-3  pb-3">
-                                <div className="card p-2 shadow">
+                            <div className="col-lg-12 mt-4 border-top pt-3  pb-3">
+                              <div className="card p-2 shadow">
                                 <div className='d-flex'>
-                                    <div className='p-2 color-white f-12 pr-21'>{dateFormat(item?.date)}</div>
-                                  </div>
+                                  <div className='p-2 color-white f-12 pr-21'>{dateFormat(item?.date)}</div>
+                                </div>
+                                { item.userType === "user" ?
                                   <span className="d-block my-2">
-                                  {(data?.userId != myProfile?._id ) ? 'Complainant provides additional info' : 'Respondent provides additional info'}
+                                      { getUser(item?.userId, item.userType)+ "  "} 
+                                      {" "+(item?.userId !== myProfile?._id ) ? 'Complainant provides additional info' : 'Respondent provides additional info'}
                                   </span>
-                                  { data.reason != "" &&
-                                    <>
-                                      <span className="d-block my-2">
-                                        <b>Reason : </b>
-                                      </span>  
-                                      <span className="d-block my-2">
-                                        <p>{data.reason}</p>
-                                      </span>        
-                                    </>
-                                  } 
-                                  { item.description != "" &&
-                                    <>
-                                      <span className="d-block my-2">
-                                        <b>Description : </b>
-                                      </span>  
-                                      <span className="d-block my-2">
-                                        <p>{item.description}</p>
-                                      </span>        
-                                    </>
-                                  }      
-                                  { item && item.attachment != "" && 
-                                    <img src={item.attachment} alt="" style={{width: "70px",height:"70px"}} className="deposit-crupto-explain-image" />
-                                  }
-                                </div>
-                                </div>
-                                
-                              )
-                            })
+                                  :
+                                  item.userType === "admin" ?
+                                  <span className="d-block my-2 color-yellow">
+                                    { getUser(item?.userId, item.userType)+ "  "} 
+                                  </span>
+                                  :
+                                  <span className="d-block my-2">
+                                      { getUser(item?.userId, item.userType)+ "  "}  
+                                      {" "+(item?.userId !== myProfile?._id ) ? 'Complainant provides additional info' : 'Respondent provides additional info'}
+                                  </span>
+                                }
+                                {/* { data.reason !== "" &&
+                                  <>
+                                    <span className="d-block my-2">
+                                      <b>Reason : </b>
+                                    </span>  
+                                    <span className="d-block my-2">
+                                      <p>{data.reason}</p>
+                                    </span>        
+                                  </>
+                                }  */}
+                                { item.description !== "" &&
+                                  <>
+                                    <span className="d-block my-2">
+                                     <b>{item.userType === "user" ? "Description" : "Message"} </b>
+                                    </span>  
+                                    <span className="d-block my-2">
+                                      <p>{item.description}</p>
+                                    </span>        
+                                  </>
+                                }      
+                                { item.phone !== "" &&
+                                  <>
+                                    <span className="d-block my-2">
+                                      <b>Phone No : </b>
+                                    </span>  
+                                    <span className="d-block my-2">
+                                      <p>{item.phone}</p>
+                                    </span>        
+                                  </>
+                                }      
+                                { item && item.attachment !== "" && 
+                                  <img src={item.attachment} alt="" style={{width: "70px",height:"70px"}} className="deposit-crupto-explain-image" />
+                                }
+                              </div>
+                            </div>
+                            
                           )
                         })
                       }
@@ -1042,7 +1044,7 @@ export default function AppealHistory(props) {
           </Modal.Body>
       </Modal> 
         {/* payment received */}
-      <Modal show={paymentformOpen} onHide={()=>setpaymentformOpen(false)}>
+      {/* <Modal show={paymentformOpen} onHide={()=>setpaymentformOpen(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Verification</Modal.Title>
         </Modal.Header>
@@ -1077,6 +1079,25 @@ export default function AppealHistory(props) {
               </div>
             </div>
           </form>
+        </Modal.Body>
+      </Modal> */}
+       <Modal show={paymentformOpen} onHide={() => setpaymentformOpen(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Are you sure you want to order released?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row  ">
+            <div className='row mt-5'>
+              <div className='col'>
+                <button type="submit" className="btn text-white btn-col w-100 mt-4" disabled={isLoading} onClick={()=>confirmOrderRelease()}>
+                    Confirm
+                </button>
+                <button type="button" className="btn text-white btn-col w-100 mt-4" onClick={() => setpaymentformOpen(false)}>
+                    Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </Modal.Body>
       </Modal>
       {/* Cancel order */}
